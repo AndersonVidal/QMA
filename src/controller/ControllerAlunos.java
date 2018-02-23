@@ -1,31 +1,44 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import model.Aluno;
-import utils.Utils;
+import utils.NomeComparator;
+
 
 public class ControllerAlunos {
-	
+
 	private ArrayList<Aluno> alunos;
+	private NomeComparator Comparator;
 	
 	public ControllerAlunos() {
-		this.alunos = new HashMap<>();
+		this.alunos = new ArrayList<>();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
-		this.alunos.put(matricula, aluno);
+		this.alunos.add(aluno);
 	}
 	
 	public String recuperaAluno(String matricula) {
-		return this.alunos.get(matricula).toString();
+		String str = "";
+		for(Aluno aluno: alunos) {
+			if(aluno.getMatricula().equals(matricula)) {
+				str += aluno.toString();
+			}
+		}
+		return str;
 	}
 	
 	public String listarAlunos() {
-		Collections.sort(( Utils.toList(alunos));
+		String str = "";
+		Collections.sort(alunos,Comparator);
+		for(Aluno aluno: alunos) {
+			str += aluno.toString() + "/n";
+		}
+		
+		return str.trim();
 	}
 }
+
