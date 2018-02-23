@@ -11,6 +11,10 @@ public class Aluno {
 
 
 	public Aluno(String matricula, String nome, int codigoCurso, String email) {
+		if(nome.equals(null) || nome.equals("")) {
+			throw new NullPointerException("Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
+		}
+		
 		this.matricula = matricula;
 		this.nome = nome;
 		this.codigoCurso = codigoCurso;

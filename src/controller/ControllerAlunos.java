@@ -2,23 +2,43 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 
+
+import exceptions.ExistingElementException;
 import model.Aluno;
 import utils.NomeComparator;
 
 
 public class ControllerAlunos {
 
-	private ArrayList<Aluno> alunos;
-	private NomeComparator Comparator;
+	private HashSet<Aluno> alunos;
 	
 	public ControllerAlunos() {
-		this.alunos = new ArrayList<>();
+		this.alunos = new HashSet<>();
 	}
 	
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {	
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
-		this.alunos.add(aluno);
+		if(verificaExistencia(aluno) == true) {
+			try {
+				throw new ExistingElementException("");
+			} catch (ExistingElementException e) {
+				System.err.println(e.getMessage());
+			}
+		}else {
+			this.alunos.add(aluno);
+		}
+	}
+	
+	public boolean verificaExistencia(Aluno aluno) {
+		
+		if(alunos.contains(aluno)) {
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 	
 	public String recuperaAluno(String matricula) {
@@ -32,13 +52,48 @@ public class ControllerAlunos {
 	}
 	
 	public String listarAlunos() {
-		String str = "";
-		Collections.sort(alunos,Comparator);
+		ArrayList<Aluno> arrayAlunos = new ArrayList<>();
 		for(Aluno aluno: alunos) {
-			str += aluno.toString() + "/n";
+			arrayAlunos.add(aluno);
+		}
+		String str = "";
+		Collections.sort(arrayAlunos,new NomeComparator(){
+            public int compare(Aluno a1, Aluno a2){
+                return a1.getNome().compareTo(a2.getNome());
+            } 
+        	});
+		
+		int now = 0;
+		for(Aluno aluno: arrayAlunos) {
+			if(now == arrayAlunos.size() - 1) {
+				str += aluno.toString();
+			}else if(now < arrayAlunos.size() - 1) {
+				str += aluno.toString() + ", ";
+			}
+			now ++;
 		}
 		
 		return str.trim();
 	}
-}
+	
+	
+	public String getInfoAluno(String matricula, String atributo) {
+		
+		String info = "";
+		for(Aluno aluno: alunos) {
+			if(aluno.getMatricula().equals(matricula)) {
+				if(atributo.equals("Nome")) {
+					info += aluno.getNome();
+				}else if(atributo.equals("Telefone")) {
+					info += aluno.getTelefone();
+				}else if(atributo.equals("Email")) {
+					info += aluno.getEmail();
+				}else if(atributo.equals("CodigoCurso")) {
+					info += aluno.getCodigoCurso();
+				}
+			}
+		}
+		return info;
+	}
 
+}
