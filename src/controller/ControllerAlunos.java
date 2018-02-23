@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
-
-import exceptions.ExistingElementException;
 import model.Aluno;
 import utils.NomeComparator;
 
@@ -19,29 +17,16 @@ public class ControllerAlunos {
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {	
-		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
-		if(verificaExistencia(aluno) == true) {
-			try {
-				throw new ExistingElementException("");
-			} catch (ExistingElementException e) {
-				System.err.println(e.getMessage());
-			}
+		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone,email);
+		if(alunos.contains(aluno)) {
+			throw new StringIndexOutOfBoundsException("Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
 		}else {
 			this.alunos.add(aluno);
 		}
 	}
 	
-	public boolean verificaExistencia(Aluno aluno) {
-		
-		if(alunos.contains(aluno)) {
-			return true;
-		}else {
-			return false;
-		}
-		
-	}
-	
 	public String recuperaAluno(String matricula) {
+
 		String str = "";
 		for(Aluno aluno: alunos) {
 			if(aluno.getMatricula().equals(matricula)) {
