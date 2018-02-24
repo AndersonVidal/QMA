@@ -1,10 +1,16 @@
-package viewFacade;
+package view;
 
 import controller.ControllerAlunos;
 
 import easyaccept.EasyAccept;
 
 public class Facade {
+	
+	public static void main(String[] args) { 
+		args = new String[] { "view.Facade",
+				"acceptance_tests/us1_test.txt"};
+		EasyAccept.main(args);
+	}
 	
 	private ControllerAlunos ctrlAlunos = new ControllerAlunos();
 	
@@ -22,11 +28,5 @@ public class Facade {
 
 	public String getInfoAluno(String matricula, String atributo) {
 		return this.ctrlAlunos.getInfoAluno(matricula, atributo);
-	}
-	
-	public static void main(String[] args) {
-		args = new String[] {"viewFacade.Facade",
-				"acceptance_tests/us1_test.txt"};
-		EasyAccept.main(args);
 	}
 }

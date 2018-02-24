@@ -1,5 +1,7 @@
 package model;
 
+import utils.Validador;
+
 public class Aluno {
 	
 	private String matricula;
@@ -11,9 +13,9 @@ public class Aluno {
 
 
 	public Aluno(String matricula, String nome, int codigoCurso, String email) {
-		if(nome.equals(null) || nome.equals("")) {
-			throw new NullPointerException("Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
-		}
+		Validador.validadorString(matricula, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
+		Validador.validadorString(nome, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
+		Validador.validadorEmail(email, "Erro no cadastro de aluno: Email invalido");
 		
 		this.matricula = matricula;
 		this.nome = nome;
