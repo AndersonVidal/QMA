@@ -1,3 +1,7 @@
+/**
+ * Classe que extende da interface Comparator e irá ordenar por orede alfabetica
+ * @author Arthur da Silva Rodrigues
+ */
 package utils;
 
 import model.Aluno;

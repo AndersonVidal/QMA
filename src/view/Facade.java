@@ -1,3 +1,6 @@
+/**
+ * @author Arthur da Silva Rodrigues e Anderson Vasconcelos
+ */
 package view;
 
 import controller.ControllerAlunos;

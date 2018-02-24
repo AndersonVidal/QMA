@@ -1,3 +1,7 @@
+/**
+ * Classe abstrata que irá implementar um comparador de aluno 
+ * @author Anderson Vasconcelos
+ */
 package utils;
 
 import java.util.Comparator;

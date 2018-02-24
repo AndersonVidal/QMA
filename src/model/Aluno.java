@@ -1,3 +1,8 @@
+/**
+ *  A classe é a representação de um aluno, que receberá atributos referentes a matricula, identificador de curso, nome, telefone(opcional), email e uma nota de 0 a 5 
+ * @author Arthur da Silva Rodrigues e Anderson Vasconcelos
+ */
+
 package model;
 
 import utils.Validador;
@@ -11,7 +16,13 @@ public class Aluno {
 	private String email;
 	private int nota;
 
-
+	/**
+	 * Constrói um aluno com telefone vazio;
+	 * @param matricula Representação da matricula do aluno
+	 * @param nome Representação do nome do aluno
+	 * @param codigoCurso Representação do codigo referente ao curso do aluno
+	 * @param email Representação do email do aluno
+	 */
 	public Aluno(String matricula, String nome, int codigoCurso, String email) {
 		Validador.validadorString(matricula, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
 		Validador.validadorString(nome, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
@@ -24,7 +35,14 @@ public class Aluno {
 		this.email = email;
 		this.nota = 5;
 	}
-	
+	/**
+	 * Contrói um aluno desta vez com o telefone não-nulo
+	 * @param matricula Representação da matricula do aluno
+	 * @param nome Representação do nome do aluno
+	 * @param codigoCurso Representação do codigo referente ao curso do aluno
+	 * @param telefone Representação do telefone do aluno
+	 * @param email Representação do email do aluno
+	 */
 	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
 		this(matricula, nome, codigoCurso, email);
 		this.telefone = telefone;

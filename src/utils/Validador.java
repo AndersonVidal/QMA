@@ -1,3 +1,7 @@
+/**
+ * Classe que abrigará os metodos responsaveis pela validação tanto de email como de nome
+ * @author Anderson Vasconcelos
+ */
 package utils;
 
 import java.util.Set;
