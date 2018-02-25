@@ -4,6 +4,7 @@
 package view;
 
 import controller.ControllerAlunos;
+import controller.ControllerTutores;
 
 import easyaccept.EasyAccept;
 
@@ -11,11 +12,12 @@ public class Facade {
 	
 	public static void main(String[] args) { 
 		args = new String[] { "view.Facade",
-				"acceptance_tests/us1_test.txt"};
+				"acceptance_tests/us1_test.txt", "acceptance_tests/us2_test.txt"};
 		EasyAccept.main(args);
 	}
 	
 	private ControllerAlunos ctrlAlunos = new ControllerAlunos();
+	private ControllerTutores ctrlTutores = new ControllerTutores(ctrlAlunos.getAlunos());
 	
 	/**
 	 * Cadastra um aluno com telefone no sistema.
@@ -70,5 +72,17 @@ public class Facade {
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
 		return this.ctrlAlunos.getInfoAluno(matricula, atributo);
+	}
+	
+	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
+		this.ctrlTutores.tornarTutor(matricula, disciplina, proeficiencia);
+	}
+	
+	public String recuperaTutor(String matricula) {
+		return this.ctrlTutores.recuperaTutor(matricula);
+	}
+	
+	public String listarTutores() {
+		return this.ctrlTutores.listarTutores();
 	}
 }

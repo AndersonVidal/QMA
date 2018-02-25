@@ -26,6 +26,11 @@ public class ControllerAlunos {
 	public ControllerAlunos() {
 		this.alunos = new HashSet<>();
 	}
+	
+	public Set<Aluno> getAlunos() {
+		return this.alunos;
+	}
+	
 	/**
 	 * Cadastra e valida um aluno com telefone no sistema
 	 * 

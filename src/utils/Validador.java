@@ -1,8 +1,12 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import model.Aluno;
 
 /**
  * Representação de um validador de parametros.
@@ -35,6 +39,20 @@ public class Validador {
 	public static void validadorString(String string, String iae, String npe){
 		if(string == null) throw new NullPointerException(npe);
 		if(string.trim().isEmpty()) throw new IllegalArgumentException(iae);
+	}
+	
+	public static void validadorPositivo(int numero, String e) {
+		if(numero <= 0) throw new IllegalArgumentException(e);
+	}
+	
+	public static void validadorCadeMatricula(String matricula, Set<Aluno> alunos, String e) {
+		List<String> matriculas = new ArrayList<>();
+		for(Aluno aluno : alunos) {
+			if(!matriculas.contains(aluno.getMatricula())) {
+				matriculas.add(aluno.getMatricula());
+			}
+		}
+		if(!matriculas.contains(matricula)) throw new IllegalArgumentException(e);
 	}
 	
 	/**
