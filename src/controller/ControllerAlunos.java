@@ -1,7 +1,3 @@
-/**
- * @author Arthur da Silva Rodrigues e Anderson Vasconcelos
- */
-
 package controller;
 
 import java.util.ArrayList;
@@ -15,23 +11,29 @@ import utils.Alfabetica;
 import utils.Comparador;
 import utils.Validador;
 
-
+/**
+ * Controle que contem a l√≥gica de negocio do armazenamento de alunos do sistema
+ * 
+ * @author Arthur da Silva Rodrigues e Anderson Vasconcelos
+ */
 public class ControllerAlunos {
 
-	private Set<Aluno> alunos;
 	/**
-	 * ConstrÛi um Controller com um hashset para armazenar objetos do tipo Aluno.
+	 * Representa√ß√£o de um conjunto de alunos diferenciados pela matricula.
 	 */
+	private Set<Aluno> alunos;
+
 	public ControllerAlunos() {
 		this.alunos = new HashSet<>();
 	}
 	/**
-	 * Este metodo È responsavel pelo cadastro e validaÁ„o de alunos no sistema
-	 * @param nome RepresentaÁ„o do nome do aluno
-	 * @param matricula RepresentaÁ„o da amtricula do aluno
-	 * @param codigoCurso RepresentaÁ„o do codigo referente ao curso do aluno
-	 * @param telefone RepresentaÁ„o do telefone do aluno (opcional)
-	 * @param email RepresentaÁ„o do email do aluno
+	 * Cadastra e valida um aluno com telefone no sistema
+	 * 
+	 * @param nome Representa√ß√£o do nome do aluno, no formato String "james"
+	 * @param matricula Representa√ß√£o do nome do aluno, no formato String "123456"
+	 * @param codigoCurso Representa√ß√£o do codigo do curso, no formato inteiro "1"
+	 * @param telefone Representa√ß√£o do telefone do aluno, no formato String "99999999"
+	 * @param email Representa√ß√£o do email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {	
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
@@ -39,10 +41,28 @@ public class ControllerAlunos {
 		
 		this.alunos.add(aluno);
 	}
+	
 	/**
-	 * Este metodo È um metodo auxiliar responsavel por buscar o aluno atraves de sua matricula
-	 * @param matricula RepresentaÁ„o da matricula do aluno
-	 * @return retorna um objeto do tipo Aluno
+	 * Cadastra um aluno no sistema.
+	 * 
+	 * @param nome Representa√ß√£o do nome do aluno, no formato String "james"
+	 * @param matricula Representa√ß√£o do nome do aluno, no formato String "123456"
+	 * @param codigoCurso Representa√ß√£o do codigo do curso, no formato inteiro "1"
+	 * @param email Representa√ß√£o do email do aluno, no formato String "james@ccc.ufcg.edu.br"
+	 */
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String email) {	
+		Aluno aluno = new Aluno(matricula, nome, codigoCurso, email);
+		Validador.validadorSetCoteins(aluno, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
+		
+		this.alunos.add(aluno);
+	}
+	/**
+	 * Retorna o aluno especificado pela matricula.<br>
+	 * Caso aluno n√£o exista, √© retornado null.
+	 * 
+	 * @param matricula Representa√ß√£o do nome do aluno, no formato String "123456"
+	 * 
+	 * @return Aluno. Caso n√£o exista, null.
 	 */
 	private Aluno buscaAluno(String matricula) {
 		Aluno busca = null;
@@ -55,10 +75,13 @@ public class ControllerAlunos {
 		
 		return busca;
 	}
+	
 	/**
-	 * Este metodo È responsavel por consultar o aluno atrves da matricula 
-	 * @param matricula RepresentaÁ„o da matricula
-	 * @return Uma string com todos os atributos do aluno referenciado pela matricula solicitada
+	 * Encontra um aluno segundo a sua matricula no sistema.
+	 * 
+	 * @param matricula Representa√ß√£o do nome do aluno, no formato String "123456"
+	 * 
+	 * @return Representa√ßao textual do aluno buscado.
 	 */
 	public String recuperaAluno(String matricula) {
 		Validador.validadorString(matricula, "matricula invalida");
@@ -67,11 +90,13 @@ public class ControllerAlunos {
 		Validador.validadorObjeto(aluno, "Erro na busca por aluno: Aluno nao encontrado");
 		return aluno.toString();
 	}
+	
 	/**
-	 * Este metodo È responsavel por ceder a lista de todos os alunos cadastrados em ordem alfabetica
-	 * @return Uma string com todas as representaÁıes dos alunos concatenadas
+	 * Cria uma lista ordenada de alunos, em ordem alfab√©tica.
+	 * 
+	 * @return List de Alunos.
 	 */
-	public String listarAlunos() {
+	private List<Aluno> ordenaAlfabeticaAlunos() {
 		List<Aluno> arrayAlunos = new ArrayList<>();
 		for(Aluno aluno: alunos) {
 			arrayAlunos.add(aluno);
@@ -79,6 +104,16 @@ public class ControllerAlunos {
 		
 		Comparador alfabetico = new Alfabetica();
 		Collections.sort(arrayAlunos, alfabetico);
+		return arrayAlunos;
+	}
+	
+	/**
+	 * Lista todos os alunos do sistema exibindo suas representa√ß√µes textuais em sequencia alfab√©tica.
+	 * 
+	 * @return Representa√ß√£o textual de uma lista de alunos.
+	 */
+	public String listarAlunos() {
+		List<Aluno> arrayAlunos = ordenaAlfabeticaAlunos();
 		
 		String str = "";
 		
@@ -92,13 +127,14 @@ public class ControllerAlunos {
 		
 		return str.trim();
 	}
-	/**
-	 * Este metodo È responsavel por buscar um certo atributo de um certo aluno e retorn·-lo
-	 * @param matricula RepresentaÁ„o da matricula 
-	 * @param atributo RepresentaÁ„o do atributo
-	 * @return Retorna uma string com o atributo solicitado de um determinado aluno
-	 */
 	
+	/**
+	 * Encontra um aluno segundo sua matricula no sistema e imprime a caracteristica desejada.
+	 * 
+	 * @param matricula Representa√ß√£o do nome do aluno, no formato String "123456"
+	 * @param atributo Representa√ß√£o de uma caract√©ristica do aluno
+	 * @return Representa√ß√£o textual de uma caract√©ristica do aluno
+	 */
 	public String getInfoAluno(String matricula, String atributo) {
 		
 		Aluno aluno = this.buscaAluno(matricula);

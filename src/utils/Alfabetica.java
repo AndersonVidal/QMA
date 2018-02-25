@@ -1,11 +1,11 @@
-/**
- * Classe que extende da interface Comparator e ir· ordenar por orede alfabetica
- * @author Arthur da Silva Rodrigues
- */
 package utils;
 
 import model.Aluno;
 
+/**
+ * Classe que extende da interface Comparator e ir√° ordenar por orede alfabetica
+ * @author Arthur da Silva Rodrigues
+ */
 public class Alfabetica extends Comparador {
 
 	@Override

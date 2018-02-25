@@ -1,27 +1,45 @@
-/**
- *  A classe È a representaÁ„o de um aluno, que receber· atributos referentes a matricula, identificador de curso, nome, telefone(opcional), email e uma nota de 0 a 5 
- * @author Arthur da Silva Rodrigues e Anderson Vasconcelos
- */
-
 package model;
 
 import utils.Validador;
 
+/**
+ * Representa√ß√£o de um aluno, que ter√° matricula, identificador de curso, nome, telefone(opcional), email e uma nota de 0 a 5. 
+ * @author Arthur da Silva Rodrigues e Anderson Vasconcelos
+ */
 public class Aluno {
 	
+	/**
+	 * Representa√ß√£o de matricula do aluno, no formato String "123456"
+	 */
 	private String matricula;
+	/**
+	 * Representa√ß√£o do nome do aluno, no formato String "james"
+	 */
 	private String nome;
+	/**
+	 * Representa√ß√£o do codigo do curso, no formato inteiro "1"
+	 */
 	private int codigoCurso;
+	/**
+	 * Representa√ß√£o do telefone do aluno, no formato String "99999999"
+	 */
 	private String telefone;
+	/**
+	 * Representa√ß√£o do email do aluno, no formato String "james@ccc.ufcg.edu.br"
+	 */
 	private String email;
+	/**
+	 * Representa√ß√£o da nota do aluno, no formato Inteiro "3"
+	 */
 	private int nota;
 
 	/**
-	 * ConstrÛi um aluno com telefone vazio;
-	 * @param matricula RepresentaÁ„o da matricula do aluno
-	 * @param nome RepresentaÁ„o do nome do aluno
-	 * @param codigoCurso RepresentaÁ„o do codigo referente ao curso do aluno
-	 * @param email RepresentaÁ„o do email do aluno
+	 * Constroi um aluno sem telefone
+	 * 
+	 * @param matricula Representa√ß√£o da matricula do aluno
+	 * @param nome Representa√ß√£o do nome do aluno
+	 * @param codigoCurso Representa√ß√£o do codigo referente ao curso do aluno
+	 * @param email Representa√ß√£o do email do aluno
 	 */
 	public Aluno(String matricula, String nome, int codigoCurso, String email) {
 		Validador.validadorString(matricula, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
@@ -36,12 +54,13 @@ public class Aluno {
 		this.nota = 5;
 	}
 	/**
-	 * ContrÛi um aluno desta vez com o telefone n„o-nulo
-	 * @param matricula RepresentaÁ„o da matricula do aluno
-	 * @param nome RepresentaÁ„o do nome do aluno
-	 * @param codigoCurso RepresentaÁ„o do codigo referente ao curso do aluno
-	 * @param telefone RepresentaÁ„o do telefone do aluno
-	 * @param email RepresentaÁ„o do email do aluno
+	 * Constroi um aluno com telefone
+	 * 
+	 * @param matricula Representa√ß√£o da matricula do aluno
+	 * @param nome Representa√ß√£o do nome do aluno
+	 * @param codigoCurso Representa√ß√£o do codigo referente ao curso do aluno
+	 * @param telefone Representa√ß√£o do telefone do aluno
+	 * @param email Representa√ß√£o do email do aluno
 	 */
 	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
 		this(matricula, nome, codigoCurso, email);
@@ -71,9 +90,15 @@ public class Aluno {
 		this.nota = nota;
 	}
 
+	/**
+	 * Retorna a representa√ß√£o textual de um aluno:<br>
+	 * <ul><li>Sem telefone:</li>
+	 * <tt>‚Äú123456 - James - 1 - james@ccc.ufcg.edu.br‚Äù</tt>
+	 * <li>Com telefone:</li>
+	 * <tt>‚Äú123456 - James - 1 - 99999999 - james@ccc.ufcg.edu.br‚Äù</tt>
+	 */
 	@Override
 	public String toString() {
-		
 		if(this.telefone.isEmpty()) {
 			return this.matricula + " - " + this.nome + " - " + this.codigoCurso + " - " + this.email;
 		}else {
@@ -88,7 +113,11 @@ public class Aluno {
 		result = prime * result + ((matricula == null) ? 0 : matricula.hashCode());
 		return result;
 	}
-
+	
+	/**
+	 * Retorna um boleano que representa a proposi√ß√£o de o objeto aluno ter a mesma <b>matricula</b> 
+	 * que outro objeto aluno.
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
