@@ -1,0 +1,80 @@
+package utils;
+
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * Representação de um validador de parametros.
+ * 
+ * @author Anderson Vasconcelos
+ *
+ */
+public class Validador {
+	
+	/**
+	 * @exception NullPointerException String Null
+	 * @exception IllegalArgumentException String vazia
+	 * 
+	 * @param string Objeto do tipo String a ser validado
+	 * @param e Mensagem de erro padrão.
+	 */
+	public static void validadorString(String string, String e){
+		if(string == null) throw new NullPointerException(e);
+		if(string.trim().isEmpty()) throw new IllegalArgumentException(e);
+	}
+	
+	/**
+	 * @exception NullPointerException String Null
+	 * @exception IllegalArgumentException String vazia
+	 * 
+	 * @param string Objeto do tipo String a ser validado
+	 * @param iae Mensagem de erro para String ilegal.
+	 * @param npe Mensagem de erro para String Nula.
+	 */
+	public static void validadorString(String string, String iae, String npe){
+		if(string == null) throw new NullPointerException(npe);
+		if(string.trim().isEmpty()) throw new IllegalArgumentException(iae);
+	}
+	
+	/**
+	 * Valida a expressão textual de um email.
+	 * 
+ 	 * @exception IllegalArgumentException Email inválido.
+	 * 
+	 * @param email Representação textual de um email
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorEmail(String email, String e){
+		validadorObjeto(email, e);
+		Pattern p = Pattern.compile("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$");
+		Matcher m = p.matcher(email);
+	
+		if(!m.find()) throw new IllegalArgumentException(e);
+	}
+	
+	/**
+	 * Valida não existencia de um determinado objeto em um Set
+	 * 
+	 * @exception StringIndexOutOfBoundsException Caso objeto já exista no set
+	 * 
+	 * @param o Representação do objeto
+	 * @param c Representação do Set
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorSetCoteins(Object o, Set<?> c, String e){
+		if(c.contains(o)) throw new StringIndexOutOfBoundsException(e);
+	}
+	
+	/**
+	 * Valida a existência de um objeto.
+	 * 
+	 * @exception NullPointerException Caso objeto seja null
+	 * 
+	 * @param o Representação do objeto
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorObjeto(Object o, String e) {
+		if(o == null) throw new NullPointerException(e);
+	}
+}
