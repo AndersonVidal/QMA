@@ -9,8 +9,7 @@ import model.Aluno;
 /**
  * Entidade responsável pelos testes unitários da classe Aluno.
  * 
- * @author daniel
- *
+ * @author Daniel Coura
  */
 public class AlunoTest {
 	
@@ -26,6 +25,8 @@ public class AlunoTest {
 	public void criaAlunoParaTeste() {
 		this.aluno = new Aluno("123456", "daniel", 123, "99123-123", "daniel@ccc.ufcg.edu.br");
 	}
+	
+	// *---------- CONSTRUIR ALUNO ----------*
 	
 	/**
 	 * Testa se cria um aluno com os parâmetros corretos. 
@@ -65,6 +66,22 @@ public class AlunoTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testCriaAlunoNomeVazio() {
 		this.aluno = new Aluno("123456", "   ", 123, "99123-123", "daniel@ccc.ufcg.edu.br");
+	}
+	
+	/**
+	 * Testa se uma exceção é lançada ao criar um aluno com o código de curso negativo.
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCriaAlunoCodigoCursoNegativo() {
+		this.aluno = new Aluno("123456", "daniel", -1, "99123-123", "daniel@ccc.ufcg.edu.br");
+	}
+	
+	/**
+	 * Testa se uma exceção é lançada ao criar um aluno com o código de curso igual a 0.
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCriaAlunoCodigoCursoZero() {
+		this.aluno = new Aluno("123456", "daniel", 0, "99123-123", "daniel@ccc.ufcg.edu.br");
 	}
 	
 	/**
@@ -126,22 +143,6 @@ public class AlunoTest {
 	}
 	
 	/**
-	 * Testa se uma exceção é lançada ao criar um aluno com o código de curso negativo.
-	 */
-	@Test(expected=IllegalArgumentException.class)
-	public void testCriaAlunoCodigoCursoNegativo() {
-		this.aluno = new Aluno("123456", "daniel", -1, "99123-123", "daniel@ccc.ufcg.edu.br");
-	}
-	
-	/**
-	 * Testa se uma exceção é lançada ao criar um aluno com o código de curso igual a 0.
-	 */
-	@Test(expected=IllegalArgumentException.class)
-	public void testCriaAlunoCodigoCursoZero() {
-		this.aluno = new Aluno("123456", "daniel", 0, "99123-123", "daniel@ccc.ufcg.edu.br");
-	}
-	
-	/**
 	 * Testa se cria um aluno sem telefone. 
 	 */
 	@Test
@@ -183,6 +184,24 @@ public class AlunoTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testCriaAlunoSemTelefoneNomeVazio() {
 		this.aluno = new Aluno("123456", "  ", 1, "daniel@ccc.ufcg.edu.br");
+	}
+	
+	/**
+	 * Testa se uma exceção é lançada ao criar um aluno sem telefone 
+	 * com o código de curso negativo.
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCriaAlunoSemTelefoneCodigoCursoNegativo() {
+		this.aluno = new Aluno("123456", "daniel", -1, "daniel@ccc.ufcg.edu.br");
+	}
+	
+	/**
+	 * Testa se uma exceção é lançada ao criar um aluno sem telefone 
+	 * com o código de curso igual a 0.
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCriaAlunoSemTelefoneCodigoCursoZero() {
+		this.aluno = new Aluno("123456", "daniel", 0, "daniel@ccc.ufcg.edu.br");
 	}
 
 	/**
@@ -230,23 +249,7 @@ public class AlunoTest {
 		this.aluno = new Aluno("123456", "daniel", 123, "semarroba@");
 	}
 	
-	/**
-	 * Testa se uma exceção é lançada ao criar um aluno sem telefone 
-	 * com o código de curso negativo.
-	 */
-	@Test(expected=IllegalArgumentException.class)
-	public void testCriaAlunoSemTelefoneCodigoCursoNegativo() {
-		this.aluno = new Aluno("123456", "daniel", -1, "daniel@ccc.ufcg.edu.br");
-	}
-	
-	/**
-	 * Testa se uma exceção é lançada ao criar um aluno sem telefone 
-	 * com o código de curso igual a 0.
-	 */
-	@Test(expected=IllegalArgumentException.class)
-	public void testCriaAlunoSemTelefoneCodigoCursoZero() {
-		this.aluno = new Aluno("123456", "daniel", 0, "daniel@ccc.ufcg.edu.br");
-	}
+	// *---------- TOSTRING ----------*
 	
 	/**
 	 * Verifica o toString do aluno que possui telefone.

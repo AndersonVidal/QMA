@@ -11,7 +11,7 @@ import controller.ControllerAlunos;
  * 
  * @author Daniel Coura
  */
-public class ControllerAluno {
+public class ControllerAlunosTest {
 
 	/**
 	 * Objeto ControllerAlunos para teste.
