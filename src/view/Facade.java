@@ -17,7 +17,7 @@ public class Facade {
 	}
 	
 	private ControllerAlunos ctrlAlunos = new ControllerAlunos();
-	private ControllerTutores ctrlTutores = new ControllerTutores(ctrlAlunos.getAlunos());
+	private ControllerTutores ctrlTutores = new ControllerTutores(ctrlAlunos);
 	
 	/**
 	 * Cadastra um aluno com telefone no sistema.
@@ -74,14 +74,33 @@ public class Facade {
 		return this.ctrlAlunos.getInfoAluno(matricula, atributo);
 	}
 	
+	/**
+	 * Torna um aluno tutor de alguma disciplina através de sua matrícula.
+	 * 
+	 * @param matricula Representação da matrícula do aluno, no formato String "123456".
+	 * @param disciplina Representação da disciplina, no formato String "matemática".
+	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0".
+	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
 		this.ctrlTutores.tornarTutor(matricula, disciplina, proeficiencia);
 	}
 	
+	/**
+	 * Encontra um tutor segundo a sua matricula no sistema.
+	 * 
+	 * @param matricula Representação do tutor, no formato String "123456"
+	 * 
+	 * @return Representaçao textual do tutor buscado.
+	 */
 	public String recuperaTutor(String matricula) {
 		return this.ctrlTutores.recuperaTutor(matricula);
 	}
 	
+	/**
+	 * Lista todos os tutores do sistema exibindo suas representações textuais em sequencia alfabética.
+	 * 
+	 * @return Representação textual de uma lista de tutores.
+	 */
 	public String listarTutores() {
 		return this.ctrlTutores.listarTutores();
 	}

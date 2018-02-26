@@ -27,6 +27,9 @@ public class ControllerAlunos {
 		this.alunos = new HashSet<>();
 	}
 	
+	/**
+	 * Retorna o conjunto de alunos do controller.
+	 */
 	public Set<Aluno> getAlunos() {
 		return this.alunos;
 	}
@@ -69,7 +72,7 @@ public class ControllerAlunos {
 	 * 
 	 * @return Aluno. Caso não exista, null.
 	 */
-	private Aluno buscaAluno(String matricula) {
+	public Aluno buscaAluno(String matricula) {
 		Aluno busca = null;
 		for(Aluno aluno: alunos) {
 			if(aluno.getMatricula().equals(matricula)) {

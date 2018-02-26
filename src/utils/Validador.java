@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -41,10 +42,23 @@ public class Validador {
 		if(string.trim().isEmpty()) throw new IllegalArgumentException(iae);
 	}
 	
+	/**
+	 * @exception IllegalArgumentException inteiro não positivo.
+	 * 
+	 * @param numero Objeto do tipo int a ser validado.
+	 * @param e Mensagem de erro padrão.
+	 */
 	public static void validadorPositivo(int numero, String e) {
 		if(numero <= 0) throw new IllegalArgumentException(e);
 	}
 	
+	/**
+	 * @exception IllegalArgumentException matrícula não é de um aluno cadastrado.
+	 * 
+	 * @param matricula Matricula a ser validada.
+	 * @param alunos Conjunto de alunos.
+	 * @param e Mensagem de erro padrão.
+	 */
 	public static void validadorCadeMatricula(String matricula, Set<Aluno> alunos, String e) {
 		List<String> matriculas = new ArrayList<>();
 		for(Aluno aluno : alunos) {
@@ -82,6 +96,19 @@ public class Validador {
 	 */
 	public static void validadorSetCoteins(Object o, Set<?> c, String e){
 		if(c.contains(o)) throw new StringIndexOutOfBoundsException(e);
+	}
+	
+	/**
+	 * Valida a existência de um determinado objeto em um conjunto.
+	 * 
+	 * @exception StringIndexOutOfBoundsException(e) Caso objeto não exista no conjunto.
+	 * 
+	 * @param o Representação do objeto
+	 * @param c Representação do Set
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorCollectionNopeCoteins(Object o, Collection<?> c, String e) {
+		if(!c.contains(o)) throw new StringIndexOutOfBoundsException(e);
 	}
 	
 	/**
