@@ -16,8 +16,8 @@ public class Facade {
 		EasyAccept.main(args);
 	}
 	
-	private ControllerAlunos ctrlAlunos = new ControllerAlunos();
-	private ControllerTutores ctrlTutores = new ControllerTutores(ctrlAlunos);
+	private ControllerAlunos controleAlunos = new ControllerAlunos();
+	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos);
 	
 	/**
 	 * Cadastra um aluno com telefone no sistema.
@@ -29,7 +29,7 @@ public class Facade {
 	 * @param email Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		this.ctrlAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
+		this.controleAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 	/**
 	 * Cadastra um aluno no sistema.
@@ -40,7 +40,7 @@ public class Facade {
 	 * @param email Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String email){
-		this.ctrlAlunos.cadastrarAluno(nome, matricula, codigoCurso, email);
+		this.controleAlunos.cadastrarAluno(nome, matricula, codigoCurso, email);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class Facade {
 	 * @return Representaçao textual do aluno buscado.
 	 */
 	public String recuperaAluno(String matricula) {
-		return this.ctrlAlunos.recuperaAluno(matricula);
+		return this.controleAlunos.recuperaAluno(matricula);
 	}
 	
 	/**
@@ -60,7 +60,7 @@ public class Facade {
 	 * @return Representação textual de uma lista de alunos.
 	 */
 	public String listarAlunos() {
-		return this.ctrlAlunos.listarAlunos();
+		return this.controleAlunos.listarAlunos();
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class Facade {
 	 * @return Representação textual de uma caractéristica do aluno
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
-		return this.ctrlAlunos.getInfoAluno(matricula, atributo);
+		return this.controleAlunos.getInfoAluno(matricula, atributo);
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class Facade {
 	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0".
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
-		this.ctrlTutores.tornarTutor(matricula, disciplina, proeficiencia);
+		this.controleTutores.tornarTutor(matricula, disciplina, proeficiencia);
 	}
 	
 	/**
@@ -93,7 +93,7 @@ public class Facade {
 	 * @return Representaçao textual do tutor buscado.
 	 */
 	public String recuperaTutor(String matricula) {
-		return this.ctrlTutores.recuperaTutor(matricula);
+		return this.controleTutores.recuperaTutor(matricula);
 	}
 	
 	/**
@@ -102,6 +102,6 @@ public class Facade {
 	 * @return Representação textual de uma lista de tutores.
 	 */
 	public String listarTutores() {
-		return this.ctrlTutores.listarTutores();
+		return this.controleTutores.listarTutores();
 	}
 }

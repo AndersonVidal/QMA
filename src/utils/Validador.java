@@ -1,13 +1,9 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import model.Aluno;
 
 /**
  * Representação de um validador de parametros.
@@ -51,23 +47,7 @@ public class Validador {
 	public static void validadorPositivo(int numero, String e) {
 		if(numero <= 0) throw new IllegalArgumentException(e);
 	}
-	
-	/**
-	 * @exception IllegalArgumentException matrícula não é de um aluno cadastrado.
-	 * 
-	 * @param matricula Matricula a ser validada.
-	 * @param alunos Conjunto de alunos.
-	 * @param e Mensagem de erro padrão.
-	 */
-	public static void validadorCadeMatricula(String matricula, Set<Aluno> alunos, String e) {
-		List<String> matriculas = new ArrayList<>();
-		for(Aluno aluno : alunos) {
-			if(!matriculas.contains(aluno.getMatricula())) {
-				matriculas.add(aluno.getMatricula());
-			}
-		}
-		if(!matriculas.contains(matricula)) throw new IllegalArgumentException(e);
-	}
+
 	
 	/**
 	 * Valida a expressão textual de um email.
@@ -94,8 +74,8 @@ public class Validador {
 	 * @param c Representação do Set
 	 * @param e Mensagem de erro padrão
 	 */
-	public static void validadorSetCoteins(Object o, Set<?> c, String e){
-		if(c.contains(o)) throw new StringIndexOutOfBoundsException(e);
+	public static void validadorMapKeyCoteins(Object o, Map<?, ?> c, String e){
+		if(c.containsKey(o)) throw new StringIndexOutOfBoundsException(e);
 	}
 	
 	/**
@@ -107,8 +87,8 @@ public class Validador {
 	 * @param c Representação do Set
 	 * @param e Mensagem de erro padrão
 	 */
-	public static void validadorCollectionNopeCoteins(Object o, Collection<?> c, String e) {
-		if(!c.contains(o)) throw new StringIndexOutOfBoundsException(e);
+	public static void validadorMapValueCoteins(Object o, Map<?, ?> c, String e) {
+		if(!c.values().contains(o)) throw new StringIndexOutOfBoundsException(e);
 	}
 	
 	/**

@@ -26,11 +26,11 @@ public class ControllerTutores {
 	/**
 	 * Representação de um Controller de alunos.
 	 */
-	private ControllerAlunos ctrlAlunos;
+	private ControllerAlunos controleAlunos;
 	
 	public ControllerTutores(ControllerAlunos ctrlAlunos) {
 		this.tutores = new HashMap<>();
-		this.ctrlAlunos = ctrlAlunos;
+		this.controleAlunos = ctrlAlunos;
 	}
 	
 	/**
@@ -41,12 +41,11 @@ public class ControllerTutores {
 	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0".
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
+		Validador.validadorMapKeyCoteins(matricula, this.controleAlunos.getAlunos(), "Erro na definicao de papel: Tutor nao encontrado");
 		Tutor tutor = new Tutor(matricula, disciplina, proeficiencia);
-		
-		Validador.validadorCadeMatricula(matricula, this.ctrlAlunos.getAlunos(), "Erro na definicao de papel: Tutor nao encontrado");
-		Validador.validadorPositivo(proeficiencia, "Erro na definicao de papel: Proficiencia invalida");
-		Validador.validadorSetCoteins(tutor, this.tutores.keySet(), "Erro na definicao de papel: Ja eh tutor dessa disciplina");
-		
+		Validador.validadorMapKeyCoteins(tutor, this.tutores, "Erro na definicao de papel: Ja eh tutor dessa disciplina");
+		//Validador.validadorPositivo(proeficiencia, "Erro na definicao de papel: Proficiencia invalida");
+	
 		if(!this.tutores.keySet().contains(tutor)) {
 			this.tutores.put(tutor, matricula);
 		}
@@ -60,9 +59,9 @@ public class ControllerTutores {
 	 * @return Representaçao textual do tutor buscado.
 	 */
 	public String recuperaTutor(String matricula) {
-		Validador.validadorCollectionNopeCoteins(matricula, this.tutores.values(), "Erro na busca por tutor: Tutor nao encontrado");
+		Validador.validadorMapValueCoteins(matricula, this.tutores, "Erro na busca por tutor: Tutor nao encontrado");
 		
-		return this.ctrlAlunos.buscaAluno(matricula).toString();
+		return this.controleAlunos.recuperaAluno(matricula);
 	}
 	
 	/**
@@ -73,8 +72,8 @@ public class ControllerTutores {
 	public String listarTutores() {
 		List<Aluno> alunosTutores = new ArrayList<>();
 		for(Tutor tutor : this.tutores.keySet()) {
-			if(!alunosTutores.contains(this.ctrlAlunos.buscaAluno(tutor.getMatricula()))) {
-				alunosTutores.add(this.ctrlAlunos.buscaAluno(tutor.getMatricula()));
+			if(!alunosTutores.contains(this.controleAlunos.getAlunos().get((tutor.getMatricula())))) {
+				alunosTutores.add(this.controleAlunos.getAlunos().get((tutor.getMatricula())));
 			}
 		}
 		
