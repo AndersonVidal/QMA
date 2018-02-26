@@ -13,8 +13,14 @@ import controller.ControllerAlunos;
  */
 public class ControllerAluno {
 
+	/**
+	 * Objeto ControllerAlunos para teste.
+	 */
 	private ControllerAlunos ca = new ControllerAlunos();
 	
+	/**
+	 * Cadastra alguns alunos para testes.
+	 */
 	@Before
 	public void cadastraAlunosParaTeste() {
 		this.ca.cadastrarAluno("aba", "123412", 123, "123-123", "aluno1@ccc.br");
@@ -22,7 +28,7 @@ public class ControllerAluno {
 		this.ca.cadastrarAluno("cab", "111111", 123, "aluno3@ccc.br");
 	}
 	
-	// *----- CADASTRAR ALUNO ------*
+	// *--------- CADASTRAR ALUNO ----------*
 	
 	/**
 	 * Testa se cadastra um aluno com os parâmetros corretos. 
@@ -248,36 +254,51 @@ public class ControllerAluno {
 	/**
 	 * Testa se uma exceção é lançada ao cadastrar alunos com mesma matrícula.
 	 */
-	@Test(expected=StringIndexOutOfBoundsException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void testCadastraAlunoComMesmaMatricula() {
 		this.ca.cadastrarAluno("daniel", "123412", 123, "aluno@ccc.br");
 	}
 	
-	// *------ RECUPERAR ALUNO ------*
+	// *---------- RECUPERAR ALUNO ----------*
 	
+	/**
+	 * Verifica se recupera o aluno informado através da matrícula.
+	 */
 	@Test
 	public void testRecuperaAluno() {
 		String stringAluno = "123412 - aba - 123 - 123-123 - aluno1@ccc.br";
 		assertEquals(stringAluno, this.ca.recuperaAluno("123412"));
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar recuperar alunos com matrícula null.
+	 */
 	@Test(expected=NullPointerException.class)
 	public void testRecuperaAlunoMatriculaNull() {
 		this.ca.recuperaAluno(null);
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar recuperar alunos com matrícula vazia.
+	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void testRecuperaAlunoMatriculaVazia() {
 		this.ca.recuperaAluno("  ");
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar recuperar alunos com matrícula inexistente.
+	 */
 	@Test(expected=NullPointerException.class)
 	public void testRecuperaAlunoMatriculaInexistente() {
 		this.ca.recuperaAluno("0000");
 	}
 	
-	// *------ LISTAR ALUNOS ------*
+	// *---------- LISTAR ALUNOS ----------*
 	
+	/**
+	 * Verifica se lista os alunos cadastrados em ordem alfabética.
+	 */
 	@Test
 	public void testListaAlunos() {
 		String listaDeAlunos = "654321 - aaa - 123 - 123-123 - aluno2@ccc.br, " +
@@ -286,64 +307,100 @@ public class ControllerAluno {
 		assertEquals(listaDeAlunos, this.ca.listarAlunos());
 	}
 	
+	/**
+	 * Verifica a listagem quando não há alunos cadastrados.
+	 */
 	@Test
 	public void testListaAlunosSemAlunosCadastrados() {
 		ControllerAlunos ca = new ControllerAlunos();
 		assertEquals("", ca.listarAlunos());
 	}
 	
-	// *------ INFORMAÇÕES DE ALUNO ------*
+	// *---------- INFORMAÇÕES DE ALUNO ----------*
 	
+	/**
+	 * Verifica se resgata o nome do aluno através da matrícula e do atributo "Nome"
+	 */
 	@Test
 	public void testGetInfoAlunoNome() {
 		assertEquals("aaa", this.ca.getInfoAluno("654321", "Nome"));
 	}
 	
+	/**
+	 * Verifica se resgata o telefone do aluno através da matrícula e do atributo "Telefone"
+	 */
 	@Test
 	public void testGetInfoAlunoTelefone() {
 		assertEquals("123-123", this.ca.getInfoAluno("654321", "Telefone"));
 	}
 	
+	/**
+	 * Verifica se resgata o email do aluno através da matrícula e do atributo "Email"
+	 */
 	@Test
 	public void testGetInfoAlunoEmail() {
 		assertEquals("aluno2@ccc.br", this.ca.getInfoAluno("654321", "Email"));
 	}
 	
+	/**
+	 * Verifica se resgata o email do aluno através da matrícula e do atributo "CodigoCurso"
+	 */
 	@Test
 	public void testGetInfoAlunoCodigoCurso() {
 		assertEquals("123", this.ca.getInfoAluno("654321", "CodigoCurso"));
 	}
 	
+	/**
+	 * Verifica se resgata o telefone de um aluno sem telefone através da matrícula e do atributo "Telefone"
+	 */
 	@Test
 	public void testGetInfoAlunoSemTelefone() {
 		assertEquals("", this.ca.getInfoAluno("111111", "Telefone"));
 	}
 	
-	@Test(expected=StringIndexOutOfBoundsException.class)
+	/**
+	 * Testa se uma exceção é lançada ao tentar resgatar uma informação de um aluno com um atributo inválido.
+	 */
+	@Test(expected=IllegalArgumentException.class)
 	public void testGetInfoAlunoAtributoInvalido() {
 		this.ca.getInfoAluno("111111", "Teste");
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar resgatar uma informação de um aluno com matrícula inexistente.
+	 */
 	@Test(expected=NullPointerException.class)
 	public void testGetInfoAlunoMatriculaInexistente() {
-		this.ca.getInfoAluno("0000", "Teste");
+		this.ca.getInfoAluno("0000", "Nome");
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar resgatar uma informação de um aluno com matrícula null.
+	 */
 	@Test(expected=NullPointerException.class)
 	public void testGetInfoMatriculaNull() {
 		this.ca.getInfoAluno(null, "Nome");
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar resgatar uma informação de um aluno com matrícula vazia.
+	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void testGetInfoMatriculaVazia() {
 		this.ca.getInfoAluno("  ", "Nome");
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar resgatar uma informação de um aluno com atributo null.
+	 */
 	@Test(expected=NullPointerException.class)
 	public void testGetInfoAtributoNull() {
 		this.ca.getInfoAluno("654321", null);
 	}
 	
+	/**
+	 * Testa se uma exceção é lançada ao tentar resgatar uma informação de um aluno com atributo vazio.
+	 */
 	@Test(expected=IllegalArgumentException.class)
 	public void testGetInfoAtributoVazio() {
 		this.ca.getInfoAluno("654321", "  ");
