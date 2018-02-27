@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,8 @@ import java.util.regex.Pattern;
  *
  */
 public class Validador {
+	
+	private final static String EMAIL_REGEX = "^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$";
 	
 	/**
 	 * Valida uma String em termos de ser vazia ou nula.
@@ -65,7 +68,7 @@ public class Validador {
 	 */
 	public static void validadorEmail(String email, String e){
 		validadorObjeto(email, e);
-		Pattern p = Pattern.compile("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$");
+		Pattern p = Pattern.compile(EMAIL_REGEX);
 		Matcher m = p.matcher(email);
 	
 		if(!m.find()) throw new IllegalArgumentException(e);
@@ -120,5 +123,16 @@ public class Validador {
 	 */
 	public static void validadorObjeto(Object o, String e) {
 		if(o == null) throw new NullPointerException(e);
+	}
+
+	/**
+	 * Valida a não existência de um objeto em um Set.
+	 * 
+	 * @param o Representação do objeto
+	 * @param s Representação de um Set
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorSetContains(Object o, Set<?> s, String e) {
+		if(s.contains(o)) { throw new IllegalArgumentException(e); }
 	}
 }

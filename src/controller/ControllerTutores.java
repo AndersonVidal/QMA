@@ -42,7 +42,7 @@ public class ControllerTutores {
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
 		Validador.validadorMapKeyNotConteins(matricula, this.controleAlunos.getAlunos(), "Erro na definicao de papel: Tutor nao encontrado");
-		Tutor tutor = new Tutor(matricula, disciplina, proeficiencia);
+		Tutor tutor = new Tutor(matricula, disciplina, proeficiencia, this.controleAlunos.getInfoAluno(matricula, "Email"));
 		Validador.validadorMapKeyConteins(tutor, this.tutores, "Erro na definicao de papel: Ja eh tutor dessa disciplina");
 		this.tutores.put(tutor, matricula);
 	}
