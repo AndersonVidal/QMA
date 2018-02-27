@@ -2,9 +2,9 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 import model.Aluno;
 import utils.Alfabetica;
@@ -21,11 +21,19 @@ public class ControllerAlunos {
 	/**
 	 * Representação de um conjunto de alunos diferenciados pela matricula.
 	 */
-	private Set<Aluno> alunos;
+	private Map<String, Aluno> alunos;
 
 	public ControllerAlunos() {
-		this.alunos = new HashSet<>();
+		this.alunos = new HashMap<>();
 	}
+	
+	/**
+	 * Retorna o conjunto de alunos do controller.
+	 */
+	public Map<String, Aluno> getAlunos() {
+		return this.alunos;
+	}
+	
 	/**
 	 * Cadastra e valida um aluno com telefone no sistema
 	 * 
@@ -37,9 +45,9 @@ public class ControllerAlunos {
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {	
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
-		Validador.validadorSetCoteins(aluno, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
+		Validador.validadorMapKeyConteins(matricula, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
 		
-		this.alunos.add(aluno);
+		this.alunos.put(matricula, aluno);
 	}
 	
 	/**
@@ -52,28 +60,9 @@ public class ControllerAlunos {
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String email) {	
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, email);
-		Validador.validadorSetCoteins(aluno, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
+		Validador.validadorMapKeyConteins(matricula, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
 		
-		this.alunos.add(aluno);
-	}
-	/**
-	 * Retorna o aluno especificado pela matricula.<br>
-	 * Caso aluno não exista, é retornado null.
-	 * 
-	 * @param matricula Representação do nome do aluno, no formato String "123456"
-	 * 
-	 * @return Aluno. Caso não exista, null.
-	 */
-	private Aluno buscaAluno(String matricula) {
-		Aluno busca = null;
-		for(Aluno aluno: alunos) {
-			if(aluno.getMatricula().equals(matricula)) {
-				busca = aluno;
-				break;
-			}
-		}
-		
-		return busca;
+		this.alunos.put(matricula, aluno);
 	}
 	
 	/**
@@ -85,9 +74,8 @@ public class ControllerAlunos {
 	 */
 	public String recuperaAluno(String matricula) {
 		Validador.validadorString(matricula, "matricula invalida");
-		Aluno aluno;
-		aluno = buscaAluno(matricula);
-		Validador.validadorObjeto(aluno, "Erro na busca por aluno: Aluno nao encontrado");
+		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na busca por aluno: Aluno nao encontrado");
+		Aluno aluno = this.alunos.get(matricula);
 		return aluno.toString();
 	}
 	
@@ -98,7 +86,7 @@ public class ControllerAlunos {
 	 */
 	private List<Aluno> ordenaAlfabeticaAlunos() {
 		List<Aluno> arrayAlunos = new ArrayList<>();
-		for(Aluno aluno: alunos) {
+		for(Aluno aluno: this.alunos.values()) {
 			arrayAlunos.add(aluno);
 		}
 		
@@ -136,9 +124,8 @@ public class ControllerAlunos {
 	 * @return Representação textual de uma caractéristica do aluno
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
-		
-		Aluno aluno = this.buscaAluno(matricula);
-		Validador.validadorObjeto(aluno, "Erro na obtencao de informacao de aluno: Aluno nao encontrado");
+		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na obtencao de informacao de aluno: Aluno nao encontrado");
+		Aluno aluno = this.alunos.get(matricula);
 		
 		switch (atributo) {
 		case "Nome":

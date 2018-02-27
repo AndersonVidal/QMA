@@ -1,8 +1,9 @@
 package utils;
 
-import java.util.Set;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 /**
  * Representação de um validador de parametros.
@@ -13,6 +14,8 @@ import java.util.regex.Pattern;
 public class Validador {
 	
 	/**
+	 * Valida uma String em termos de ser vazia ou nula.
+	 * 
 	 * @exception NullPointerException String Null
 	 * @exception IllegalArgumentException String vazia
 	 * 
@@ -25,6 +28,8 @@ public class Validador {
 	}
 	
 	/**
+	 * Valida uma String em termos de ser vazia ou nula.
+	 * 
 	 * @exception NullPointerException String Null
 	 * @exception IllegalArgumentException String vazia
 	 * 
@@ -36,6 +41,19 @@ public class Validador {
 		if(string == null) throw new NullPointerException(npe);
 		if(string.trim().isEmpty()) throw new IllegalArgumentException(iae);
 	}
+	
+	/**
+	 * Valida um inteiro, em termos de ser menor que 0.
+	 * 
+	 * @exception IllegalArgumentException inteiro não positivo.
+	 * 
+	 * @param numero Objeto do tipo int a ser validado.
+	 * @param e Mensagem de erro padrão.
+	 */
+	public static void validadorPositivo(int numero, String e) {
+		if(numero <= 0) throw new IllegalArgumentException(e);
+	}
+
 	
 	/**
 	 * Valida a expressão textual de um email.
@@ -54,16 +72,42 @@ public class Validador {
 	}
 	
 	/**
-	 * Valida não existencia de um determinado objeto em um Set
+	 * Valida não existencia de um determinada key em um Map
 	 * 
-	 * @exception StringIndexOutOfBoundsException Caso objeto já exista no set
+	 * @exception StringIndexOutOfBoundsException Caso objeto já exista no Map
 	 * 
 	 * @param o Representação do objeto
-	 * @param c Representação do Set
+	 * @param c Representação do Map
 	 * @param e Mensagem de erro padrão
 	 */
-	public static void validadorSetCoteins(Object o, Set<?> c, String e){
-		if(c.contains(o)) throw new StringIndexOutOfBoundsException(e);
+	public static void validadorMapKeyConteins(Object o, Map<?, ?> c, String e){
+		if(c.containsKey(o)) throw new StringIndexOutOfBoundsException(e);
+	}
+	
+	/**
+	 * Valida existencia de um determinada key em um Map
+	 * 
+	 * @exception StringIndexOutOfBoundsException Caso objeto não exista no Map
+	 * 
+	 * @param o Representação do objeto
+	 * @param c Representação do Map
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorMapKeyNotConteins(Object o, Map<?, ?> c, String e){
+		if(!c.containsKey(o)) throw new IllegalArgumentException(e);
+	}
+	
+	/**
+	 * Valida a existência de um determinado objeto em um conjunto de valores do Map.
+	 * 
+	 * @exception StringIndexOutOfBoundsException(e) Caso objeto não exista nos valores do Map.
+	 * 
+	 * @param o Representação do objeto
+	 * @param c Representação do Map
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorMapValueConteins(Object o, Map<?, ?> c, String e) {
+		if(!c.values().contains(o)) throw new StringIndexOutOfBoundsException(e);
 	}
 	
 	/**
