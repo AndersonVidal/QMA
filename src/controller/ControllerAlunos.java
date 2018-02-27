@@ -45,7 +45,7 @@ public class ControllerAlunos {
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {	
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
-		Validador.validadorMapKeyCoteins(matricula, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
+		Validador.validadorMapKeyConteins(matricula, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
 		
 		this.alunos.put(matricula, aluno);
 	}
@@ -60,7 +60,7 @@ public class ControllerAlunos {
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String email) {	
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, email);
-		Validador.validadorMapKeyCoteins(matricula, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
+		Validador.validadorMapKeyConteins(matricula, this.alunos, "Erro no cadastro de aluno: Aluno de mesma matricula ja cadastrado");
 		
 		this.alunos.put(matricula, aluno);
 	}
@@ -74,8 +74,9 @@ public class ControllerAlunos {
 	 */
 	public String recuperaAluno(String matricula) {
 		Validador.validadorString(matricula, "matricula invalida");
-		Validador.validadorMapKeyCoteins(matricula, this.alunos, "Erro na busca por aluno: Aluno nao encontrado");
-		return this.alunos.get(matricula).toString();
+		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na busca por aluno: Aluno nao encontrado");
+		Aluno aluno = this.alunos.get(matricula);
+		return aluno.toString();
 	}
 	
 	/**
@@ -123,7 +124,7 @@ public class ControllerAlunos {
 	 * @return Representação textual de uma caractéristica do aluno
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
-		Validador.validadorMapKeyCoteins(matricula, this.alunos, "Erro na obtencao de informacao de aluno: Aluno nao encontrado");
+		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na obtencao de informacao de aluno: Aluno nao encontrado");
 		Aluno aluno = this.alunos.get(matricula);
 		
 		switch (atributo) {

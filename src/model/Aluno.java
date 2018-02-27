@@ -64,7 +64,6 @@ public class Aluno {
 	 */
 	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
 		this(matricula, nome, codigoCurso, email);
-		Validador.validadorString(telefone, "Telefone invalido");
 		this.telefone = telefone;
 	}
 	

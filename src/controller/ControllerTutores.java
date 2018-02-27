@@ -41,14 +41,10 @@ public class ControllerTutores {
 	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0".
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
-		Validador.validadorMapKeyCoteins(matricula, this.controleAlunos.getAlunos(), "Erro na definicao de papel: Tutor nao encontrado");
+		Validador.validadorMapKeyNotConteins(matricula, this.controleAlunos.getAlunos(), "Erro na definicao de papel: Tutor nao encontrado");
 		Tutor tutor = new Tutor(matricula, disciplina, proeficiencia);
-		Validador.validadorMapKeyCoteins(tutor, this.tutores, "Erro na definicao de papel: Ja eh tutor dessa disciplina");
-		//Validador.validadorPositivo(proeficiencia, "Erro na definicao de papel: Proficiencia invalida");
-	
-		if(!this.tutores.keySet().contains(tutor)) {
-			this.tutores.put(tutor, matricula);
-		}
+		Validador.validadorMapKeyConteins(tutor, this.tutores, "Erro na definicao de papel: Ja eh tutor dessa disciplina");
+		this.tutores.put(tutor, matricula);
 	}
 	
 	/**
@@ -59,7 +55,8 @@ public class ControllerTutores {
 	 * @return Representaçao textual do tutor buscado.
 	 */
 	public String recuperaTutor(String matricula) {
-		Validador.validadorMapValueCoteins(matricula, this.tutores, "Erro na busca por tutor: Tutor nao encontrado");
+		Validador.validadorString(matricula, "Erro na busca por tutor: Matricula não pode ser vazio ou nulo");
+		Validador.validadorMapValueConteins(matricula, this.tutores, "Erro na busca por tutor: Tutor nao encontrado");
 		
 		return this.controleAlunos.recuperaAluno(matricula);
 	}
