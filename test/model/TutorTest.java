@@ -97,4 +97,35 @@ public class TutorTest {
 		this.tutor = new Tutor("1234", "aa", 6);
 		assertEquals(4, this.tutor.getNota());
 	}
+	
+	/**
+	 * Verifica se dois objetos Tutor são iguais.
+	 */
+	@Test
+	public void testEqualsTrue() {
+		this.tutor = new Tutor("1234", "aa", 6);
+		tutor2 = new Tutor("1234", "aa", 1);
+		assertTrue(this.tutor.equals(tutor2));
+	}
+	
+	/**
+	 * Verifica se dois objetos Tutor são diferentes (disciplinas diferentes).
+	 */
+	@Test
+	public void testEqualsTrue() {
+		this.tutor = new Tutor("1234", "aa", 6);
+		tutor2 = new Tutor("1234", "bb", 1);
+		assertFalse(this.tutor.equals(tutor2));
+	}
+	
+	
+	/**
+	 * Verifica se dois objetos Tutor são diferentes (matrículas diferentes).
+	 */
+	@Test
+	public void testEqualsTrue() {
+		this.tutor = new Tutor("1234", "aa", 6);
+		tutor2 = new Tutor("1111", "aa", 1);
+		assertFalse(this.tutor.equals(tutor2));
+	}
 }
