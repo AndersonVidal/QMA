@@ -20,13 +20,14 @@ import utils.Validador;
 public class ControllerTutores {
 	
 	/**
-	 * Representação de um mapa de tutores e matrículas.
-	 */
-	private Map<Tutor, String> tutores;
-	/**
 	 * Representação de um Controller de alunos.
 	 */
 	private ControllerAlunos controleAlunos;
+	
+	/**
+	 * Representação de um mapa de tutores e matrículas.
+	 */
+	private Map<Tutor, String> tutores;
 	
 	public ControllerTutores(ControllerAlunos ctrlAlunos) {
 		this.tutores = new HashMap<>();
