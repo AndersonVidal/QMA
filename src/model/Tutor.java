@@ -91,27 +91,55 @@ public class Tutor {
 	
 	public void adicionaDinheiro(double dinheiro) { this.dinheiro += dinheiro; }
 	
+	/**
+	 * Adiciona um horário ao dia especificado
+	 * 
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 */
 	public void setHorario(String horario, String dia) {
-		Validador.validadorMapKeyConteins(dia, this.disponibilidade , "dia invalido");
-		Validador.validadorString(horario, "hora invalida");
+		Validador.validadorString(dia, "Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
+		Validador.validadorMapKeyNotConteins(dia, this.disponibilidade , "dia invalido");
+		Validador.validadorString(horario, "Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
 		this.disponibilidade.put(dia, horario);
 	}
 	
+	/**
+	 * Adiciona um novo local ao conjunto de locais de atendimento
+	 * 
+	 * @param local Representação de um local no formato String "ufcg"
+	 */
 	public void setLocal(String local) {
-		Validador.validadorString(local, "local invalido");
+		Validador.validadorString(local, "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
 		Validador.validadorSetContains(local, this.locaisAtendimento, "local ja existe");
 		this.locaisAtendimento.add(local);
 	}
 	
+	/**
+	 * Verifica se o horario especificado é de disponibilidade do tutor.
+	 * 
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 * @return Representação booleana da verificação de horario do tutor
+	 */
 	public boolean consultaHorario(String horario, String dia) {
 		Validador.validadorString(dia, "dia null ou vazio");
 		Validador.validadorMapKeyNotConteins(dia, this.disponibilidade, "dia invalido");
-		Validador.validadorString(horario, "hora invalida");
+		Validador.validadorString(horario, "Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
 		return this.disponibilidade.get(dia).equals(horario);
 	}
 	
-//	public boolean consultaHorario(String horario, String )
-
+	/**
+	 * Verifica se o local especificado é de disponibilidade do tutor
+	 * 
+	 * @param local Representação de um local no formato String "ufcg"
+	 * @return Representação booleana da verificação de local do tutor
+	 */
+	public boolean consultaLocal(String local){
+		Validador.validadorString(local, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
+		return this.locaisAtendimento.contains(local);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

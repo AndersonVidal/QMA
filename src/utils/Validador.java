@@ -1,9 +1,13 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import model.Tutor;
 
 
 /**
@@ -134,5 +138,21 @@ public class Validador {
 	 */
 	public static void validadorSetContains(Object o, Set<?> s, String e) {
 		if(s.contains(o)) { throw new IllegalArgumentException(e); }
+	}
+
+	
+	/**
+	 * Valida a existencia de um tutor pelo email
+	 * 
+	 * @param email
+	 * @param tutores
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorTutoresContainsEmail(String email, Map<Tutor,String> tutores ,String e) {
+		List<String> emails = new ArrayList<>();
+		for(Tutor tutor : tutores.keySet()){
+			emails.add(tutor.getContato());
+		}
+		if(!emails.contains(email)) throw new IllegalArgumentException(e);
 	}
 }

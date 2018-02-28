@@ -106,4 +106,48 @@ public class Facade {
 	public String listarTutores() {
 		return this.controleTutores.listarTutores();
 	}
+	
+	/**
+	 * Adiciona um horário ao dia especificado para um tutor especifico
+	 * 
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 */
+	public void cadastrarHorario(String email, String horario, String dia){
+		this.controleTutores.cadastrarHorario(email, horario, dia);
+	}
+	
+	/**
+	 * Adiciona um local de atendimento do tutor especificado
+	 * 
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param local Representação de um local de atendimento, no formato String "ufcg"
+	 */
+	public void cadastrarLocalDeAtendimento(String email, String local){
+		this.controleTutores.cadastrarLocalDeAtendimento(email, local);
+	}
+	
+	/**
+	 * Verifica se o horario especificado é de disponibilidade do tutor especificado.
+	 *
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 * @return Representação booleana da verificação de horario do tutor
+	 */
+	public boolean consultaHorario(String email, String horario, String dia){
+		return this.controleTutores.consultaHorario(email, horario, dia);
+	}
+	
+	/**
+	 * Verifica se o local especificado é de disponibilidade do tutor especificado
+	 * 
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param local Representação de um local no formato String "ufcg"
+	 * @return Representação booleana da verificação de local do tutor
+	 */
+	public boolean consultaLocal(String email, String local){
+		return this.controleTutores.consultaLocal(email, local);
+	}
 }
