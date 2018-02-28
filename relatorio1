@@ -1,0 +1,48 @@
+RELATÓRIO
+
+O QMA foi projetado para gerenciar alunos e tutores.
+Criamos a entidade aluno e tutor.
+
+A entidade aluno contem:
+	String nome, 
+	String matricula, 
+	int codigo do curso, 
+	String telefone, 
+	String email
+	int nota
+
+A entidade tutor contem 
+	String matricula, (matricula referente a matricula de um aluno do sistema)
+	String contato, (email referente ao aluno da matricula armazenada)
+	String disciplina, (disciplina de tutoramento)
+	int proficiencia, 
+	int nota, 
+	double dinheiro, 
+	Set<String> locais de atendimento (armazena os locais, que devem ser unicos e não possuem ordem)
+
+Criamos tambem dois controllers, um para gerenciamento dos Alunos e outro para gerenciamento dos tutores.
+No controller de alunos optamos por armazenar os alunos em um Map em que as chaves são matriculas 
+, ja que as mesmas são unicas nesse contexto, e os valores são os alunos cuja chave é sua matricula
+No controller de tutores optamos por armazenar os tutores em um Map em que as chaves são os tutores,
+já que os tutores são unicos, e os valores são matriculas, possibilitando assim alunos tutorarem mais
+de uma disciplina
+
+Neste cenario, o controller de tutores conhece o controller de alunos e eventualmente consulta o armazenamento de alunos contido nele
+
+Criamos tambem um Comparator que ordena as listagens de alunos e tutores em ordem alfabetica
+
+Criamos a classe Validador com metodos estaticos para servir a aplicação gerando as exceções do sistema. 
+
+
+A divisão de tarefas entre os membros do grupo foi organizada da seguinte forma:
+
+	- As atividades a serem feitas foram divididos em US1, US2, US3 e Testes
+	- O responsável por cada atividade foi decidido por sorteio em comum acordo com todos os membros
+
+Com isso as tarefas ficaram divididas da seguinte forma:
+	
+	- US1 - Arthur Silva
+	- US2 - Maria Cecilia
+	- US3 - Anderson Vidal
+	- Testes unitarios - Daniel Coura
+
