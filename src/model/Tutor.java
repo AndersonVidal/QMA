@@ -1,5 +1,10 @@
 package model;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 import utils.Validador;
 
 /**
@@ -13,6 +18,10 @@ public class Tutor {
 	 * Representação da matrícula do tutor, no formato String "123456".
 	 */
 	private String matricula;
+	/**
+	 * Representação do contato do tutor, no formato String "teste@email.com"
+	 */
+	private String contato;
 	/**
 	 * Representação da disciplina, no formato String "disciplina".
 	 */
@@ -30,6 +39,10 @@ public class Tutor {
 	 */
 	private double dinheiro;
 	
+	private Map<String, String> disponibilidade;
+	
+	private Set<String> locaisAtendimento;
+	
 	/**
 	 * Constroi um tutor.
 	 * 
@@ -37,45 +50,96 @@ public class Tutor {
 	 * @param disciplina Representação da disciplina.
 	 * @param proeficiencia Representação da proeficiencia do tutor na disciplina.
 	 */
-	public Tutor(String matricula, String disciplina, int proeficiencia) {
+	public Tutor(String matricula, String disciplina, int proeficiencia, String contato) {
 		Validador.validadorString(matricula, "Erro no cadastro de tutor: Nome nao pode ser vazio ou nulo");
 		Validador.validadorString(disciplina, "Erro no cadastro de tutor: Disciplina nao pode ser vazio ou nulo");
 		Validador.validadorPositivo(proeficiencia, "Erro na definicao de papel: Proficiencia invalida");
 		this.matricula = matricula;
+		this.contato = contato;
 		this.disciplina = disciplina;
 		this.proeficiencia = proeficiencia;
 		this.nota = 4;
 		this.dinheiro = 0;
+		this.constroiHorarios();
+		this.locaisAtendimento = new HashSet<>();
 	}
 	
-	public String getMatricula() {
-		return this.matricula;
+	private void constroiHorarios(){
+		this.disponibilidade = new HashMap<>();
+		this.disponibilidade.put("seg", "");
+		this.disponibilidade.put("ter", "");
+		this.disponibilidade.put("qua", "");
+		this.disponibilidade.put("qui", "");
+		this.disponibilidade.put("sex", "");
 	}
 	
-	public String getDisciplina() {
-		return this.disciplina;
+	public String getMatricula() { return this.matricula; }
+	
+	public String getDisciplina() { return this.disciplina; }
+	
+	public int getProeficiencia() { return this.proeficiencia; }
+	
+	public int getNota() { return this.nota; }
+	
+	public void setNota(int nota) { this.nota = nota; }
+	
+	public double getDinheiro() { return this.dinheiro; }
+	
+	public String getContato() { return this.contato; }
+	
+	public Set<String> getLocalAtendimento() { return this.locaisAtendimento; }
+	
+	public void adicionaDinheiro(double dinheiro) { this.dinheiro += dinheiro; }
+	
+	/**
+	 * Adiciona um horário ao dia especificado
+	 * 
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 */
+	public void setHorario(String horario, String dia) {
+		Validador.validadorString(dia, "Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
+		Validador.validadorMapKeyNotConteins(dia, this.disponibilidade , "dia invalido");
+		Validador.validadorString(horario, "Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
+		this.disponibilidade.put(dia, horario);
 	}
 	
-	public int getProeficiencia() {
-		return this.proeficiencia;
+	/**
+	 * Adiciona um novo local ao conjunto de locais de atendimento
+	 * 
+	 * @param local Representação de um local no formato String "ufcg"
+	 */
+	public void setLocal(String local) {
+		Validador.validadorString(local, "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
+		Validador.validadorSetContains(local, this.locaisAtendimento, "local ja existe");
+		this.locaisAtendimento.add(local);
 	}
 	
-	public int getNota() {
-		return this.nota;
+	/**
+	 * Verifica se o horario especificado é de disponibilidade do tutor.
+	 * 
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 * @return Representação booleana da verificação de horario do tutor
+	 */
+	public boolean consultaHorario(String horario, String dia) {
+		Validador.validadorString(dia, "dia null ou vazio");
+		Validador.validadorMapKeyNotConteins(dia, this.disponibilidade, "dia invalido");
+		Validador.validadorString(horario, "Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
+		return this.disponibilidade.get(dia).equals(horario);
 	}
 	
-	public void setNota(int nota) {
-		this.nota = nota;
+	/**
+	 * Verifica se o local especificado é de disponibilidade do tutor
+	 * 
+	 * @param local Representação de um local no formato String "ufcg"
+	 * @return Representação booleana da verificação de local do tutor
+	 */
+	public boolean consultaLocal(String local){
+		Validador.validadorString(local, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
+		return this.locaisAtendimento.contains(local);
 	}
 	
-	public double getDinheiro() {
-		return this.dinheiro;
-	}
-	
-	public void adicionaDinheiro(double dinheiro) {
-		this.dinheiro += dinheiro;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

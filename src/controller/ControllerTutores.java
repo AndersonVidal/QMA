@@ -42,7 +42,7 @@ public class ControllerTutores {
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
 		Validador.validadorMapKeyNotConteins(matricula, this.controleAlunos.getAlunos(), "Erro na definicao de papel: Tutor nao encontrado");
-		Tutor tutor = new Tutor(matricula, disciplina, proeficiencia);
+		Tutor tutor = new Tutor(matricula, disciplina, proeficiencia, this.controleAlunos.getInfoAluno(matricula, "Email"));
 		Validador.validadorMapKeyConteins(tutor, this.tutores, "Erro na definicao de papel: Ja eh tutor dessa disciplina");
 		this.tutores.put(tutor, matricula);
 	}
@@ -77,18 +77,107 @@ public class ControllerTutores {
 		Comparador alfabetico = new Alfabetica();
 		Collections.sort(alunosTutores, alfabetico);
 		
-        String str = "";
+        String lista = "";
 		
 		for(int i=0; i < alunosTutores.size(); i++) {
 			if(i == alunosTutores.size() - 1) {
-				str += alunosTutores.get(i).toString();
+				lista += alunosTutores.get(i).toString();
 				break;
 			}
-			str += alunosTutores.get(i).toString() + ", ";
+			lista += alunosTutores.get(i).toString() + ", ";
 		}
 		
-		return str.trim();
+		return lista.trim();
 	}
+	
+	/**
+	 * Busca um tutor a partir do email e o retorna
+	 * 
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @return Um tutor. Caso não encontre, null
+	 */
+	private Tutor buscaTutor(String email) {
+		Tutor tutor = null;
+		for(Tutor t: this.tutores.keySet()){
+			if(t.getContato().equals(email)){
+				tutor = t;
+				break;
+			}
+		}
+		return tutor;
+	}
+	
+	/**
+	 * Cria uma lista de emails dos tutores.
+	 * 
+	 * @return List de Strings email.
+	 */
+	private List<String> listaContatosTutores() {
+		List<String> emails = new ArrayList<>();
+		for(Tutor tutor : this.tutores.keySet()){
+			emails.add(tutor.getContato());
+		}
+		return emails;
+	}
+	
+	/**
+	 * Adiciona um horário ao dia especificado para um tutor especifico
+	 * 
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 */
+	public void cadastrarHorario(String email, String horario, String dia) {
+		Validador.validadorString(email, "Erro no cadastrar horario: email nao pode ser vazio ou em branco");
+		Validador.validadorTutoresContainsEmail(email, this.tutores, "Erro no cadastrar horario: tutor nao cadastrado");
+		Tutor tutor = buscaTutor(email);
+		tutor.setHorario(horario, dia);
+	}
+
+	/**
+	 * Adiciona um local de atendimento do tutor especificado
+	 * 
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param local Representação de um local de atendimento, no formato String "ufcg"
+	 */
+	public void cadastrarLocalDeAtendimento(String email, String local) {
+		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
+		Validador.validadorTutoresContainsEmail(email, this.tutores, "Erro no cadastrar local de atendimento: tutor nao cadastrado");
+		Tutor tutor = buscaTutor(email);
+		tutor.setLocal(local);
+	}
+	
+	/**
+	 *
+	 * Verifica se o horario especificado é de disponibilidade do tutor especificado.
+	 *
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 * @return Representação booleana da verificação de horario do tutor
+	 */
+	public boolean consultaHorario(String email, String horario, String dia) {
+		List<String> emails = listaContatosTutores();
+		if(!emails.contains(email)) return false;
+		Tutor tutor = buscaTutor(email);
+		return tutor.consultaHorario(horario, dia);
+	}
+	
+	/**
+	 * Verifica se o local especificado é de disponibilidade do tutor especificado
+	 * 
+	 * @param email Representação textual de um email, no formato String "teste@email.com"
+	 * @param local Representação de um local no formato String "ufcg"
+	 * @return Representação booleana da verificação de local do tutor
+	 */
+	public boolean consultaLocal(String email, String local) {
+		List<String> emails = listaContatosTutores();
+		if(!emails.contains(email)) return false;
+		Tutor tutor = buscaTutor(email);
+		return tutor.consultaLocal(local);
+	}
+
+	
 	
 }
 
