@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 
 import model.Tutor;
 
+import java.text.SimpleDateFormat;
+import java.time.*;
 
 /**
  * Representação de um validador de parametros.
@@ -58,6 +60,18 @@ public class Validador {
 	 * @param e Mensagem de erro padrão.
 	 */
 	public static void validadorPositivo(int numero, String e) {
+		if(numero <= 0) throw new IllegalArgumentException(e);
+	}
+	
+	/**
+	 * Valida um double, em termos de ser menor que 0.
+	 * 
+	 * @exception IllegalArgumentException double nao positivo.
+	 * 
+	 * @param numero Objeto do tipo double a ser validado.
+	 * @param e Mensagem de erro padrao.
+	 */
+	public static void validadorPositivoDouble(double numero, String e) {
 		if(numero <= 0) throw new IllegalArgumentException(e);
 	}
 
@@ -140,19 +154,20 @@ public class Validador {
 		if(s.contains(o)) { throw new IllegalArgumentException(e); }
 	}
 
-	
 	/**
-	 * Valida a existencia de um tutor pelo email
+	 * Valida se o formato do horario eh "HH:mm"
 	 * 
-	 * @param email
-	 * @param tutores
-	 * @param e Mensagem de erro padrão
+	 * @param horario o horario a ser validado
+	 * @param iae a mensagem de excecao
 	 */
-	public static void validadorTutoresContainsEmail(String email, Map<Tutor,String> tutores ,String e) {
-		List<String> emails = new ArrayList<>();
-		for(Tutor tutor : tutores.keySet()){
-			emails.add(tutor.getContato());
+	public static void validadorHorario(String horario, String iae) {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		sdf.setLenient(false);
+		try{
+			sdf.parse(horario);
+		} catch(Exception e){
+			throw new IllegalArgumentException(iae);
 		}
-		if(!emails.contains(email)) throw new IllegalArgumentException(e);
 	}
+	
 }
