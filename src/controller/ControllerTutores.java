@@ -4,19 +4,19 @@ import model.Tutor;
 import utils.Validador;
 
 /**
- * Controle que contem a logica de negocio dos tutores do sistema.
+ * Controle que contém a légica de negócio dos tutores do sistema.
  * 
  * @author Maria Cecília Kemiac
  */
 public class ControllerTutores {
 	
 	/**
-	 * Representacao de um Controller de alunos.
+	 * Representação de um Controller de alunos.
 	 */
 	private ControllerAlunos ctAlunos;
 	
 	/**
-	 * Consotroi um controller de tutores a partir de um controller
+	 * Consotrói um controller de tutores a partir de um controller
 	 * de alunos.
 	 * 
 	 * @param ctrlAlunos o controller de alunos
@@ -27,7 +27,7 @@ public class ControllerTutores {
 
 
 	/**
-	 * Adiciona um horario ao dia especificado para um tutor especifico
+	 * Adiciona um horário ao dia especificado para um tutor específico
 	 * 
 	 * @param email o email do tutor, no formato String "teste@email.com"
 	 * @param horario o horario a ser adicionado, no formato String "17:00"
@@ -57,7 +57,7 @@ public class ControllerTutores {
 	
 	/**
 	 *
-	 * Verifica se o horario especificado eh de disponibilidade do tutor especificado.
+	 * Verifica se o horario especificado é de disponibilidade do tutor especificado.
 	 *
 	 * @param email o email do tutor, no formato String "teste@email.com"
 	 * @param horario o horario a ser consultado, no formato String "17:00"
@@ -73,7 +73,7 @@ public class ControllerTutores {
 	}
 	
 	/**
-	 * Verifica se o local especificado eh de disponibilidade do tutor especificado
+	 * Verifica se o local especificado é de disponibilidade do tutor especificado
 	 * 
 	 * @param email o email do tutor, no formato String "teste@email.com"
 	 * @param local o local a ser consultado, no formato String "ufcg"
