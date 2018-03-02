@@ -13,14 +13,14 @@ import utils.Comparador;
 import utils.Validador;
 
 /**
- * Controle que contem a logica de negocio do armazenamento de alunos do sistema
+ * Controle que contem a lógica de negócio do armazenamento de alunos do sistema.
  * 
- * @author Arthur da Silva Rodrigues, Anderson Vasconcelos e Daniel Coura
+ * @author Arthur da Silva Rodrigues, Anderson Vidal e Daniel Coura
  */
 public class ControllerAlunos {
 
 	/**
-	 * Representacao de um conjunto de alunos diferenciados pela matricula.
+	 * Representação de um conjunto de alunos diferenciados pela matricula.
 	 */
 	private Map<String, Aluno> alunos;
 
@@ -58,7 +58,7 @@ public class ControllerAlunos {
 	}
 	
 	/**
-	 * Cria uma lista ordenada de alunos, em ordem alfabetica.
+	 * Cria uma lista ordenada de alunos, em ordem alfabética.
 	 * 
 	 * @return um List de Alunos.
 	 */
@@ -71,8 +71,8 @@ public class ControllerAlunos {
 	}
 	
 	/**
-	 * Lista todos os alunos do sistema exibindo suas representacoes textuais
-	 * em sequencia alfabetica.
+	 * Lista todos os alunos do sistema exibindo suas representações textuais
+	 * em sequência alfabética.
 	 * 
 	 * @return a representacao textual de uma lista de alunos.
 	 */
@@ -119,7 +119,7 @@ public class ControllerAlunos {
 	}
 	
 	/**
-	 * Torna um aluno tutor de alguma disciplina atraves de sua matricula.
+	 * Torna um aluno tutor de alguma disciplina através de sua matricula.
 	 * 
 	 * @param matricula a matrícula do aluno, no formato String "123456"
 	 * @param disciplina a disciplina, no formato String "matemática"
@@ -180,7 +180,7 @@ public class ControllerAlunos {
 	}
 	
 	/**
-	 * Retorna um Map onde a chave eh o email do tutor e o valor eh o Tutor.
+	 * Retorna um Map onde a chave é o email do tutor e o valor é o Tutor.
 	 * 
 	 * @return um Map de tutores
 	 */
