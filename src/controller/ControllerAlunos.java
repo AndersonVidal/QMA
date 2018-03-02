@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Aluno;
-import model.Tutor;
+import model.Ocupacao;
 import utils.Alfabetica;
 import utils.Comparador;
 import utils.Validador;
@@ -184,8 +184,8 @@ public class ControllerAlunos {
 	 * 
 	 * @return Map de tutores chaveados pelo email.
 	 */
-	public Map<String, Tutor> getAlunosTutores(){
-		Map<String, Tutor> tutores = new HashMap<String, Tutor>();
+	public Map<String, Ocupacao> getAlunosTutores(){
+		Map<String, Ocupacao> tutores = new HashMap<String, Ocupacao>();
 		for(Aluno aln : this.alunos.values()) {
 			if (aln.isTutor()) {
 				tutores.put(aln.getEmail(), aln.getTutor());

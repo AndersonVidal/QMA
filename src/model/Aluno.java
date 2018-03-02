@@ -37,7 +37,7 @@ public class Aluno {
 	/**
 	 * Representação a função de Tutor do aluno
 	 */
-	private Tutor tutor;
+	private Ocupacao tutor;
 	
 	
 	/**
@@ -92,7 +92,7 @@ public class Aluno {
 	 * 
 	 * @return Objeto tutor de aluno.
 	 */
-	public Tutor getTutor() {
+	public Ocupacao getTutor() {
 		if (!this.isTutor()) {
 			throw new NullPointerException("Erro ao recuperar tutor: Tutor nao existe");
 		}
