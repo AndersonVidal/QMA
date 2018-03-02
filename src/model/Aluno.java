@@ -3,52 +3,52 @@ package model;
 import utils.Validador;
 
 /**
- * Representacao de um aluno, que tera matricula, identificador de curso, 
- * nome, telefone(opcional), email, uma nota de 0 a 5 e uma ocupacao. 
+ * Representação de um aluno, que terá matricula, identificador de curso, 
+ * nome, telefone(opcional), email, uma nota de 0 a 5, e uma ocupação. 
  * 
  * @author Arthur da Silva Rodrigues, Anderson Vasconcelos e Daniel Coura
  */
 public class Aluno {
 	
 	/**
-	 * Representacao da matricula do aluno, no formato String "123456"
+	 * Representação da matricula do aluno, no formato String "123456"
 	 */
 	private String matricula;
 	/**
-	 * Representacao do nome do aluno, no formato String "james"
+	 * Representação do nome do aluno, no formato String "james"
 	 */
 	private String nome;
 	/**
-	 * Representacao do codigo do curso, no formato inteiro "1"
+	 * Representação do código do curso, no formato inteiro "1"
 	 */
 	private int codigoCurso;
 	/**
-	 * Representacao do telefone do aluno, no formato String "99999999"
+	 * Representação do telefone do aluno, no formato String "99999999"
 	 */
 	private String telefone;
 	/**
-	 * Representacao do email do aluno, no formato String "james@ccc.ufcg.edu.br"
+	 * Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	private String email;
 	/**
-	 * Representacao da nota do aluno, no formato Inteiro "3"
+	 * Representação da nota do aluno, no formato Inteiro "3"
 	 */
 	private int nota;
 	/**
-	 * Representacao a funcao de Tutor do aluno
+	 * Representação a função de Tutor do aluno
 	 */
 	private Tutor tutor;
 	
 	
 	/**
-	 * Constroi um aluno a partir da matricula, do nome, do codigo do curso,
+	 * Constrói um aluno a partir da matricula, do nome, do código do curso,
 	 * do telefone e do email.
 	 * 
-	 * @param matricula Representacao da matricula do aluno
-	 * @param nome Representacao do nome do aluno
-	 * @param codigoCurso Representacao do codigo referente ao curso do aluno
-	 * @param telefone Representacao do telefone do aluno
-	 * @param email Representacao do email do aluno
+	 * @param matricula Representacao da matricula do aluno, no formato String "123456"
+	 * @param nome Representacao do nome do aluno, no formato String "James"
+	 * @param codigoCurso Representacao do codigo referente ao curso do aluno, no formato inteiro "123"
+	 * @param telefone Representacao do telefone do aluno, no formato String "988888888"
+	 * @param email Representacao do email do aluno, no formato String "james.fulano@ccc.ufcg.edu.br"
 	 */
 	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
 		Validador.validadorString(matricula, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
@@ -79,9 +79,9 @@ public class Aluno {
 	public int getNota() { return nota; }
 
 	/**
-	 * Retorna se o aluno eh ou nao um tutor.
+	 * Retorna um true caso aluno seja tutor.
 	 * 
-	 * @return um booleano informando se o aluno eh um tutor
+	 * @return Booleano que representa se o aluno é um tutor
 	 */
 	public boolean isTutor() {
 		return this.tutor != null;
@@ -90,7 +90,7 @@ public class Aluno {
 	/**
 	 * Retorna o objeto tutor de aluno, se existir.
 	 * 
-	 * @return o objeto tutor de aluno.
+	 * @return Objeto tutor de aluno.
 	 */
 	public Tutor getTutor() {
 		if (!this.isTutor()) {
@@ -103,19 +103,19 @@ public class Aluno {
 	/**
 	 * Torna o aluno um tutor atraves da disciplina e da proficiencia.
 	 * 
-	 * @param disciplina a disciplina que o aluno ira tutelar
-	 * @param proficiencia a proficiencia do tutor na disciplina
+	 * @param disciplina Disciplina que o aluno será tutor
+	 * @param proficiencia Proficiência do tutor na disciplina
 	 */
 	public void tornaTutor(String disciplina, int proficiencia) {
 		this.tutor = new Tutor(disciplina, proficiencia);
 	}
 	
 	/**
-	 * Retorna a representacao textual de um aluno:
-	 * Segue o formato: “MATRICULA - NOME - CODIGOCURSO - EMAIL” (sem telefone)
-	 *                  “MATRICULA - NOME - CODIGOCURSO - TELEFONE - EMAIL” (com telefone)
+	 * Retorna a representacao textual de um aluno:<br>
+	 * Segue o formato: <ul><li>“123456 - James - 123 - james@ccc.ufcg.edu.br” (sem telefone)</li>
+	 *                  <li>“123456 - James - 123 - 988888888 - james@ccc.ufcg.edu.br” (com telefone)</li></ul>
 	 *                  
-	 * @return a representacao em String do aluno
+	 * @return Representação textual do aluno
 	 */
 	@Override
 	public String toString() {
@@ -127,7 +127,7 @@ public class Aluno {
 	}
 
 	/**
-	 * Representacao numerica de um aluno.
+	 * Representacao hash do aluno em relaçao a matricula.
 	 */
 	@Override
 	public int hashCode() {
