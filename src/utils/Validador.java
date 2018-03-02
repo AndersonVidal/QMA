@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 import java.text.SimpleDateFormat;
 
 /**
- * Representacao de um validador de parametros.
+ * Representação de um validador de parametros.
  * 
  * @author Anderson Vasconcelos
  *
@@ -23,7 +23,7 @@ public class Validador {
 	 * @exception IllegalArgumentException String vazia
 	 * 
 	 * @param string Objeto do tipo String a ser validado
-	 * @param e Mensagem de erro padrao.
+	 * @param e Mensagem de erro padrão.
 	 */
 	public static void validadorString(String string, String e){
 		if(string == null) throw new NullPointerException(e);
@@ -58,12 +58,12 @@ public class Validador {
 	}
 	
 	/**
-	 * Valida a expressao textual de um email.
+	 * Valida a expressão textual de um email.
 	 * 
  	 * @exception IllegalArgumentException Email invalido.
 	 * 
-	 * @param email Representacao textual de um email
-	 * @param e Mensagem de erro padrao
+	 * @param email Representação textual de um email
+	 * @param e Mensagem de erro padrão
 	 */
 	public static void validadorEmail(String email, String e){
 		validadorObjeto(email, e);
@@ -74,51 +74,51 @@ public class Validador {
 	}
 	
 	/**
-	 * Valida nao existencia de um determinada key em um Map
+	 * Valida nao existência de um determinada key em um Map
 	 * 
-	 * @exception StringIndexOutOfBoundsException Caso objeto ja exista no Map
+	 * @exception StringIndexOutOfBoundsException Caso objeto já exista no Map
 	 * 
-	 * @param o Representacao do objeto
-	 * @param c Representacao do Map
-	 * @param e Mensagem de erro padrao
+	 * @param o Representação do objeto
+	 * @param c Representação do Map
+	 * @param e Mensagem de erro padrão
 	 */
 	public static void validadorMapKeyConteins(Object o, Map<?, ?> c, String e){
 		if(c.containsKey(o)) throw new StringIndexOutOfBoundsException(e);
 	}
 	
 	/**
-	 * Valida existencia de um determinada key em um Map
+	 * Valida existência de um determinada key em um Map
 	 * 
-	 * @exception StringIndexOutOfBoundsException Caso objeto nao exista no Map
+	 * @exception StringIndexOutOfBoundsException Caso objeto não exista no Map
 	 * 
-	 * @param o Representacao do objeto
-	 * @param c Representacao do Map
-	 * @param e Mensagem de erro padrao
+	 * @param o Representação do objeto
+	 * @param c Representação do Map
+	 * @param e Mensagem de erro padrão
 	 */
 	public static void validadorMapKeyNotConteins(Object o, Map<?, ?> c, String e){
 		if(!c.containsKey(o)) throw new IllegalArgumentException(e);
 	}
 	
 	/**
-	 * Valida a existencia de um determinado objeto em um conjunto de valores do Map.
+	 * Valida a existência de um determinado objeto em um conjunto de valores do Map.
 	 * 
-	 * @exception StringIndexOutOfBoundsException(e) Caso objeto nao exista nos valores do Map.
+	 * @exception StringIndexOutOfBoundsException(e) Caso objeto não exista nos valores do Map.
 	 * 
-	 * @param o Representacao do objeto
-	 * @param c Representacao do Map
-	 * @param e Mensagem de erro padrao
+	 * @param o Representação do objeto
+	 * @param c Representação do Map
+	 * @param e Mensagem de erro padrão
 	 */
 	public static void validadorMapValueConteins(Object o, Map<?, ?> c, String e) {
 		if(!c.values().contains(o)) throw new StringIndexOutOfBoundsException(e);
 	}
 	
 	/**
-	 * Valida a existencia de um objeto.
+	 * Valida a existência de um objeto.
 	 * 
 	 * @exception NullPointerException Caso objeto seja null
 	 * 
-	 * @param o Representacao do objeto
-	 * @param e Mensagem de erro padrao
+	 * @param o Representação do objeto
+	 * @param e Mensagem de erro padrão
 	 */
 	public static void validadorObjeto(Object o, String e) {
 		if(o == null) throw new NullPointerException(e);
@@ -127,19 +127,19 @@ public class Validador {
 	/**
 	 * Valida a nao existencia de um objeto em um Set.
 	 * 
-	 * @param o Representacao do objeto
-	 * @param s Representacao de um Set
-	 * @param e Mensagem de erro padrao
+	 * @param o Representação do objeto
+	 * @param s Representação de um Set
+	 * @param e Mensagem de erro padrão
 	 */
 	public static void validadorSetContains(Object o, Set<?> s, String e) {
 		if(s.contains(o)) { throw new IllegalArgumentException(e); }
 	}
 
 	/**
-	 * Valida se o formato do horario eh "HH:mm".
+	 * Valida se o formato do horário eh "HH:mm".
 	 * 
-	 * @param horario o horario a ser validado
-	 * @param iae a mensagem de excecao
+	 * @param horario Horario a ser validado
+	 * @param iae Mensagem de exceção
 	 */
 	public static void validadorHorario(String horario, String iae) {
 		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -152,12 +152,12 @@ public class Validador {
 	}
 
 	/**
-	 * Valida se o numero informado esta dentro de um intervalo fechado.
+	 * Valida se o número informado esta dentro de um intervalo fechado.
 	 * 
-	 * @param valor o valor a ser validado
-	 * @param left o intervalo a esquerda
-	 * @param right o intervalo a direita
-	 * @param e a mensagem de excecao
+	 * @param valor Valor a ser validado
+	 * @param left Intervalo a esquerda
+	 * @param right Intervalo a direita
+	 * @param e Mensagem de excecao
 	 */
 	public static void validadorIntervalo(int valor, int left, int right, String e) {
 		if (valor < left || valor > right) {
