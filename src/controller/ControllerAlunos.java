@@ -31,11 +31,11 @@ public class ControllerAlunos {
 	/**
 	 * Cadastra e valida um aluno com telefone no sistema
 	 * 
-	 * @param nome o nome do aluno, no formato String "james"
-	 * @param matricula a matricula do aluno, no formato String "123456"
-	 * @param codigoCurso o codigo do curso, no formato inteiro "1"
-	 * @param telefone o telefone do aluno, no formato String "99999999"
-	 * @param email o email do aluno, no formato String "james@ccc.ufcg.edu.br"
+	 * @param nome Representação do nome do aluno, no formato String "james"
+	 * @param matricula Representação da matricula do aluno, no formato String "123456"
+	 * @param codigoCurso Representação do código do curso, no formato inteiro "1"
+	 * @param telefone Representação do telefone do aluno, no formato String "99999999"
+	 * @param email Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {	
 		Aluno aluno = new Aluno(matricula, nome, codigoCurso, telefone, email);
@@ -47,8 +47,8 @@ public class ControllerAlunos {
 	/**
 	 * Encontra um aluno segundo a sua matricula no sistema.
 	 * 
-	 * @param matricula o nome do aluno, no formato String "123456"
-	 * @return a representacao textual do aluno buscado.
+	 * @param matricula Representação da matricula do aluno, no formato String "123456"
+	 * @return Representacao textual do aluno buscado.
 	 */
 	public String recuperaAluno(String matricula) {
 		Validador.validadorString(matricula, "Erro ao recuperar aluno: matricula invalida");
@@ -60,7 +60,7 @@ public class ControllerAlunos {
 	/**
 	 * Cria uma lista ordenada de alunos, em ordem alfabética.
 	 * 
-	 * @return um List de Alunos.
+	 * @return List de Alunos.
 	 */
 	private List<Aluno> ordenaAlfabeticaAlunos() {
 		List<Aluno> arrayAlunos = new ArrayList<Aluno>(this.alunos.values());
@@ -74,7 +74,7 @@ public class ControllerAlunos {
 	 * Lista todos os alunos do sistema exibindo suas representações textuais
 	 * em sequência alfabética.
 	 * 
-	 * @return a representacao textual de uma lista de alunos.
+	 * @return Representação textual de uma lista de alunos.
 	 */
 	public String listarAlunos() {
 		List<Aluno> arrayAlunos = ordenaAlfabeticaAlunos();
@@ -94,9 +94,9 @@ public class ControllerAlunos {
 	/**
 	 * Encontra um aluno segundo sua matricula no sistema e imprime a caracteristica desejada.
 	 * 
-	 * @param matricula o nome do aluno, no formato String "123456"
-	 * @param atributo uma caractéristica do aluno
-	 * @return a representacao textual de uma caracteristica do aluno
+	 * @param matricula Representação da matricula do aluno, no formato String "123456"
+	 * @param atributo Representação de um atributo do aluno
+	 * @return Representação textual de um atributo do aluno
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
 		Validador.validadorString(matricula, "Erro na obtencao de informacao de aluno: Matricula nula ou vazia");
@@ -121,9 +121,9 @@ public class ControllerAlunos {
 	/**
 	 * Torna um aluno tutor de alguma disciplina através de sua matricula.
 	 * 
-	 * @param matricula a matrícula do aluno, no formato String "123456"
-	 * @param disciplina a disciplina, no formato String "matemática"
-	 * @param proeficiencia a proeficiencia do tutor, no formato inteiro "0"
+	 * @param matricula Representação da matrícula do aluno, no formato String "123456"
+	 * @param disciplina Representação da disciplina, no formato String "matemática"
+	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0"
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		Validador.validadorString(matricula, "Erro na definicao de papel: matricula invalida");
@@ -139,10 +139,10 @@ public class ControllerAlunos {
 	}
 	
 	/**
-	 * Encontra um tutor segundo a sua matricula no sistema.
+	 * Encontra um tutor segundo a sua matrícula no sistema.
 	 * 
-	 * @param matricula o nome do tutor, no formato String "123456"
-	 * @return a representacao textual do tutor buscado.
+	 * @param matricula Representação da matricula do aluno tutor, no formato String "123456"
+	 * @return Representação textual do tutor buscado.
 	 */
 	public String recuperaAlunoTutor(String matricula) {
 		Validador.validadorString(matricula, "Erro na busca por tutor: Matricula não pode ser vazio ou nulo");
@@ -158,7 +158,7 @@ public class ControllerAlunos {
 	/**
 	 * Cria uma lista ordenada de alunos que sao tutores, em ordem alfabética.
 	 * 
-	 * @return um List de Tutores.
+	 * @return List de Tutores.
 	 */
 	public String listarAlunosTutores() {
 		List<Aluno> arrayAlunos = ordenaAlfabeticaAlunos();
@@ -182,7 +182,7 @@ public class ControllerAlunos {
 	/**
 	 * Retorna um Map onde a chave é o email do tutor e o valor é o Tutor.
 	 * 
-	 * @return um Map de tutores
+	 * @return Map de tutores chaveados pelo email.
 	 */
 	public Map<String, Tutor> getAlunosTutores(){
 		Map<String, Tutor> tutores = new HashMap<String, Tutor>();
