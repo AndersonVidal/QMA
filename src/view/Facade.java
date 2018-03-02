@@ -33,17 +33,7 @@ public class Facade {
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		this.controleAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
-	/**
-	 * Cadastra um aluno no sistema.
-	 * 
-	 * @param nome Representação do nome do aluno, no formato String "james"
-	 * @param matricula Representação do nome do aluno, no formato String "123456"
-	 * @param codigoCurso Representação do codigo do curso, no formato inteiro "1"
-	 * @param email Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
-	 */
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String email){
-		this.controleAlunos.cadastrarAluno(nome, matricula, codigoCurso, email);
-	}
+
 	
 	/**
 	 * Encontra um aluno segundo a sua matricula no sistema.
@@ -84,7 +74,7 @@ public class Facade {
 	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0".
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
-		this.controleTutores.tornarTutor(matricula, disciplina, proeficiencia);
+		this.controleAlunos.tornarTutor(matricula, disciplina, proeficiencia);
 	}
 	
 	/**
@@ -95,7 +85,7 @@ public class Facade {
 	 * @return Representaçao textual do tutor buscado.
 	 */
 	public String recuperaTutor(String matricula) {
-		return this.controleTutores.recuperaTutor(matricula);
+		return this.controleAlunos.recuperaAlunoTutor(matricula);
 	}
 	
 	/**
@@ -104,11 +94,11 @@ public class Facade {
 	 * @return Representação textual de uma lista de tutores.
 	 */
 	public String listarTutores() {
-		return this.controleTutores.listarTutores();
+		return this.controleAlunos.listarAlunosTutores();
 	}
 	
 	/**
-	 * Adiciona um horário ao dia especificado para um tutor especifico
+	 * Adiciona um horario ao dia especificado para um tutor especifico
 	 * 
 	 * @param email Representação textual de um email, no formato String "teste@email.com"
 	 * @param horario Representação de um horario, no formato String "17:00"

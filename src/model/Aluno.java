@@ -3,13 +3,15 @@ package model;
 import utils.Validador;
 
 /**
- * Representação de um aluno, que terá matricula, identificador de curso, nome, telefone(opcional), email e uma nota de 0 a 5. 
- * @author Arthur da Silva Rodrigues e Anderson Vasconcelos
+ * Representação de um aluno, que terá matricula, identificador de curso, 
+ * nome, telefone(opcional), email, uma nota de 0 a 5, e uma ocupação. 
+ * 
+ * @author Arthur da Silva Rodrigues, Anderson Vasconcelos e Daniel Coura
  */
 public class Aluno {
 	
 	/**
-	 * Representação de matricula do aluno, no formato String "123456"
+	 * Representação da matricula do aluno, no formato String "123456"
 	 */
 	private String matricula;
 	/**
@@ -17,7 +19,7 @@ public class Aluno {
 	 */
 	private String nome;
 	/**
-	 * Representação do codigo do curso, no formato inteiro "1"
+	 * Representação do código do curso, no formato inteiro "1"
 	 */
 	private int codigoCurso;
 	/**
@@ -32,70 +34,88 @@ public class Aluno {
 	 * Representação da nota do aluno, no formato Inteiro "3"
 	 */
 	private int nota;
-
 	/**
-	 * Constroi um aluno sem telefone
-	 * 
-	 * @param matricula Representação da matricula do aluno
-	 * @param nome Representação do nome do aluno
-	 * @param codigoCurso Representação do codigo referente ao curso do aluno
-	 * @param email Representação do email do aluno
+	 * Representação a função de Tutor do aluno
 	 */
-	public Aluno(String matricula, String nome, int codigoCurso, String email) {
+	private Tutor tutor;
+	
+	
+	/**
+	 * Constrói um aluno a partir da matricula, do nome, do código do curso,
+	 * do telefone e do email.
+	 * 
+	 * @param matricula Representacao da matricula do aluno, no formato String "123456"
+	 * @param nome Representacao do nome do aluno, no formato String "James"
+	 * @param codigoCurso Representacao do codigo referente ao curso do aluno, no formato inteiro "123"
+	 * @param telefone Representacao do telefone do aluno, no formato String "988888888"
+	 * @param email Representacao do email do aluno, no formato String "james.fulano@ccc.ufcg.edu.br"
+	 */
+	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
 		Validador.validadorString(matricula, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
 		Validador.validadorString(nome, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
 		Validador.validadorEmail(email, "Erro no cadastro de aluno: Email invalido");
+		if(!telefone.isEmpty()) {
+			Validador.validadorString(matricula, "Erro no cadastro de aluno: Telefone nao pode ser vazio ou nulo");
+		}
 		
 		this.matricula = matricula;
 		this.nome = nome;
 		this.codigoCurso = codigoCurso;
-		this.telefone = "";
+		this.telefone = telefone;
 		this.email = email;
 		this.nota = 5;
 	}
+	
+	public String getMatricula() { return matricula; }
+	
+	public String getNome() { return nome; }
+	
+	public int getCodigoCurso() { return codigoCurso; }
+	
+	public String getTelefone() { return telefone; }
+	
+	public String getEmail() { return email; }
+	
+	public int getNota() { return nota; }
+
 	/**
-	 * Constroi um aluno com telefone
+	 * Retorna um true caso aluno seja tutor.
 	 * 
-	 * @param matricula Representação da matricula do aluno
-	 * @param nome Representação do nome do aluno
-	 * @param codigoCurso Representação do codigo referente ao curso do aluno
-	 * @param telefone Representação do telefone do aluno
-	 * @param email Representação do email do aluno
+	 * @return Booleano que representa se o aluno é um tutor
 	 */
-	public Aluno(String matricula, String nome, int codigoCurso, String telefone, String email) {
-		this(matricula, nome, codigoCurso, email);
-		this.telefone = telefone;
+	public boolean isTutor() {
+		return this.tutor != null;
 	}
 	
-	public String getMatricula() {
-		return matricula;
-	}
-	public String getNome() {
-		return nome;
-	}
-	public int getCodigoCurso() {
-		return codigoCurso;
-	}
-	public String getTelefone() {
-		return telefone;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public int getNota() {
-		return nota;
-	}
-
-	public void setNota(int nota) {
-		this.nota = nota;
-	}
-
 	/**
-	 * Retorna a representação textual de um aluno:<br>
-	 * <ul><li>Sem telefone:</li>
-	 * <tt>“123456 - James - 1 - james@ccc.ufcg.edu.br”</tt>
-	 * <li>Com telefone:</li>
-	 * <tt>“123456 - James - 1 - 99999999 - james@ccc.ufcg.edu.br”</tt>
+	 * Retorna o objeto tutor de aluno, se existir.
+	 * 
+	 * @return Objeto tutor de aluno.
+	 */
+	public Tutor getTutor() {
+		if (!this.isTutor()) {
+			throw new NullPointerException("Erro ao recuperar tutor: Tutor nao existe");
+		}
+		
+		return this.tutor;
+	}
+	
+	/**
+	 * Torna o aluno um tutor atraves da disciplina e da proficiencia.
+	 * 
+	 * @param disciplina Disciplina que o aluno será tutor
+	 * @param proficiencia Proficiência do tutor na disciplina
+	 */
+	public void tornaTutor(String disciplina, int proficiencia) {
+		this.tutor = new Tutor(disciplina, proficiencia);
+	}
+	
+	/**
+	 * Retorna a representacao textual de um aluno:<br>
+	 * Segue o formato: <ul><li>“123456 - James - 123 - james@ccc.ufcg.edu.br” (sem telefone)</li>
+	 *                  <li>“123456 - James - 123 - 988888888 - james@ccc.ufcg.edu.br” (com telefone)</li></ul>
+	 *                  
+	 * @return Representação textual do aluno
 	 */
 	@Override
 	public String toString() {
@@ -106,6 +126,9 @@ public class Aluno {
 		}
 	}
 
+	/**
+	 * Representacao hash do aluno em relaçao a matricula.
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -6,7 +6,8 @@ import java.util.Comparator;
 import model.Aluno;
 
 /**
- * Abstralçai que irá implementar um comparador de aluno 
+ * Abstração de um comparador de aluno 
+ * 
  * @author Anderson Vasconcelos
  */
 public abstract class Comparador implements Comparator<Aluno> {

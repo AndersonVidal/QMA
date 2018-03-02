@@ -1,14 +1,10 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import model.Tutor;
-
+import java.text.SimpleDateFormat;
 
 /**
  * Representação de um validador de parametros.
@@ -52,20 +48,19 @@ public class Validador {
 	/**
 	 * Valida um inteiro, em termos de ser menor que 0.
 	 * 
-	 * @exception IllegalArgumentException inteiro não positivo.
+	 * @exception IllegalArgumentException inteiro nao positivo.
 	 * 
 	 * @param numero Objeto do tipo int a ser validado.
-	 * @param e Mensagem de erro padrão.
+	 * @param e Mensagem de erro padrao.
 	 */
-	public static void validadorPositivo(int numero, String e) {
+	public static void validadorPositivo(double numero, String e) {
 		if(numero <= 0) throw new IllegalArgumentException(e);
 	}
-
 	
 	/**
 	 * Valida a expressão textual de um email.
 	 * 
- 	 * @exception IllegalArgumentException Email inválido.
+ 	 * @exception IllegalArgumentException Email invalido.
 	 * 
 	 * @param email Representação textual de um email
 	 * @param e Mensagem de erro padrão
@@ -79,7 +74,7 @@ public class Validador {
 	}
 	
 	/**
-	 * Valida não existencia de um determinada key em um Map
+	 * Valida nao existência de um determinada key em um Map
 	 * 
 	 * @exception StringIndexOutOfBoundsException Caso objeto já exista no Map
 	 * 
@@ -92,7 +87,7 @@ public class Validador {
 	}
 	
 	/**
-	 * Valida existencia de um determinada key em um Map
+	 * Valida existência de um determinada key em um Map
 	 * 
 	 * @exception StringIndexOutOfBoundsException Caso objeto não exista no Map
 	 * 
@@ -130,7 +125,7 @@ public class Validador {
 	}
 
 	/**
-	 * Valida a não existência de um objeto em um Set.
+	 * Valida a nao existencia de um objeto em um Set.
 	 * 
 	 * @param o Representação do objeto
 	 * @param s Representação de um Set
@@ -140,19 +135,34 @@ public class Validador {
 		if(s.contains(o)) { throw new IllegalArgumentException(e); }
 	}
 
-	
 	/**
-	 * Valida a existencia de um tutor pelo email
+	 * Valida se o formato do horário eh "HH:mm".
 	 * 
-	 * @param email
-	 * @param tutores
-	 * @param e Mensagem de erro padrão
+	 * @param horario Horario a ser validado
+	 * @param iae Mensagem de exceção
 	 */
-	public static void validadorTutoresContainsEmail(String email, Map<Tutor,String> tutores ,String e) {
-		List<String> emails = new ArrayList<>();
-		for(Tutor tutor : tutores.keySet()){
-			emails.add(tutor.getContato());
+	public static void validadorHorario(String horario, String iae) {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+		sdf.setLenient(false);
+		try{
+			sdf.parse(horario);
+		} catch(Exception e){
+			throw new IllegalArgumentException(iae);
 		}
-		if(!emails.contains(email)) throw new IllegalArgumentException(e);
 	}
+
+	/**
+	 * Valida se o número informado esta dentro de um intervalo fechado.
+	 * 
+	 * @param valor Valor a ser validado
+	 * @param left Intervalo a esquerda
+	 * @param right Intervalo a direita
+	 * @param e Mensagem de excecao
+	 */
+	public static void validadorIntervalo(int valor, int left, int right, String e) {
+		if (valor < left || valor > right) {
+			throw new IllegalArgumentException(e);
+		}
+	}
+	
 }
