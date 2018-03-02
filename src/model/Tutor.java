@@ -9,7 +9,7 @@ import utils.Validador;
 import java.time.*;
 
 /**
- * Representacao de um tutor, que tera um conjunto de  disciplinas, a proeficiencia 
+ * Representação de um tutor, que terá um conjunto de  disciplinas, proficiência 
  * em cada disciplina, uma nota de 0 a 5 e o dinheiro recebido pela tutoria.
  * 
  * @author Maria Cecília Kemiac e Daniel Coura
@@ -17,12 +17,12 @@ import java.time.*;
 public class Tutor {
 	
 	/**
-	 * Representacao das disciplinas onde a chave eh a disciplina e o valor
-	 * eh a proficiencia do tutor na disciplina
+	 * Representação de um mapa das disciplinas onde a chave é a disciplina e o valor
+	 * é a proficiência do tutor na disciplina
 	 */
 	private Map<String, Integer> disciplinas;
 	/**
-	 * Representacao da avaliaca do tutor, no formato inteiro "1"
+	 * Representação da avaliação do tutor, no formato inteiro "1"
 	 */
 	private int nota;
 	/**
@@ -30,7 +30,7 @@ public class Tutor {
 	 */
 	private double dinheiro;
 	/**
-	 * Representacao dos horarios de disponibilidade do tutor
+	 * Representacao dos horários de disponibilidade do tutor
 	 */
 	private Map<String, Set<LocalTime>> disponibilidade;
 	/**
@@ -39,7 +39,7 @@ public class Tutor {
 	private Set<String> locaisAtendimento;
 
 	/**
-	 * Constroi um tutor a partir da disciplina e da proficiencia.
+	 * Constroói um tutor a partir da disciplina e da proficiencia.
 	 * 
 	 * @param disciplina o nome da disciplina.
 	 * @param proeficiencia a proficiencia do tutor na disciplina.
@@ -57,7 +57,7 @@ public class Tutor {
 	}
 	
 	/**
-	 * Constroi o mapa de horarios em que a chave sao os dias da
+	 * Constrói o mapa de horarios em que a chave sao os dias da
 	 * semana e o valor, um conjunto de horarios.
 	 */
 	private void constroiHorarios(){
@@ -70,19 +70,19 @@ public class Tutor {
 	}
 	
 	/**
-	 * Retorna um mapa onde a chave eh uma String disciplina e o valor
-	 * eh um inteiro proficiencia.
+	 * Retorna um mapa onde a chave é uma String disciplina e o valor
+	 * é um inteiro proficiência.
 	 * 
-	 * @return um mapa que representa uma disciplina
+	 * @return Mapa que representa uma disciplina
 	 */
 	public Map<String, Integer> getDisciplinas() { return this.disciplinas; }
 
 	/**
-	 * Adiciona uma disciplina no tutor. A proficiencia dever 
+	 * Adiciona uma disciplina no tutor. A proficiência dever 
 	 * ser de 1 a 5.
 	 * 
-	 * @param disciplina o nome da disciplina
-	 * @param proficiencia a proficiencia do tutor na disciplina
+	 * @param disciplina Nome da disciplina
+	 * @param proficiencia Proficiência do tutor na disciplina
 	 */
 	public void addDisciplina(String disciplina, int proficiencia) {
 		Validador.validadorString(disciplina, "Erro no cadastro de disciplina: Disciplina nao pode ser vazia ou nula");
@@ -101,7 +101,7 @@ public class Tutor {
 	/**
 	 * Adiciona dinheiro ao caixa do tutor.
 	 * 
-	 * @param dinheiro o valor a ser adicionado no caixa
+	 * @param dinheiro Valor a ser adicionado no caixa
 	 */
 	public void addDinheiro(double dinheiro) {
 		Validador.validadorPositivo(dinheiro, "Erro ao adicionar dinheiro: valor nao pode ser menor ou igual a 0");
@@ -111,8 +111,8 @@ public class Tutor {
 	/**
 	 * Adiciona um horario ao dia especificado.
 	 * 
-	 * @param horario Representacao de um horario, no formato String "17:00"
-	 * @param dia Representacao de um dia da semana, no formato String "seg"
+	 * @param horario Representacao de um horário, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
 	 */
 	public void addHorario(String horario, String dia) {
 		Validador.validadorString(dia, "Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
@@ -135,11 +135,11 @@ public class Tutor {
 	}
 	
 	/**
-	 * Verifica se o horario especificado eh de disponibilidade do tutor.
+	 * Verifica se o horario especificado é de disponibilidade do tutor.
 	 * 
-	 * @param horario Representacao de um horario, no formato String "17:00"
-	 * @param dia Representacao de um dia da semana, no formato String "seg"
-	 * @return Representacao booleana da verificacao de horario do tutor
+	 * @param horario Representação de um horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 * @return Representação booleana da verificação de horário do tutor
 	 */
 	public boolean consultaHorario(String horario, String dia) {
 		Validador.validadorString(dia, "Erro no consultar horario: dia null ou vazio");
@@ -151,7 +151,7 @@ public class Tutor {
 	}
 	
 	/**
-	 * Verifica se o local especificado eh de disponibilidade do tutor.
+	 * Verifica se o local especificado é de disponibilidade do tutor.
 	 * 
 	 * @param local Representação de um local no formato String "ufcg"
 	 * @return Representação booleana da verificação de local do tutor
@@ -164,7 +164,7 @@ public class Tutor {
 	
 	/**
 	 * Retorna a representacao em String de um tutor. Segue o 
-	 * formato: "NOTA - DINHEIRO - (DISCIPLINAS - PROFICIENCIA) - (LOCAIS DE ATENDIMENTO)
+	 * formato:<br> "NOTA - DINHEIRO - (DISCIPLINAS - PROFICIENCIA) - (LOCAIS DE ATENDIMENTO)
 	 *  - (HORARIOS DE ATENDIMENTO)"
 	 */
 	public String toString() {
