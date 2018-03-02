@@ -6,7 +6,7 @@ import java.util.Comparator;
 import model.Aluno;
 
 /**
- * Abstracao que implementa um comparador de aluno 
+ * Abstração de um comparador de aluno 
  * 
  * @author Anderson Vasconcelos
  */
