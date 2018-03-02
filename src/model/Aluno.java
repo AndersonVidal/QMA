@@ -3,13 +3,15 @@ package model;
 import utils.Validador;
 
 /**
- * Representacao de um aluno, que tera matricula, identificador de curso, nome, telefone(opcional), email e uma nota de 0 a 5. 
- * @author Arthur da Silva Rodrigues, Anderson Vasconcelos, Daniel Coura
+ * Representacao de um aluno, que tera matricula, identificador de curso, 
+ * nome, telefone(opcional), email, uma nota de 0 a 5 e uma ocupacao. 
+ * 
+ * @author Arthur da Silva Rodrigues, Anderson Vasconcelos e Daniel Coura
  */
 public class Aluno {
 	
 	/**
-	 * Representacao de matricula do aluno, no formato String "123456"
+	 * Representacao da matricula do aluno, no formato String "123456"
 	 */
 	private String matricula;
 	/**
@@ -33,13 +35,14 @@ public class Aluno {
 	 */
 	private int nota;
 	/**
-	 * Representacao a função de Tutor do aluno
+	 * Representacao a funcao de Tutor do aluno
 	 */
 	private Tutor tutor;
 	
 	
 	/**
-	 * Constroi um aluno sem telefone
+	 * Constroi um aluno a partir da matricula, do nome, do codigo do curso,
+	 * do telefone e do email.
 	 * 
 	 * @param matricula Representacao da matricula do aluno
 	 * @param nome Representacao do nome do aluno
@@ -91,15 +94,16 @@ public class Aluno {
 	 */
 	public Tutor getTutor() {
 		if (!this.isTutor()) {
-			throw new NullPointerException("Erro ao resgatar tutor: Tutor nao existe");
+			throw new NullPointerException("Erro ao recuperar tutor: Tutor nao existe");
 		}
+		
 		return this.tutor;
 	}
 	
 	/**
 	 * Torna o aluno um tutor atraves da disciplina e da proficiencia.
 	 * 
-	 * @param disciplina a disciplina que o aluno ira tutorar
+	 * @param disciplina a disciplina que o aluno ira tutelar
 	 * @param proficiencia a proficiencia do tutor na disciplina
 	 */
 	public void tornaTutor(String disciplina, int proficiencia) {
@@ -107,11 +111,11 @@ public class Aluno {
 	}
 	
 	/**
-	 * Retorna a representacao textual de um aluno:<br>
-	 * <ul><li>Sem telefone:</li>
-	 * <tt>“123456 - James - 1 - james@ccc.ufcg.edu.br”</tt>
-	 * <li>Com telefone:</li>
-	 * <tt>“123456 - James - 1 - 99999999 - james@ccc.ufcg.edu.br”</tt>
+	 * Retorna a representacao textual de um aluno:
+	 * Segue o formato: “MATRICULA - NOME - CODIGOCURSO - EMAIL” (sem telefone)
+	 *                  “MATRICULA - NOME - CODIGOCURSO - TELEFONE - EMAIL” (com telefone)
+	 *                  
+	 * @return a representacao em String do aluno
 	 */
 	@Override
 	public String toString() {

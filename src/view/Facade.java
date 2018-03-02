@@ -85,7 +85,7 @@ public class Facade {
 	 * @return Representaçao textual do tutor buscado.
 	 */
 	public String recuperaTutor(String matricula) {
-		return this.controleAlunos.recuperaTutor(matricula);
+		return this.controleAlunos.recuperaAlunoTutor(matricula);
 	}
 	
 	/**
@@ -94,11 +94,11 @@ public class Facade {
 	 * @return Representação textual de uma lista de tutores.
 	 */
 	public String listarTutores() {
-		return this.controleAlunos.listarTutores();
+		return this.controleAlunos.listarAlunosTutores();
 	}
 	
 	/**
-	 * Adiciona um horário ao dia especificado para um tutor especifico
+	 * Adiciona um horario ao dia especificado para um tutor especifico
 	 * 
 	 * @param email Representação textual de um email, no formato String "teste@email.com"
 	 * @param horario Representação de um horario, no formato String "17:00"

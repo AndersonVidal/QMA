@@ -10,7 +10,7 @@ import java.time.*;
 
 /**
  * Representacao de um tutor, que tera um conjunto de  disciplinas, a proeficiencia 
- * em cada disciplina, uma nota de 0 a 5 e dinheiro recebido pela tutoria.
+ * em cada disciplina, uma nota de 0 a 5 e o dinheiro recebido pela tutoria.
  * 
  * @author Maria Cecília Kemiac e Daniel Coura
  */
@@ -18,37 +18,35 @@ public class Tutor {
 	
 	/**
 	 * Representacao das disciplinas onde a chave eh a disciplina e o valor
-	 * eh a proficiencia do tutor na disciplina.
+	 * eh a proficiencia do tutor na disciplina
 	 */
 	private Map<String, Integer> disciplinas;
 	/**
-	 * Representacao da avaliaca do tutor, no formato inteiro "1".
+	 * Representacao da avaliaca do tutor, no formato inteiro "1"
 	 */
 	private int nota;
 	/**
-	 * Representacao do dinheiro recebido, no formato double "0.0".
+	 * Representacao do dinheiro recebido, no formato double "0.0"
 	 */
 	private double dinheiro;
 	/**
-	 * Representacao dos horarios de disponibilidade do tutor.
+	 * Representacao dos horarios de disponibilidade do tutor
 	 */
 	private Map<String, Set<LocalTime>> disponibilidade;
 	/**
-	 * Representacao dos locais de atendimento do tutor.
+	 * Representacao dos locais de atendimento do tutor
 	 */
 	private Set<String> locaisAtendimento;
-	
+
 	/**
 	 * Constroi um tutor a partir da disciplina e da proficiencia.
 	 * 
-	 * @param disciplina Representacao da disciplina.
-	 * @param proeficiencia Representacao da proficiencia do tutor na disciplina.
+	 * @param disciplina o nome da disciplina.
+	 * @param proeficiencia a proficiencia do tutor na disciplina.
 	 */
 	public Tutor(String disciplina, int proficiencia) {
 		Validador.validadorString(disciplina, "Erro no cadastro de disciplina: Disciplina nao pode ser vazia ou nula");
-		if (proficiencia < 1 || proficiencia > 5) {
-			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
-		}
+		Validador.validadorIntervalo(proficiencia, 1, 5, "Erro na definicao de papel: Proficiencia invalida");
 		
 		this.disciplinas = new HashMap<String, Integer>();
 		this.disciplinas.put(disciplina, proficiencia);
@@ -71,14 +69,25 @@ public class Tutor {
 		this.disponibilidade.put("sex", new HashSet<LocalTime>());
 	}
 	
+	/**
+	 * Retorna um mapa onde a chave eh uma String disciplina e o valor
+	 * eh um inteiro proficiencia.
+	 * 
+	 * @return um mapa que representa uma disciplina
+	 */
 	public Map<String, Integer> getDisciplinas() { return this.disciplinas; }
 
+	/**
+	 * Adiciona uma disciplina no tutor. A proficiencia dever 
+	 * ser de 1 a 5.
+	 * 
+	 * @param disciplina o nome da disciplina
+	 * @param proficiencia a proficiencia do tutor na disciplina
+	 */
 	public void addDisciplina(String disciplina, int proficiencia) {
 		Validador.validadorString(disciplina, "Erro no cadastro de disciplina: Disciplina nao pode ser vazia ou nula");
 		Validador.validadorMapKeyConteins(disciplina, disciplinas, "Erro na definicao de papel: Ja eh tutor dessa disciplina");
-		if (proficiencia < 1 || proficiencia > 5) {
-			throw new IllegalArgumentException("Erro na definicao de papel: Proficiencia invalida");
-		}
+		Validador.validadorIntervalo(proficiencia, 1, 5, "Erro na definicao de papel: Proficiencia invalida");
 		
 		this.disciplinas.put(disciplina, proficiencia);
 	}
@@ -92,10 +101,10 @@ public class Tutor {
 	/**
 	 * Adiciona dinheiro ao caixa do tutor.
 	 * 
-	 * @param dinheiro o valor a ser adicionado
+	 * @param dinheiro o valor a ser adicionado no caixa
 	 */
 	public void addDinheiro(double dinheiro) {
-		Validador.validadorPositivoDouble(dinheiro, "Erro ao adicionar dinheiro: valor nao pode ser menor ou igual a 0");
+		Validador.validadorPositivo(dinheiro, "Erro ao adicionar dinheiro: valor nao pode ser menor ou igual a 0");
 		this.dinheiro += dinheiro; 
 	}
 	
@@ -105,9 +114,9 @@ public class Tutor {
 	 * @param horario Representacao de um horario, no formato String "17:00"
 	 * @param dia Representacao de um dia da semana, no formato String "seg"
 	 */
-	public void setHorario(String horario, String dia) {
+	public void addHorario(String horario, String dia) {
 		Validador.validadorString(dia, "Erro no cadastrar horario: dia nao pode ser vazio ou em branco");
-		Validador.validadorMapKeyNotConteins(dia, this.disponibilidade , "dia invalido");
+		Validador.validadorMapKeyNotConteins(dia, this.disponibilidade , "Erro no cadastrar horario: dia invalido");
 		Validador.validadorString(horario, "Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
 		Validador.validadorHorario(horario, "Erro no cadastrar horario: formato de horario invalido");
 		
@@ -119,7 +128,7 @@ public class Tutor {
 	 * 
 	 * @param local Representacao de um local no formato String "ufcg"
 	 */
-	public void setLocal(String local) {
+	public void addLocal(String local) {
 		Validador.validadorString(local, "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
 		Validador.validadorSetContains(local, this.locaisAtendimento, "Erro ao cadastrar local de atendimento: local ja existe");
 		this.locaisAtendimento.add(local);
@@ -148,7 +157,8 @@ public class Tutor {
 	 * @return Representação booleana da verificação de local do tutor
 	 */
 	public boolean consultaLocal(String local){
-		Validador.validadorString(local, "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
+		Validador.validadorString(local, "Erro no consultar local de atendimento: local nao pode ser vazio ou em branco");
+		
 		return this.locaisAtendimento.contains(local);
 	}
 	
@@ -167,8 +177,8 @@ public class Tutor {
 		for (String dia : this.disponibilidade.keySet()) {
 			horarios += dia + " - (" + this.disponibilidade.get(dia).toString() + "), "; 
 		}
+		
 		return this.nota + " - " + this.dinheiro + " - (" + disciplinas + ") - (" +
 			   this.locaisAtendimento.toString() + ") - (" + horarios;
 	}
-	
 }
