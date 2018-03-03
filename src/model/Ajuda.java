@@ -36,10 +36,10 @@ public abstract class Ajuda {
 	 * @param disciplina Representação da disciplina , no formato "inglês"
 	 */
 	public Ajuda(int id, String matrAluno, String matrTutor, String disciplina) {
-		Validador.validadorPositivo(id, "Erro ao cadastrar ajuda presencial: id nao pode ser negativo ou nulo");
-		Validador.validadorString(matrAluno, "Erro ao cadastrar ajuda presencial: matricula do aluno nao pode ser vazia ou nula");
-		Validador.validadorString(matrTutor, "Erro ao cadastrar ajuda presencial: matricula do tutor nao pode ser vazia ou nula");
-		Validador.validadorString(disciplina, "Erro ao cadastrar ajuda presencial: disciplina nao pode ser vazia ou nula");
+		Validador.validadorPositivo(id, "Erro no pedido ajuda presencial: id nao pode ser negativo ou nulo");
+		Validador.validadorString(matrAluno, "Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco");
+		Validador.validadorString(matrTutor, "Erro no pedido de ajuda presencial: matricula do tutor nao pode ser vazio ou em branco");
+		Validador.validadorString(disciplina, "Erro no pedido de ajuda presencial: disciplina nao pode ser vazio ou em branco");
 			
 		this.id = id;
 		this.matrTutor = matrTutor;

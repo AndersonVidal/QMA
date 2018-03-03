@@ -35,7 +35,7 @@ public abstract class Ocupacao {
 	/**
 	 * Representacao dos horários de disponibilidade do tutor
 	 */
-	private Map<String, HashSet<String>> disponibilidade;
+	private Map<String, Set<String>> disponibilidade;
 	/**
 	 * Representacao dos locais de atendimento do tutor
 	 */
@@ -67,7 +67,7 @@ public abstract class Ocupacao {
 	 * semana e o valor, um conjunto de horarios.
 	 */
 	private void constroiHorarios(){
-		this.disponibilidade = new HashMap<String, HashSet<String>>();
+		this.disponibilidade = new HashMap<String, Set<String>>();
 		this.disponibilidade.put("seg", new HashSet<String>());
 		this.disponibilidade.put("ter", new HashSet<String>());
 		this.disponibilidade.put("qua", new HashSet<String>());
@@ -104,7 +104,7 @@ public abstract class Ocupacao {
 	
 	public double getDinheiro() { return this.dinheiro; }
 	
-	public Map<String, HashSet<String>> getDisponibilidade() { return this.disponibilidade; }
+	public Map<String, Set<String>> getDisponibilidade() { return this.disponibilidade; }
 	
 	public Set<String> getLocalAtendimento() { return this.locaisAtendimento; }
 	

@@ -36,10 +36,10 @@ public class AjudaPresencial extends Ajuda {
 	 */
 	public AjudaPresencial(int id, String matrAluno, String matrTutor, String disciplina, String horario, String dia, String localInteresse) {
 		super(id, matrAluno, matrTutor, disciplina);
-		Validador.validadorString(horario, "Erro ao cadastrar ajuda presencial: horario nao pode ser vazio ou nulo");
-		Validador.validadorHorario(horario, "Erro ao cadastrar ajuda presencial: horario invalido");
-		Validador.validadorString(dia, "Erro ao cadastrar ajuda presencial: dia nao pode ser vazio ou nulo");
-		Validador.validadorString(localInteresse, "Erro ao cadastrar ajuda presencial: local nao pode ser vazio ou nulo");
+		Validador.validadorString(horario, "Erro no pedido de ajuda presencial: horario nao pode ser vazio ou em branco");
+		Validador.validadorHorario(horario, "Erro no pedido ajuda presencial: horario invalido");
+		Validador.validadorString(dia, "Erro no pedido de ajuda presencial: dia nao pode ser vazio ou em branco");
+		Validador.validadorString(localInteresse, "Erro no pedido de ajuda presencial: local nao pode ser vazio ou em branco");
 		
 		this.horario = horario;
 		this.dia = dia;

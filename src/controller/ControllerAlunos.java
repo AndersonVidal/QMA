@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import model.Aluno;
 import model.Ocupacao;
@@ -193,6 +194,15 @@ public class ControllerAlunos {
 		}
 		
 		return tutores;
+	}
+	
+	/**
+	 * Retorna um Set das matrículas dos alunos.
+	 * 
+	 * @return Set das matrículas dos alunos
+	 */
+	public Set<String> getMatriculaAlunos(){
+		return this.alunos.keySet();
 	}
 
 	/**

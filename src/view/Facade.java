@@ -15,7 +15,8 @@ public class Facade {
 		args = new String[] { "view.Facade",
 				"acceptance_tests/us1_test.txt", 
 				"acceptance_tests/us2_test.txt",
-				"acceptance_tests/us3_test.txt"};
+				"acceptance_tests/us3_test.txt",
+				"acceptance_tests/us4_test.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -154,7 +155,7 @@ public class Facade {
 	 * @param localInteresse Representação de um local de atendimento, no formato String "ufcg"
 	 * @return Represenetação inteira do id da ajuda
 	 */
-	public int AjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
 		return this.controleAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
 }
