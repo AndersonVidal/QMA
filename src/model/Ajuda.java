@@ -29,7 +29,7 @@ public abstract class Ajuda {
 	/**
 	 * Constrói ajuda a partir do id, das matrículas do aluno e do tutor,
 	 * e da disciplina.
-	 *  
+	 * 
 	 * @param id Represetação do id da ajuda, no formato "1"
 	 * @param matrAluno Representação da matrícula do aluno, no formato "123456"
 	 * @param matrTutor Representação da matrícula do tutor, no formato "123456"

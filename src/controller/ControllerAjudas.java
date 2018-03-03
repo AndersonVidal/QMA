@@ -61,11 +61,9 @@ public class ControllerAjudas {
 		}
 		
 		Aluno alnMax = Collections.max(alunosTutores, new ComparaNotaAlunoTutor());
-		
-		if (alnMax.equals(matrAluno)) {
-			alunosTutores.remove(alnMax);
-		}
-		
+		if (alunosTutores.isEmpty()) new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
+		if (alnMax.equals(matrAluno)) alunosTutores.remove(alnMax);
+				
 		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
 	}
 	
@@ -75,13 +73,17 @@ public class ControllerAjudas {
 	 * @param disciplina Represetação da disciplina, no formato "inglês"
 	 * @return Representação textual da matrícula do tutor 
 	 */
-	private String selecionaTutorAjudaOnline(String disciplina) {
+	private String selecionaTutorAjudaOnline(String matrAluno, String disciplina) {
 		List<Aluno> alunosTutores = new ArrayList<Aluno>();
 		for (Aluno aln : this.ctAlunos.getAlunosTutores()) {
 			if(aln.getTutor().getDisciplinas().containsKey(disciplina)) {
 				alunosTutores.add(aln);
 			}
 		}
+		
+		Aluno alnMax = Collections.max(alunosTutores, new ComparaNotaAlunoTutor());
+		if (alunosTutores.isEmpty()) new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
+		if (alnMax.equals(matrAluno)) alunosTutores.remove(alnMax);
 		
 		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
 	}
@@ -107,14 +109,10 @@ public class ControllerAjudas {
 		
 		Validador.validadorSetNotContains(matrAluno, this.ctAlunos.getMatriculaAlunos(), "Erro no pedido de ajuda presencial: matricula de aluno nao cadastrada");
 
-		try {
-			String tutor = this.selecionaTutorAjudaPresencial(matrAluno, disciplina, horario, dia, local);
-			int id = this.ajudas.size() + 1;
-			this.ajudas.add(new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local));
-			return id;
-		} catch (NoSuchElementException nsee) {
-			throw new NoSuchElementException("Erro no pedido de ajuda presencial: tutor nao encontrado");
-		}
+		String tutor = this.selecionaTutorAjudaPresencial(matrAluno, disciplina, horario, dia, local);
+		int id = this.ajudas.size() + 1;
+		this.ajudas.add(new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local));
+		return id;
 		
 	} 	
 }
