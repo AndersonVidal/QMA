@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import model.Ajuda;
+import model.AjudaOnline;
 import model.AjudaPresencial;
 import model.Aluno;
 import utils.ComparaNotaAlunoTutor;
@@ -35,6 +36,10 @@ public class ControllerAjudas {
 	public ControllerAjudas(ControllerAlunos ctAlunos) {
 		this.ctAlunos = ctAlunos;
 		this.ajudas = new ArrayList<Ajuda>();
+	}
+	
+	public ControllerAlunos getCt() {
+		return this.ctAlunos;
 	}
 	
 	/**
@@ -116,5 +121,18 @@ public class ControllerAjudas {
 			throw new NoSuchElementException("Erro no pedido de ajuda presencial: tutor nao encontrado");
 		}
 		
-	} 	
+	} 
+	
+	public int pedirAjudaOnline(String matrAluno, String disciplina) {
+		Validador.validadorString(matrAluno, "Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
+		Validador.validadorString(disciplina, "Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
+		Validador.validadorSetNotContains(matrAluno, this.ctAlunos.getMatriculaAlunos(), "Erro no pedido de ajuda online: matricula de aluno nao cadastrada");
+		
+		String tutor = this.selecionaTutorAjudaOnline(disciplina);
+		Validador.validadorObjeto(tutor, "Erro no pedido de ajuda online: tutor nao encontrado");
+		
+		int id = this.ajudas.size() + 1;
+		this.ajudas.add(new AjudaOnline(id, matrAluno, tutor, disciplina));
+		return id;
+	}
 }

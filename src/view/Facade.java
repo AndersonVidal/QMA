@@ -158,4 +158,8 @@ public class Facade {
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
 		return this.controleAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
+	
+	public int pedirAjudaOnline(String matrAluno, String disciplina) {
+		return this.controleAjudas.pedirAjudaOnline(matrAluno, disciplina);
+	}
 }
