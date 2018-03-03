@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import utils.Validador;
-import java.time.*;
 
 /**
  * Representação de um tutor, que terá um conjunto de  disciplinas, proficiência 
@@ -36,7 +35,7 @@ public abstract class Ocupacao {
 	/**
 	 * Representacao dos horários de disponibilidade do tutor
 	 */
-	private Map<String, Set<LocalTime>> disponibilidade;
+	private Map<String, HashSet<String>> disponibilidade;
 	/**
 	 * Representacao dos locais de atendimento do tutor
 	 */
@@ -68,12 +67,12 @@ public abstract class Ocupacao {
 	 * semana e o valor, um conjunto de horarios.
 	 */
 	private void constroiHorarios(){
-		this.disponibilidade = new HashMap<String, Set<LocalTime>>();
-		this.disponibilidade.put("seg", new HashSet<LocalTime>());
-		this.disponibilidade.put("ter", new HashSet<LocalTime>());
-		this.disponibilidade.put("qua", new HashSet<LocalTime>());
-		this.disponibilidade.put("qui", new HashSet<LocalTime>());
-		this.disponibilidade.put("sex", new HashSet<LocalTime>());
+		this.disponibilidade = new HashMap<String, HashSet<String>>();
+		this.disponibilidade.put("seg", new HashSet<String>());
+		this.disponibilidade.put("ter", new HashSet<String>());
+		this.disponibilidade.put("qua", new HashSet<String>());
+		this.disponibilidade.put("qui", new HashSet<String>());
+		this.disponibilidade.put("sex", new HashSet<String>());
 	}
 	
 	/**
@@ -105,6 +104,8 @@ public abstract class Ocupacao {
 	
 	public double getDinheiro() { return this.dinheiro; }
 	
+	public Map<String, HashSet<String>> getDisponibilidade() { return this.disponibilidade; }
+	
 	public Set<String> getLocalAtendimento() { return this.locaisAtendimento; }
 	
 	/**
@@ -129,7 +130,7 @@ public abstract class Ocupacao {
 		Validador.validadorString(horario, "Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
 		Validador.validadorHorario(horario, "Erro no cadastrar horario: formato de horario invalido");
 		
-		this.disponibilidade.get(dia).add(LocalTime.parse(horario));
+		this.disponibilidade.get(dia).add(horario);
 	}
 	
 	/**
@@ -156,7 +157,7 @@ public abstract class Ocupacao {
 		Validador.validadorString(horario, "Erro no consultar horario: horario nao pode ser vazio ou em branco");
 		Validador.validadorHorario(horario, "Erro no cadastrar horario: formato de horario invalido");
 		
-		return this.disponibilidade.get(dia).contains(LocalTime.parse(horario));
+		return this.disponibilidade.get(dia).contains(horario);
 	}
 	
 	/**

@@ -4,18 +4,68 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import model.Ajuda;
+import model.AjudaPresencial;
 import model.Aluno;
 import utils.ComparaNotaAlunoTutor;
 
+/**
+ * Controle que contem a lógica de negócio do armazenamento de ajudas do sistema.
+ * 
+ * @author Daniel Coura
+ */
 public class ControllerAjudas {
 	
+	/**
+	 * Representação de um Controller de alunos.
+	 */
 	private ControllerAlunos ctAlunos;
+	/**
+	 * Representação de uma lista de ajudas.
+	 */
+	private List<Ajuda> ajudas;
 	
+	/**
+	 * Constrói o controle de ajudas a partir do controle de alunos.
+	 * 
+	 * @param ctAlunos o controle de alunos
+	 */
 	public ControllerAjudas(ControllerAlunos ctAlunos) {
 		this.ctAlunos = ctAlunos;
+		this.ajudas = new ArrayList<Ajuda>();
 	}
 	
-	private String selecionaTutor(String disciplina) {
+	/**
+	 * Retorna a matrícula do tutor que possui os critérios: disciplina, horario e dia.
+	 * 
+	 * @param disciplina Represetação da disciplina, no formato "inglês"
+	 * @param horario Representação do horário, no formato "12:12"
+	 * @param dia Representação do dia, no formato "seg"
+	 * @param local Representação do local, no formato "ufcg"
+	 * @return Representação textual da matrícula do tutor 
+	 */
+	private String selecionaTutorAjudaPresencial(String disciplina, String horario, String dia, String local) {
+		List<Aluno> alunosTutores = new ArrayList<Aluno>();
+		for (Aluno aln : this.ctAlunos.getAlunosTutores()) {
+			boolean contemDisciplina = aln.getTutor().getDisciplinas().containsKey(disciplina);
+			boolean diaDisponivel = aln.getTutor().getDisponibilidade().containsKey(dia);
+			boolean horarioDisponivel = aln.getTutor().getDisponibilidade().get(dia).contains(horario);
+			boolean localDisponivel = aln.getTutor().getLocalAtendimento().contains(local);
+			if(contemDisciplina && diaDisponivel && horarioDisponivel && localDisponivel) {
+				alunosTutores.add(aln);
+			}
+		}
+		
+		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
+	}
+	
+	/**
+	 * Retorna a matrícula do tutor que possui o critério disciplina.
+	 * 
+	 * @param disciplina Represetação da disciplina, no formato "inglês"
+	 * @return Representação textual da matrícula do tutor 
+	 */
+	private String selecionaTutorAjudaOnline(String disciplina) {
 		List<Aluno> alunosTutores = new ArrayList<Aluno>();
 		for (Aluno aln : this.ctAlunos.getAlunosTutores()) {
 			if(aln.getTutor().getDisciplinas().containsKey(disciplina)) {
@@ -26,8 +76,21 @@ public class ControllerAjudas {
 		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
 	}
 	
-	/*public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
-		new AjudaPresencial(id, matrAluno, this.selecionaTutor(disciplina), disciplina, horario, dia, localInteresse);
+	/**
+	 * Registra uma ajuda presencial no sistema.
+	 * 
+	 * @param matrAluno Represetanção da matrícula do aluno, no formato String "123456"
+	 * @param disciplina Representação da disciplina, no formato String "inglês"
+	 * @param horario Representação do horário, no formato "12:12"
+	 * @param dia Representação do dia, no formato "seg"
+	 * @param local Representação do local, no formato "ufcg"
+	 * @return O id da ajuda cadastrada
+	 */
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String local) {
+		int id = this.ajudas.size() + 1;
+		String tutor = this.selecionaTutorAjudaPresencial(disciplina, horario, dia, local);
+		this.ajudas.add(new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local));
+		
 		return id;
-	}*/ 	
+	} 	
 }

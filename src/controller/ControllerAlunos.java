@@ -195,6 +195,11 @@ public class ControllerAlunos {
 		return tutores;
 	}
 
+	/**
+	 * Retorna um List dos alunos que são tutores.
+	 * 
+	 * @return List de alunos tutores.
+	 */
 	public List<Aluno> getAlunosTutores(){
 		List<Aluno> tutores = new ArrayList<Aluno>();
 		for(Aluno aln : this.alunos.values()) {

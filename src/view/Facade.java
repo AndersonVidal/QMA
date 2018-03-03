@@ -154,7 +154,7 @@ public class Facade {
 	 * @param localInteresse Representação de um local de atendimento, no formato String "ufcg"
 	 * @return Represenetação inteira do id da ajuda
 	 */
-//	public int AjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
-//		return this.controleAjudas.perdirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
-//	}
+	public int AjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+		return this.controleAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
+	}
 }

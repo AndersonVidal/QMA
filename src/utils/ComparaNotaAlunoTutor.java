@@ -4,6 +4,12 @@ import java.util.Comparator;
 
 import model.Aluno;
 
+/**
+ * Classe que extende da interface Comparator e ordena de acordo com a nota
+ * e a ordem de cadastro.
+ * 
+ * @author Daniel Coura
+ */
 public class ComparaNotaAlunoTutor implements Comparator<Aluno> {
 
 	@Override
