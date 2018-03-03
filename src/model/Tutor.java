@@ -2,8 +2,8 @@ package model;
 
 public class Tutor extends Ocupacao {
 
-	public Tutor(String disciplina, int proficiencia) {
-		super(disciplina, proficiencia);
+	public Tutor(int id, String disciplina, int proficiencia) {
+		super(id, disciplina, proficiencia);
 	}
 
 }

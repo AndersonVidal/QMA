@@ -106,8 +106,8 @@ public class Aluno {
 	 * @param disciplina Disciplina que o aluno será tutor
 	 * @param proficiencia Proficiência do tutor na disciplina
 	 */
-	public void tornaTutor(String disciplina, int proficiencia) {
-		this.tutor = new Tutor(disciplina, proficiencia);
+	public void tornaTutor(int id, String disciplina, int proficiencia) {
+		this.tutor = new Tutor(id, disciplina, proficiencia);
 	}
 	
 	/**

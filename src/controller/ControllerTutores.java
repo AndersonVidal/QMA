@@ -35,9 +35,9 @@ public class ControllerTutores {
 	 */
 	public void cadastrarHorario(String email, String horario, String dia) {
 		Validador.validadorString(email, "Erro no cadastrar horario: email nao pode ser vazio ou em branco");
-		Validador.validadorMapKeyNotConteins(email, this.ctAlunos.getAlunosTutores(), "Erro no cadastrar horario: tutor nao cadastrado");
+		Validador.validadorMapKeyNotConteins(email, this.ctAlunos.getAlunosTutoresKeyEmail(), "Erro no cadastrar horario: tutor nao cadastrado");
 		
-		Ocupacao tutor = this.ctAlunos.getAlunosTutores().get(email);
+		Ocupacao tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
 		tutor.addHorario(horario, dia);
 	}
 
@@ -49,9 +49,9 @@ public class ControllerTutores {
 	 */
 	public void cadastrarLocalDeAtendimento(String email, String local) {
 		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		Validador.validadorMapKeyNotConteins(email, this.ctAlunos.getAlunosTutores(), "Erro no cadastrar local de atendimento: tutor nao cadastrado");
+		Validador.validadorMapKeyNotConteins(email, this.ctAlunos.getAlunosTutoresKeyEmail(), "Erro no cadastrar local de atendimento: tutor nao cadastrado");
 		
-		Ocupacao tutor = this.ctAlunos.getAlunosTutores().get(email);
+		Ocupacao tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
 		tutor.addLocal(local);
 	}
 	
@@ -66,8 +66,8 @@ public class ControllerTutores {
 	 */
 	public boolean consultaHorario(String email, String horario, String dia) {
 		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		if (!this.ctAlunos.getAlunosTutores().containsKey(email)) return false; 
-		Ocupacao tutor = this.ctAlunos.getAlunosTutores().get(email);
+		if (!this.ctAlunos.getAlunosTutoresKeyEmail().containsKey(email)) return false; 
+		Ocupacao tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
 		
 		return tutor.consultaHorario(horario, dia);
 	}
@@ -81,8 +81,8 @@ public class ControllerTutores {
 	 */
 	public boolean consultaLocal(String email, String local) {
 		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		if (!this.ctAlunos.getAlunosTutores().containsKey(email)) return false;
-		Ocupacao tutor = this.ctAlunos.getAlunosTutores().get(email);
+		if (!this.ctAlunos.getAlunosTutoresKeyEmail().containsKey(email)) return false;
+		Ocupacao tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
 		
 		return tutor.consultaLocal(local);
 	}

@@ -3,6 +3,7 @@
  */
 package view;
 
+import controller.ControllerAjudas;
 import controller.ControllerAlunos;
 import controller.ControllerTutores;
 
@@ -14,12 +15,14 @@ public class Facade {
 		args = new String[] { "view.Facade",
 				"acceptance_tests/us1_test.txt", 
 				"acceptance_tests/us2_test.txt",
-				"acceptance_tests/us3_test.txt"};
+				"acceptance_tests/us3_test.txt",
+				"acceptance_tests/us4_test.txt"};
 		EasyAccept.main(args);
 	}
 	
 	private ControllerAlunos controleAlunos = new ControllerAlunos();
 	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos);
+	private ControllerAjudas controleAjudas = new ControllerAjudas(controleAlunos);
 	
 	/**
 	 * Cadastra um aluno com telefone no sistema.
@@ -139,5 +142,20 @@ public class Facade {
 	 */
 	public boolean consultaLocal(String email, String local){
 		return this.controleTutores.consultaLocal(email, local);
+	}
+	
+	/**
+	 * Solicita ajuda presencial a um tutor em uma disciplina que o tutor tenha
+	 * proficiência.
+	 * 
+	 * @param matrAluno Representação da matrícula do aluno, no formato String "123456"
+	 * @param disciplina Representação da disciplina, no formato String "matemática"
+	 * @param horario Representação do horario, no formato String "17:00"
+	 * @param dia Representação de um dia da semana, no formato String "seg"
+	 * @param localInteresse Representação de um local de atendimento, no formato String "ufcg"
+	 * @return Represenetação inteira do id da ajuda
+	 */
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
+		return this.controleAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
 }

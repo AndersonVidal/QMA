@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import model.Aluno;
 import model.Ocupacao;
@@ -134,7 +135,8 @@ public class ControllerAlunos {
 		if (aluno.isTutor()) {
 			aluno.getTutor().addDisciplina(disciplina, proficiencia);
 		} else  {
-			aluno.tornaTutor(disciplina, proficiencia);
+			int id = this.getQtdAlunosTutores() + 1;
+			aluno.tornaTutor(id, disciplina, proficiencia);
 		}
 	}
 	
@@ -165,18 +167,17 @@ public class ControllerAlunos {
 		
 		String str = "";
 		int cont = 0, i = 0;
-		while (cont < this.getAlunosTutores().size()) {
+		while (cont < this.getQtdAlunosTutores()) {
 			if (arrayAlunos.get(i).isTutor()) {
-				if (i == this.getAlunosTutores().size()) {
-					str += arrayAlunos.get(i).toString();
-					break;
+				if (i == this.getQtdAlunosTutores()) {
+					return str + arrayAlunos.get(i).toString();
 				}
 				str += arrayAlunos.get(i).toString() + ", ";
 			}
 			i++;
 		}
 		
-		return str;
+		return "";
 	}
 	
 	/**
@@ -184,7 +185,7 @@ public class ControllerAlunos {
 	 * 
 	 * @return Map de tutores chaveados pelo email.
 	 */
-	public Map<String, Ocupacao> getAlunosTutores(){
+	public Map<String, Ocupacao> getAlunosTutoresKeyEmail(){
 		Map<String, Ocupacao> tutores = new HashMap<String, Ocupacao>();
 		for(Aluno aln : this.alunos.values()) {
 			if (aln.isTutor()) {
@@ -194,4 +195,39 @@ public class ControllerAlunos {
 		
 		return tutores;
 	}
+	
+	/**
+	 * Retorna um Set das matrículas dos alunos.
+	 * 
+	 * @return Set das matrículas dos alunos
+	 */
+	public Set<String> getMatriculaAlunos(){
+		return this.alunos.keySet();
+	}
+
+	/**
+	 * Retorna um List dos alunos que são tutores.
+	 * 
+	 * @return List de alunos tutores.
+	 */
+	public List<Aluno> getAlunosTutores(){
+		List<Aluno> tutores = new ArrayList<Aluno>();
+		for(Aluno aln : this.alunos.values()) {
+			if (aln.isTutor()) {
+				tutores.add(aln);
+			}
+		}
+		
+		return tutores;
+	}
+	
+	/**
+	 * Retorna a quantidade de alunos tutores no sistema.
+	 * 
+	 * @return a quantidade de tutores.
+	 */
+	public int getQtdAlunosTutores(){		
+		return this.getAlunosTutores().size();
+	}
+
 }

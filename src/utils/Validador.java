@@ -134,6 +134,17 @@ public class Validador {
 	public static void validadorSetContains(Object o, Set<?> s, String e) {
 		if(s.contains(o)) { throw new IllegalArgumentException(e); }
 	}
+	
+	/**
+	 * Valida a existencia de um objeto em um Set.
+	 * 
+	 * @param o Representação do objeto
+	 * @param s Representação de um Set
+	 * @param e Mensagem de erro padrão
+	 */
+	public static void validadorSetNotContains(Object o, Set<?> s, String e) {
+		if(!s.contains(o)) { throw new IllegalArgumentException(e); }
+	}
 
 	/**
 	 * Valida se o formato do horário eh "HH:mm".

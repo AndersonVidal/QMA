@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import utils.Validador;
-import java.time.*;
 
 /**
  * Representação de um tutor, que terá um conjunto de  disciplinas, proficiência 
@@ -22,6 +21,10 @@ public abstract class Ocupacao {
 	 */
 	private Map<String, Integer> disciplinas;
 	/**
+	 * Representação do id do tutor, no formato inteiro "1"
+	 */
+	private int id;
+	/**
 	 * Representação da avaliação do tutor, no formato inteiro "1"
 	 */
 	private int nota;
@@ -32,22 +35,25 @@ public abstract class Ocupacao {
 	/**
 	 * Representacao dos horários de disponibilidade do tutor
 	 */
-	private Map<String, Set<LocalTime>> disponibilidade;
+	private Map<String, Set<String>> disponibilidade;
 	/**
 	 * Representacao dos locais de atendimento do tutor
 	 */
 	private Set<String> locaisAtendimento;
 
 	/**
-	 * Constroói um tutor a partir da disciplina e da proficiencia.
+	 * Constrói um tutor a partir da disciplina e da proficiência.
 	 * 
-	 * @param disciplina o nome da disciplina.
-	 * @param proeficiencia a proficiencia do tutor na disciplina.
+	 * @param id o id do tutor
+	 * @param disciplina o nome da disciplina
+	 * @param proeficiencia a proficiência do tutor na disciplina.
 	 */
-	public Ocupacao(String disciplina, int proficiencia) {
+	public Ocupacao(int id, String disciplina, int proficiencia) {
 		Validador.validadorString(disciplina, "Erro no cadastro de disciplina: Disciplina nao pode ser vazia ou nula");
 		Validador.validadorIntervalo(proficiencia, 1, 5, "Erro na definicao de papel: Proficiencia invalida");
+		Validador.validadorPositivo(id, "Erro no cadastro de disciplina: id nao pode ser negativo ou nulo");
 		
+		this.id = id;
 		this.disciplinas = new HashMap<String, Integer>();
 		this.disciplinas.put(disciplina, proficiencia);
 		this.nota = 4;
@@ -61,12 +67,12 @@ public abstract class Ocupacao {
 	 * semana e o valor, um conjunto de horarios.
 	 */
 	private void constroiHorarios(){
-		this.disponibilidade = new HashMap<String, Set<LocalTime>>();
-		this.disponibilidade.put("seg", new HashSet<LocalTime>());
-		this.disponibilidade.put("ter", new HashSet<LocalTime>());
-		this.disponibilidade.put("qua", new HashSet<LocalTime>());
-		this.disponibilidade.put("qui", new HashSet<LocalTime>());
-		this.disponibilidade.put("sex", new HashSet<LocalTime>());
+		this.disponibilidade = new HashMap<String, Set<String>>();
+		this.disponibilidade.put("seg", new HashSet<String>());
+		this.disponibilidade.put("ter", new HashSet<String>());
+		this.disponibilidade.put("qua", new HashSet<String>());
+		this.disponibilidade.put("qui", new HashSet<String>());
+		this.disponibilidade.put("sex", new HashSet<String>());
 	}
 	
 	/**
@@ -92,9 +98,13 @@ public abstract class Ocupacao {
 		this.disciplinas.put(disciplina, proficiencia);
 	}
 	
+	public int getId() { return this.id; }
+	
 	public int getNota() { return this.nota; }
 	
 	public double getDinheiro() { return this.dinheiro; }
+	
+	public Map<String, Set<String>> getDisponibilidade() { return this.disponibilidade; }
 	
 	public Set<String> getLocalAtendimento() { return this.locaisAtendimento; }
 	
@@ -120,7 +130,7 @@ public abstract class Ocupacao {
 		Validador.validadorString(horario, "Erro no cadastrar horario: horario nao pode ser vazio ou em branco");
 		Validador.validadorHorario(horario, "Erro no cadastrar horario: formato de horario invalido");
 		
-		this.disponibilidade.get(dia).add(LocalTime.parse(horario));
+		this.disponibilidade.get(dia).add(horario);
 	}
 	
 	/**
@@ -147,7 +157,7 @@ public abstract class Ocupacao {
 		Validador.validadorString(horario, "Erro no consultar horario: horario nao pode ser vazio ou em branco");
 		Validador.validadorHorario(horario, "Erro no cadastrar horario: formato de horario invalido");
 		
-		return this.disponibilidade.get(dia).contains(LocalTime.parse(horario));
+		return this.disponibilidade.get(dia).contains(horario);
 	}
 	
 	/**
@@ -164,7 +174,7 @@ public abstract class Ocupacao {
 	
 	/**
 	 * Retorna a representacao em String de um tutor. Segue o 
-	 * formato:<br> "NOTA - DINHEIRO - (DISCIPLINAS - PROFICIENCIA) - (LOCAIS DE ATENDIMENTO)
+	 * formato:<br> "ID - NOTA - DINHEIRO - (DISCIPLINAS - PROFICIENCIA) - (LOCAIS DE ATENDIMENTO)
 	 *  - (HORARIOS DE ATENDIMENTO)"
 	 */
 	public String toString() {
@@ -181,4 +191,28 @@ public abstract class Ocupacao {
 		return this.nota + " - " + this.dinheiro + " - (" + disciplinas + ") - (" +
 			   this.locaisAtendimento.toString() + ") - (" + horarios;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ocupacao other = (Ocupacao) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 }
