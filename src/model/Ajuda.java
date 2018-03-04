@@ -49,11 +49,15 @@ public abstract class Ajuda {
 	
 	public int getId() { return this.id; }
 
-	public String getMatrAluno() { return this.matrAluno; }
+	public String getMatriculaAluno() { return this.matrAluno; }
 	
-	public String getMatrTutor() { return this.matrTutor; }
+	public String getMatriclaTutor() { return this.matrTutor; }
 	
 	public String getDisciplina() { return this.disciplina; }
+	
+	public abstract String getHorario();
+	public abstract String getDia();
+	public abstract String getLocal();
 	
 	/**
 	 * Retorna a representação textual da ajuda, no seguinte formato: <br><br>

@@ -39,6 +39,26 @@ public class ControllerAjudas {
 	}
 	
 	/**
+	 * Retorna a matricula do tutor com maior profissiencia.<br>
+	 * Em caso de empate, retorna o primeiro cadastrado entre os empatados.<br>
+	 * Caso não seja encontrado um tutor, é retornado null.<br>
+	 * 
+	 * @param alunosTutores Lista de alunos tutores do sistema.
+	 * @param matriculaAlunoAjudado Matricula do aluno que requisitou a ajuda
+	 * @return Matricula do tutor selecionado. Null caso não seja selecionado nenhum tutor.
+	 */
+	private String selecionaMelhorTutor(List<Aluno> alunosTutores, String matriculaAlunoAjudado){
+		if(alunosTutores.isEmpty()) return null;
+		Comparator<Aluno> comparatorTutor = new ComparaNotaAlunoTutor();
+		Aluno tutorSelecionado = Collections.max(alunosTutores, comparatorTutor);
+		if(tutorSelecionado.getMatricula().equals(matriculaAlunoAjudado)){
+			alunosTutores.remove(tutorSelecionado);
+			this.selecionaMelhorTutor(alunosTutores, matriculaAlunoAjudado);
+		}
+		return tutorSelecionado.getMatricula();
+	}
+	
+	/**
 	 * Seleciona um tutor que possui melhor proficiencia na disciplina 
 	 * e retorna sua matrícula de acordo com os critérios:
 	 * <ul><li>disciplina</li>
@@ -70,17 +90,6 @@ public class ControllerAjudas {
 		String tutorSelecionado = this.selecionaMelhorTutor(alunosTutores, matrAluno);
 		
 		return tutorSelecionado;
-	}
-
-	private String selecionaMelhorTutor(List<Aluno> l, String matrAluno){
-		if(l.isEmpty()) return null;
-		Comparator<Aluno> comparatorTutor = new ComparaNotaAlunoTutor();
-		Aluno alnMax = Collections.max(l, comparatorTutor);
-		if(alnMax.getMatricula().equals(matrAluno)){
-			l.remove(alnMax);
-			this.selecionaMelhorTutor(l, matrAluno);
-		}
-		return alnMax.getMatricula();
 	}
 	
 	/**
@@ -131,6 +140,13 @@ public class ControllerAjudas {
 		return id;
 	}
 	
+	/**
+	 * Registra uma ajuda online no sistema.
+	 * 
+	 * @param matriculaAluno Representação da matrícula do aluno solicitando, no formato String "123456"
+	 * @param disciplina Representação da disciplina solicitada, no formato String "Grafos"
+	 * @return ID de cadastro da ajuda no formato inteiro "12"
+	 */
 	public int pedirAjudaOnline(String matriculaAluno, String disciplina){
 		Validador.validadorString(matriculaAluno, "Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
 		Validador.validadorString(disciplina, "Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
@@ -142,5 +158,80 @@ public class ControllerAjudas {
 		Ajuda ajuda = new AjudaOnline(id, matriculaAluno, tutor, disciplina);
 		this.ajudas.add(ajuda);
 		return id;
+	}
+
+	/**
+	 * Retorna a descrição do tutor da ajuda.
+	 * <ul><li>Para ajudas online:</li>
+	 * <tt style="font-size: 14px;">"Tutor - 12345, disciplina - ATAL"</tt>
+	 * <li>Para ajudas presenciais:</li>
+	 * <tt style="font-size: 14px;">"Tutor - 12345, horario - 14:00, dia - seg, disciplina - ATAL"</tt>
+	 * </ul>
+	 * @param idAjuda ID da ajuda, no formato inteiro
+	 * @return Representação textual da descrição do tutor da ajuda.
+	 */
+	public String pegarTutor(int idAjuda) {
+		Validador.validadorPositivo(idAjuda, "Erro ao tentar recuperar tutor : id nao pode menor que zero ");
+		Validador.listConteins(this.ajudas, idAjuda, "Erro ao tentar recupertutar or : id nao encontrado ");
+		
+		Ajuda ajuda = this.ajudas.get(idAjuda - 1);
+		
+		if(ajuda instanceof AjudaOnline) {
+			String infoTutor = "Tutor - " + ajuda.getMatriclaTutor() + ", disciplina - " + ajuda.getDisciplina();
+			return infoTutor;
+		}
+		else {
+			String infoTutor = "Tutor - " + ajuda.getMatriclaTutor() + ", horario - " + ajuda.getHorario() + 
+					", dia - " + ajuda.getDia() + ", disciplina - " + ajuda.getDisciplina();
+			return infoTutor;
+		}
+	}
+
+	/**
+	 * Recupera um atributo de uma ajuda específica.<br>
+	 * Podem ser recuperados os seguintes atribuitos:
+	 * <ul><li>aluno</li>
+	 * <li>tutor</li>
+	 * <li>disciplina</li>
+	 * <li>dia (somente ajudas presenciais)</li>
+	 * <li>horario (somente ajudas presenciais)</li>
+	 * <li>localInteresse (somente ajudas presenciais)</li></ul>
+	 * 
+	 * @param idAjuda idAjuda ID da ajuda, no formato inteiro
+	 * @param atributo Representação textual de um atributo ajuda.
+	 * @return Representação textual do atribuito solicitado.
+	 */
+	public String getInfoAjuda(int idAjuda, String atributo) {
+		Validador.validadorString(atributo, "Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
+		Validador.validadorPositivo(idAjuda, "Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
+		Validador.listConteins(this.ajudas, idAjuda, "Erro ao tentar recuperar info da ajuda : id nao encontrado ");
+		
+		String info;
+		switch(atributo){
+		case "horario":
+			info = this.ajudas.get(idAjuda - 1).getHorario();
+			break;
+		case "dia":
+			info = this.ajudas.get(idAjuda - 1).getDia();
+			break;
+		case "localInteresse":
+			info = this.ajudas.get(idAjuda - 1).getLocal();
+			break;
+		case "disciplina":
+			info = this.ajudas.get(idAjuda - 1).getDisciplina();
+			break;
+		case "tutor":
+			info = this.ajudas.get(idAjuda - 1).getMatriclaTutor();
+			break;
+		case "aluno":
+			info = this.ajudas.get(idAjuda - 1).getMatriculaAluno();
+			break;
+		default:
+			info = null;
+		}
+		
+		Validador.validadorString(info, "Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
+		
+		return info;
 	}
 }

@@ -50,7 +50,7 @@ public class AjudaPresencial extends Ajuda {
 	
 	public String getDia() { return this.dia; }
 	
-	public String getLocalInteresse() { return this.localInteresse; }
+	public String getLocal() { return this.localInteresse; }
 	
 	/**
 	 * Retorna a representação textual da ajuda, no seguinte formato:<br><br>
@@ -59,7 +59,7 @@ public class AjudaPresencial extends Ajuda {
 	 * @return a representação textual da ajuda
 	 */
 	public String toString() {
-		return this.getId() + " - " + this.getMatrAluno() + " - " + this.getMatrTutor() + " - " + this.getDisciplina() +
+		return this.getId() + " - " + this.getMatriculaAluno() + " - " + this.getMatriclaTutor() + " - " + this.getDisciplina() +
 				" - " + this.horario + " - " + this.dia + " - " + this.localInteresse;
 	}
 

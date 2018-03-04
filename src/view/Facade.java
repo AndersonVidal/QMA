@@ -158,4 +158,35 @@ public class Facade {
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
 		return this.controleAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
+	
+	/**
+	 * Solicita ajuda online para um aluno em uma determinada disciplina
+	 * @param matriculaAluno Rpresentação da matrícula do aluno, no formato String "123456"
+	 * @param disciplina Representação da disciplina, no formato String "matemática"
+	 * @return ID de cadastro da ajuda.
+	 */
+	public int pedirAjudaOnline(String matriculaAluno, String disciplina){
+		return this.controleAjudas.pedirAjudaOnline(matriculaAluno, disciplina);
+	}
+	
+	/**
+	 * Retorna a descrição do tutor da ajuda.
+	 * 
+	 * @param idAjuda ID da ajuda, no formato inteiroidAjuda 
+	 * @return Representação textual da descrição do tutor da ajuda.
+	 */
+	public String pegarTutor(int idAjuda){
+		return this.controleAjudas.pegarTutor(idAjuda);
+	}
+	
+	/**
+	 * Recupera um atributo de uma ajuda específica.
+	 * 
+	 * @param idAjuda idAjuda ID da ajuda, no formato inteiro
+	 * @param atributo Representação textual de um atributo ajuda.
+	 * @return
+	 */
+	public String getInfoAjuda(int idAjuda, String atributo){
+		return this.controleAjudas.getInfoAjuda(idAjuda, atributo);
+	}
 }
