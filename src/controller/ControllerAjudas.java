@@ -194,36 +194,9 @@ public class ControllerAjudas {
 	 * @return Representação textual do atribuito solicitado.
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo) {
-		Validador.validadorString(atributo, "Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
 		Validador.validadorPositivo(idAjuda, "Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
 		Validador.listConteins(this.ajudas, idAjuda - 1, "Erro ao tentar recuperar info da ajuda : id nao encontrado ");
 		
-		String info;
-		switch(atributo){
-		case "horario":
-			info = this.ajudas.get(idAjuda - 1).getHorario();
-			break;
-		case "dia":
-			info = this.ajudas.get(idAjuda - 1).getDia();
-			break;
-		case "localInteresse":
-			info = this.ajudas.get(idAjuda - 1).getLocal();
-			break;
-		case "disciplina":
-			info = this.ajudas.get(idAjuda - 1).getDisciplina();
-			break;
-		case "tutor":
-			info = this.ajudas.get(idAjuda - 1).getMatriclaTutor();
-			break;
-		case "aluno":
-			info = this.ajudas.get(idAjuda - 1).getMatriculaAluno();
-			break;
-		default:
-			info = null;
-		}
-		
-		Validador.validadorString(info, "Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
-		
-		return info;
+		return this.ajudas.get(idAjuda - 1).getInfoAjuda(atributo);
 	}
 }

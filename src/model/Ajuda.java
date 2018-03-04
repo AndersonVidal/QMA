@@ -55,9 +55,7 @@ public abstract class Ajuda {
 	
 	public String getDisciplina() { return this.disciplina; }
 	
-	public abstract String getHorario();
-	public abstract String getDia();
-	public abstract String getLocal();
+	public abstract String getInfoAjuda(String atributo);
 	
 	public abstract String getInfoTutor();
 	

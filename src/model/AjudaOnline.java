@@ -1,5 +1,7 @@
 package model;
 
+import utils.Validador;
+
 /**
  * Representação de uma ajuda online.
  * 
@@ -11,22 +13,29 @@ public class AjudaOnline extends Ajuda {
 	public AjudaOnline(int id, String matrAluno, String matrTutor, String disciplina) {
 		super(id, matrAluno, matrTutor, disciplina);
 	}
-
+	
+	/**
+	 * Recupera informação de ajuda através de um atributo
+	 * 
+	 * @param atributo Representação de um atributo de ajuda, no formato "tutor"
+	 * @return Informação da ajuda
+	 */
 	@Override
-	public String getHorario() {
-		return null;
+	public String getInfoAjuda(String atributo) {
+		Validador.validadorString(atributo, "Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
+		
+		switch(atributo){
+		case "disciplina":
+			return this.getDisciplina();
+		case "tutor":
+			return this.getMatriclaTutor();
+		case "aluno":
+			return this.getMatriculaAluno();
+		default:
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
+		}
 	}
-
-	@Override
-	public String getDia() {
-		return null;
-	}
-
-	@Override
-	public String getLocal() {
-		return null;
-	}
-
+	
 	/**
 	 * Retorna a especificação do tutor, no formato 
 	 * "Tutor - 12345, disicplina - Inglês"
@@ -37,4 +46,5 @@ public class AjudaOnline extends Ajuda {
 	public String getInfoTutor() {
 		return "Tutor - " + getMatriclaTutor() + ", disciplina - " + getDisciplina();
 	}
+	
 }

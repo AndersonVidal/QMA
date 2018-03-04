@@ -53,6 +53,34 @@ public class AjudaPresencial extends Ajuda {
 	public String getLocal() { return this.local; }
 	
 	/**
+	 * Recupera informação de ajuda através de um atributo
+	 * 
+	 * @param atributo Representação de um atributo de ajuda, no formato "tutor"
+	 * @return Informação da ajuda
+	 */
+	@Override
+	public String getInfoAjuda(String atributo) {
+		Validador.validadorString(atributo, "Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
+		
+		switch(atributo){
+		case "disciplina":
+			return this.getDisciplina();
+		case "tutor":
+			return this.getMatriclaTutor();
+		case "aluno":
+			return this.getMatriculaAluno();
+		case "horario":
+			return this.horario;
+		case "dia":
+			return this.dia;
+		case "localInteresse":
+			return this.local;
+		default:
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
+		}
+	}
+	
+	/**
 	 * Retorna a especificação do tutor, no formato:
 	 * "Tutor - 12345, horario - 14:00, dia - seg, disciplina - ATAL"
 	 * 
