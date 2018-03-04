@@ -178,6 +178,6 @@ public class Validador {
 	}
 
 	public static void listConteins(List<?> l, int index, String e) {
-		if(l.size() >= index) throw new IndexOutOfBoundsException(e);
+		if(l.size() <= index) throw new IndexOutOfBoundsException(e);
 	}
 }

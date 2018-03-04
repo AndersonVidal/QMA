@@ -172,7 +172,7 @@ public class ControllerAjudas {
 	 */
 	public String pegarTutor(int idAjuda) {
 		Validador.validadorPositivo(idAjuda, "Erro ao tentar recuperar tutor : id nao pode menor que zero ");
-		Validador.listConteins(this.ajudas, idAjuda, "Erro ao tentar recupertutar or : id nao encontrado ");
+		Validador.listConteins(this.ajudas, idAjuda  - 1, "Erro ao tentar recuperar tutor : id nao encontrado ");
 		
 		Ajuda ajuda = this.ajudas.get(idAjuda - 1);
 		
@@ -182,7 +182,7 @@ public class ControllerAjudas {
 		}
 		else {
 			String infoTutor = "Tutor - " + ajuda.getMatriclaTutor() + ", horario - " + ajuda.getHorario() + 
-					", dia - " + ajuda.getDia() + ", disciplina - " + ajuda.getDisciplina();
+					", dia - " + ajuda.getDia() + ", local - " + ajuda.getLocal() + ", disciplina - " + ajuda.getDisciplina();
 			return infoTutor;
 		}
 	}
@@ -204,7 +204,7 @@ public class ControllerAjudas {
 	public String getInfoAjuda(int idAjuda, String atributo) {
 		Validador.validadorString(atributo, "Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
 		Validador.validadorPositivo(idAjuda, "Erro ao tentar recuperar info da ajuda : id nao pode menor que zero ");
-		Validador.listConteins(this.ajudas, idAjuda, "Erro ao tentar recuperar info da ajuda : id nao encontrado ");
+		Validador.listConteins(this.ajudas, idAjuda - 1, "Erro ao tentar recuperar info da ajuda : id nao encontrado ");
 		
 		String info;
 		switch(atributo){
