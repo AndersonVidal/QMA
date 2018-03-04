@@ -60,8 +60,9 @@ public class ControllerAjudas {
 			}
 		}
 		
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
 		Aluno alnMax = Collections.max(alunosTutores, new ComparaNotaAlunoTutor());
-		if (alunosTutores.isEmpty()) new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
 		if (alnMax.equals(matrAluno)) alunosTutores.remove(alnMax);
 				
 		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
@@ -81,8 +82,9 @@ public class ControllerAjudas {
 			}
 		}
 		
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
 		Aluno alnMax = Collections.max(alunosTutores, new ComparaNotaAlunoTutor());
-		if (alunosTutores.isEmpty()) new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
 		if (alnMax.equals(matrAluno)) alunosTutores.remove(alnMax);
 		
 		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
