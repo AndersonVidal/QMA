@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -65,12 +64,11 @@ public class ControllerAjudas {
 			}
 		}
 		
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
 		Aluno alnMax = Collections.max(alunosTutores, new ComparaNotaAlunoTutor());
-		
-		if (alnMax.equals(matrAluno)) {
-			alunosTutores.remove(alnMax);
-		}
-		
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
+		if (alnMax.equals(matrAluno)) alunosTutores.remove(alnMax);
+				
 		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
 	}
 	
@@ -80,13 +78,18 @@ public class ControllerAjudas {
 	 * @param disciplina Represetação da disciplina, no formato "inglês"
 	 * @return Representação textual da matrícula do tutor 
 	 */
-	private String selecionaTutorAjudaOnline(String disciplina) {
+	private String selecionaTutorAjudaOnline(String matrAluno, String disciplina) {
 		List<Aluno> alunosTutores = new ArrayList<Aluno>();
 		for (Aluno aln : this.ctAlunos.getAlunosTutores()) {
 			if(aln.getTutor().getDisciplinas().containsKey(disciplina)) {
 				alunosTutores.add(aln);
 			}
 		}
+		
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
+		Aluno alnMax = Collections.max(alunosTutores, new ComparaNotaAlunoTutor());
+		if (alunosTutores.isEmpty()) throw new NullPointerException("Erro no pedido de ajuda presencial: tutor nao encontrado");
+		if (alnMax.equals(matrAluno)) alunosTutores.remove(alnMax);
 		
 		return Collections.max(alunosTutores, new ComparaNotaAlunoTutor()).getMatricula();
 	}
@@ -112,24 +115,26 @@ public class ControllerAjudas {
 		
 		Validador.validadorSetNotContains(matrAluno, this.ctAlunos.getMatriculaAlunos(), "Erro no pedido de ajuda presencial: matricula de aluno nao cadastrada");
 
-		try {
-			String tutor = this.selecionaTutorAjudaPresencial(matrAluno, disciplina, horario, dia, local);
-			int id = this.ajudas.size() + 1;
-			this.ajudas.add(new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local));
-			return id;
-		} catch (NoSuchElementException nsee) {
-			throw new NoSuchElementException("Erro no pedido de ajuda presencial: tutor nao encontrado");
-		}
+		String tutor = this.selecionaTutorAjudaPresencial(matrAluno, disciplina, horario, dia, local);
+		int id = this.ajudas.size() + 1;
+		this.ajudas.add(new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local));
+		return id;
 		
-	} 
+	} 	
 	
+	/**
+	 * Registra uma ajuda online no sistema.
+	 * 
+	 * @param matrAluno Represetanção da matrícula do aluno, no formato String "123456"
+	 * @param disciplina Representação da disciplina, no formato String "inglês"
+	 * @return O id da ajuda cadastrada
+	 */
 	public int pedirAjudaOnline(String matrAluno, String disciplina) {
 		Validador.validadorString(matrAluno, "Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
 		Validador.validadorString(disciplina, "Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
 		Validador.validadorSetNotContains(matrAluno, this.ctAlunos.getMatriculaAlunos(), "Erro no pedido de ajuda online: matricula de aluno nao cadastrada");
 		
-		String tutor = this.selecionaTutorAjudaOnline(disciplina);
-		Validador.validadorObjeto(tutor, "Erro no pedido de ajuda online: tutor nao encontrado");
+		String tutor = this.selecionaTutorAjudaOnline(matrAluno, disciplina);
 		
 		int id = this.ajudas.size() + 1;
 		this.ajudas.add(new AjudaOnline(id, matrAluno, tutor, disciplina));
