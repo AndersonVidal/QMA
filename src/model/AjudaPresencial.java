@@ -20,7 +20,7 @@ public class AjudaPresencial extends Ajuda {
 	/**
 	 * Representação do local, no formato String "ufcg"
 	 */
-	private String localInteresse;
+	private String local;
 
 	/**
 	 * Constrói a ajuda presencial a partir do id, das matrículas do aluno e do tutor,
@@ -43,14 +43,26 @@ public class AjudaPresencial extends Ajuda {
 		
 		this.horario = horario;
 		this.dia = dia;
-		this.localInteresse = localInteresse;
+		this.local = localInteresse;
 	}
 	
 	public String getHorario() { return this.horario; }
 	
 	public String getDia() { return this.dia; }
 	
-	public String getLocal() { return this.localInteresse; }
+	public String getLocal() { return this.local; }
+	
+	/**
+	 * Retorna a especificação do tutor, no formato:
+	 * "Tutor - 12345, horario - 14:00, dia - seg, disciplina - ATAL"
+	 * 
+	 * @return Representação textual da descrição do tutor da ajuda.
+	 */
+	@Override
+	public String getInfoTutor() {
+		return "Tutor - " + getMatriclaTutor() + ", horario - " + this.horario + 
+				", dia - " + this.getDia() + ", local - " + this.local + ", disciplina - " + getDisciplina();
+	}
 	
 	/**
 	 * Retorna a representação textual da ajuda, no seguinte formato:<br><br>
@@ -58,9 +70,10 @@ public class AjudaPresencial extends Ajuda {
 	 * 
 	 * @return a representação textual da ajuda
 	 */
+	@Override
 	public String toString() {
 		return this.getId() + " - " + this.getMatriculaAluno() + " - " + this.getMatriclaTutor() + " - " + this.getDisciplina() +
-				" - " + this.horario + " - " + this.dia + " - " + this.localInteresse;
+				" - " + this.horario + " - " + this.dia + " - " + this.local;
 	}
 
 }

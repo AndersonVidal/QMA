@@ -59,6 +59,8 @@ public abstract class Ajuda {
 	public abstract String getDia();
 	public abstract String getLocal();
 	
+	public abstract String getInfoTutor();
+	
 	/**
 	 * Retorna a representação textual da ajuda, no seguinte formato: <br><br>
 	 * <tt>"123456 - 123456 - inglês"</tt>
@@ -90,6 +92,5 @@ public abstract class Ajuda {
 			return false;
 		return true;
 	}
-	
 	
 }

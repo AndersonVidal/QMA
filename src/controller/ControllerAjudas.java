@@ -175,16 +175,8 @@ public class ControllerAjudas {
 		Validador.listConteins(this.ajudas, idAjuda  - 1, "Erro ao tentar recuperar tutor : id nao encontrado ");
 		
 		Ajuda ajuda = this.ajudas.get(idAjuda - 1);
-		
-		if(ajuda instanceof AjudaOnline) {
-			String infoTutor = "Tutor - " + ajuda.getMatriclaTutor() + ", disciplina - " + ajuda.getDisciplina();
-			return infoTutor;
-		}
-		else {
-			String infoTutor = "Tutor - " + ajuda.getMatriclaTutor() + ", horario - " + ajuda.getHorario() + 
-					", dia - " + ajuda.getDia() + ", local - " + ajuda.getLocal() + ", disciplina - " + ajuda.getDisciplina();
-			return infoTutor;
-		}
+			
+		return ajuda.getInfoTutor();
 	}
 
 	/**

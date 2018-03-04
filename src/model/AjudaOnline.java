@@ -26,4 +26,15 @@ public class AjudaOnline extends Ajuda {
 	public String getLocal() {
 		return null;
 	}
+
+	/**
+	 * Retorna a especificação do tutor, no formato 
+	 * "Tutor - 12345, disicplina - Inglês"
+	 * 
+	 * @return Representação textual da descrição do tutor da ajuda.
+	 */
+	@Override
+	public String getInfoTutor() {
+		return "Tutor - " + getMatriclaTutor() + ", disciplina - " + getDisciplina();
+	}
 }
