@@ -53,8 +53,8 @@ public class AjudaPresencial extends Ajuda {
 	public String getLocalInteresse() { return this.localInteresse; }
 	
 	/**
-	 * Retorna a representação textual da ajuda. segue o
-	 * formato "1 - 123456 - 123456 - inglês - 12:30 - seg - ufcg"
+	 * Retorna a representação textual da ajuda, no seguinte formato:<br><br>
+	 * <tt style="font-size: 14px;">"1 - 123456 - 332211 - inglês - 12:30 - seg - ufcg"</tt>
 	 * 
 	 * @return a representação textual da ajuda
 	 */

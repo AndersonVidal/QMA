@@ -175,5 +175,4 @@ public class Validador {
 			throw new IllegalArgumentException(e);
 		}
 	}
-	
 }
