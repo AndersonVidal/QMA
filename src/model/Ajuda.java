@@ -49,17 +49,21 @@ public abstract class Ajuda {
 	
 	public int getId() { return this.id; }
 
-	public String getMatrAluno() { return this.matrAluno; }
+	public String getMatriculaAluno() { return this.matrAluno; }
 	
-	public String getMatrTutor() { return this.matrTutor; }
+	public String getMatriclaTutor() { return this.matrTutor; }
 	
 	public String getDisciplina() { return this.disciplina; }
 	
+	public abstract String getInfoAjuda(String atributo);
+	
+	public abstract String getInfoTutor();
+	
 	/**
-	 * Retorna a representação textual da ajuda. segue o
-	 * formato "123456 - 123456 - inglês"
+	 * Retorna a representação textual da ajuda, no seguinte formato: <br><br>
+	 * <tt>"123456 - 123456 - inglês"</tt>
 	 * 
-	 * @return a representação textual da ajuda
+	 * @return Representação textual da ajuda
 	 */
 	public String toString() {
 		return this.id + " - " + this.matrAluno + " - " + this.matrTutor + " - " + this.disciplina;
@@ -86,6 +90,5 @@ public abstract class Ajuda {
 			return false;
 		return true;
 	}
-	
 	
 }

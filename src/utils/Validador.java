@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -175,5 +176,8 @@ public class Validador {
 			throw new IllegalArgumentException(e);
 		}
 	}
-	
+
+	public static void listConteins(List<?> l, int index, String e) {
+		if(l.size() <= index) throw new IndexOutOfBoundsException(e);
+	}
 }

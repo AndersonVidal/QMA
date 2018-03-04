@@ -20,7 +20,7 @@ public class AjudaPresencial extends Ajuda {
 	/**
 	 * Representação do local, no formato String "ufcg"
 	 */
-	private String localInteresse;
+	private String local;
 
 	/**
 	 * Constrói a ajuda presencial a partir do id, das matrículas do aluno e do tutor,
@@ -43,24 +43,65 @@ public class AjudaPresencial extends Ajuda {
 		
 		this.horario = horario;
 		this.dia = dia;
-		this.localInteresse = localInteresse;
+		this.local = localInteresse;
 	}
 	
 	public String getHorario() { return this.horario; }
 	
 	public String getDia() { return this.dia; }
 	
-	public String getLocalInteresse() { return this.localInteresse; }
+	public String getLocal() { return this.local; }
 	
 	/**
-	 * Retorna a representação textual da ajuda. segue o
-	 * formato "1 - 123456 - 123456 - inglês - 12:30 - seg - ufcg"
+	 * Recupera informação de ajuda através de um atributo
+	 * 
+	 * @param atributo Representação de um atributo de ajuda, no formato "tutor"
+	 * @return Informação da ajuda
+	 */
+	@Override
+	public String getInfoAjuda(String atributo) {
+		Validador.validadorString(atributo, "Erro ao tentar recuperar info da ajuda : atributo nao pode ser vazio ou em branco");
+		
+		switch(atributo){
+		case "disciplina":
+			return this.getDisciplina();
+		case "tutor":
+			return this.getMatriclaTutor();
+		case "aluno":
+			return this.getMatriculaAluno();
+		case "horario":
+			return this.horario;
+		case "dia":
+			return this.dia;
+		case "localInteresse":
+			return this.local;
+		default:
+			throw new IllegalArgumentException("Erro ao tentar recuperar info da ajuda : atributo nao encontrado");
+		}
+	}
+	
+	/**
+	 * Retorna a especificação do tutor, no formato:
+	 * "Tutor - 12345, horario - 14:00, dia - seg, disciplina - ATAL"
+	 * 
+	 * @return Representação textual da descrição do tutor da ajuda.
+	 */
+	@Override
+	public String getInfoTutor() {
+		return "Tutor - " + getMatriclaTutor() + ", horario - " + this.horario + 
+				", dia - " + this.getDia() + ", local - " + this.local + ", disciplina - " + getDisciplina();
+	}
+	
+	/**
+	 * Retorna a representação textual da ajuda, no seguinte formato:<br><br>
+	 * <tt style="font-size: 14px;">"1 - 123456 - 332211 - inglês - 12:30 - seg - ufcg"</tt>
 	 * 
 	 * @return a representação textual da ajuda
 	 */
+	@Override
 	public String toString() {
-		return this.getId() + " - " + this.getMatrAluno() + " - " + this.getMatrTutor() + " - " + this.getDisciplina() +
-				" - " + this.horario + " - " + this.dia + " - " + this.localInteresse;
+		return this.getId() + " - " + this.getMatriculaAluno() + " - " + this.getMatriclaTutor() + " - " + this.getDisciplina() +
+				" - " + this.horario + " - " + this.dia + " - " + this.local;
 	}
 
 }
