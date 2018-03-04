@@ -53,7 +53,7 @@ public class ControllerAjudas {
 		Aluno tutorSelecionado = Collections.max(alunosTutores, comparatorTutor);
 		if(tutorSelecionado.getMatricula().equals(matriculaAlunoAjudado)){
 			alunosTutores.remove(tutorSelecionado);
-			this.selecionaMelhorTutor(alunosTutores, matriculaAlunoAjudado);
+			return this.selecionaMelhorTutor(alunosTutores, matriculaAlunoAjudado);
 		}
 		return tutorSelecionado.getMatricula();
 	}
