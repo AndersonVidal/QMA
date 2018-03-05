@@ -26,6 +26,8 @@ public abstract class Ajuda {
 	 */
 	private String disciplina;
 	
+	private boolean jahDeuNota;
+	
 	/**
 	 * Constrói ajuda a partir do id, das matrículas do aluno e do tutor,
 	 * e da disciplina.
@@ -45,6 +47,7 @@ public abstract class Ajuda {
 		this.matrTutor = matrTutor;
 		this.matrAluno = matrAluno;
 		this.disciplina = disciplina;
+		this.jahDeuNota = false;
 	}
 	
 	public int getId() { return this.id; }
@@ -54,6 +57,12 @@ public abstract class Ajuda {
 	public String getMatriclaTutor() { return this.matrTutor; }
 	
 	public String getDisciplina() { return this.disciplina; }
+	
+	public boolean getJahDeuNota() { return this.jahDeuNota; }
+	
+	public void setJahDeuNota(boolean outroBoolean) {
+		this.jahDeuNota = outroBoolean;
+	}
 	
 	public abstract String getInfoAjuda(String atributo);
 	

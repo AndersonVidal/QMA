@@ -25,9 +25,9 @@ public abstract class Ocupacao {
 	 */
 	private int id;
 	/**
-	 * Representação da avaliação do tutor, no formato inteiro "1"
+	 * Representação da avaliação do tutor, no formato double "1"
 	 */
-	private int nota;
+	private double nota;
 	/**
 	 * Representacao do dinheiro recebido, no formato double "0.0"
 	 */
@@ -40,6 +40,8 @@ public abstract class Ocupacao {
 	 * Representacao dos locais de atendimento do tutor
 	 */
 	private Set<String> locaisAtendimento;
+	
+	private Map<Integer, Ajuda> ajudasAjudadas;
 
 	/**
 	 * Constrói um tutor a partir da disciplina e da proficiência.
@@ -56,10 +58,11 @@ public abstract class Ocupacao {
 		this.id = id;
 		this.disciplinas = new HashMap<String, Integer>();
 		this.disciplinas.put(disciplina, proficiencia);
-		this.nota = 4;
+		this.nota = 0;
 		this.dinheiro = 0;
 		this.constroiHorarios();
 		this.locaisAtendimento = new HashSet<>();
+		this.ajudasAjudadas = new HashMap<>();
 	}
 	
 	/**
@@ -100,13 +103,19 @@ public abstract class Ocupacao {
 	
 	public int getId() { return this.id; }
 	
-	public int getNota() { return this.nota; }
+	public double getNota() { return this.nota; }
+	
+	public void setNota(double nota) {
+		this.nota = nota;
+	}
 	
 	public double getDinheiro() { return this.dinheiro; }
 	
 	public Map<String, Set<String>> getDisponibilidade() { return this.disponibilidade; }
 	
 	public Set<String> getLocalAtendimento() { return this.locaisAtendimento; }
+	
+	public Map<Integer, Ajuda> getAjudasAjudadas() {return this.ajudasAjudadas; }
 	
 	/**
 	 * Adiciona dinheiro ao caixa do tutor.
@@ -170,6 +179,10 @@ public abstract class Ocupacao {
 		Validador.validadorString(local, "Erro no consultar local de atendimento: local nao pode ser vazio ou em branco");
 		
 		return this.locaisAtendimento.contains(local);
+	}
+	
+	public double notaFinal(int nota) {
+		return (this.nota * 5 + nota) / 6.0;
 	}
 	
 	/**

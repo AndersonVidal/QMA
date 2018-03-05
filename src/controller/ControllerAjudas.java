@@ -9,6 +9,7 @@ import model.Ajuda;
 import model.AjudaOnline;
 import model.AjudaPresencial;
 import model.Aluno;
+import model.Ocupacao;
 import utils.ComparaNotaAlunoTutor;
 import utils.Validador;
 
@@ -137,6 +138,10 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local);
 		this.ajudas.add(ajuda);
+		
+		Ocupacao oTutor = retornaTutor(tutor);
+		adicionaAjuda(ajuda, oTutor);
+		
 		return id;
 	}
 	
@@ -157,6 +162,10 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaOnline(id, matriculaAluno, tutor, disciplina);
 		this.ajudas.add(ajuda);
+		
+		Ocupacao oTutor = retornaTutor(tutor);
+		adicionaAjuda(ajuda, oTutor);
+		
 		return id;
 	}
 
@@ -199,4 +208,19 @@ public class ControllerAjudas {
 		
 		return this.ajudas.get(idAjuda - 1).getInfoAjuda(atributo);
 	}
+	
+	private Ocupacao retornaTutor(String matrTutor) {
+		Ocupacao tutor = null;
+		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+			if(aluno.getMatricula().equals(matrTutor)) {
+				tutor = aluno.getTutor();
+			}
+		}
+		return tutor;
+	}
+	
+	private void adicionaAjuda(Ajuda ajuda, Ocupacao tutor) {
+		tutor.getAjudasAjudadas().put(ajuda.getId(), ajuda);
+	}
+	
 }

@@ -229,5 +229,13 @@ public class ControllerAlunos {
 	public int getQtdAlunosTutores(){		
 		return this.getAlunosTutores().size();
 	}
+	
+	public int getQtdAjudasAlunosTutores() {
+		int qtd = 0;
+		for(Aluno aluno : this.getAlunosTutores()) {
+			qtd += aluno.getTutor().getAjudasAjudadas().size();
+		}
+		return qtd;
+	}
 
 }

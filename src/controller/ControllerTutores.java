@@ -1,5 +1,10 @@
 package controller;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+import model.Ajuda;
+import model.Aluno;
 import model.Ocupacao;
 import utils.Validador;
 
@@ -86,5 +91,68 @@ public class ControllerTutores {
 		
 		return tutor.consultaLocal(local);
 	}
+	
+	private Aluno retornaAlunoTutor(int idAjuda) {
+		Aluno alunoProcurado = null;
+		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+			if(aluno.getTutor().getAjudasAjudadas().containsKey(idAjuda)) {
+				alunoProcurado = aluno;
+				break;
+			}
+		}
+		return alunoProcurado;
+	}
+	
+	private Aluno retornaAlunoTutor(String matriculaTutor) {
+		Aluno alunoProcurado = null;
+		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+			if(aluno.getMatricula().equals(matriculaTutor)) {
+				alunoProcurado = aluno;
+				break;
+			}
+		}
+		return alunoProcurado;
+	}
+	
+	public String avaliarTutor(int idAjuda, int nota) {
+		Validador.validadorTamanho(idAjuda, this.ctAlunos.getQtdAjudasAlunosTutores(), "Erro na avaliacao de tutor: id nao encontrado ");
+		Validador.validadorNaoNegativo(nota, "Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		Validador.validadorMaiorQueAlgo(nota, 5, "Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		
+		Aluno alunoTutor = retornaAlunoTutor(idAjuda);
+		Ajuda ajuda = alunoTutor.getTutor().getAjudasAjudadas().get(idAjuda);
+		
+		Validador.validadorBooleanTrue(ajuda.getJahDeuNota(), "Erro na avaliacao de tutor: Ajuda ja avaliada");
+		
+		alunoTutor.getTutor().setNota(alunoTutor.getTutor().notaFinal(nota));
+		ajuda.setJahDeuNota(true);
+		return alunoTutor.toString();
+	}
+	
+	public String pegarNota(String matriculaTutor) {
+		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
+		double nota = alunoTutor.getTutor().getNota();
+		
+		DecimalFormat decimalFormat = new DecimalFormat("0.00");
+		decimalFormat.setRoundingMode(RoundingMode.DOWN);
+		
+		return decimalFormat.format(nota);
+	}
+	
+	public String pegarNivel(String matriculaTutor) {
+		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
+		double nota = alunoTutor.getTutor().getNota();
+		
+		String nivel = null;
+		if(nota > 4.5) {
+			nivel = "TOP";
+		}else if(nota > 3 && nota <= 4.5) {
+			nivel = "Tutor";
+		}else {
+			nivel = "Aprendiz";
+		}
+		return nivel;
+	}
+	
 }
 

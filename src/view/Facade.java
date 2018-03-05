@@ -16,7 +16,8 @@ public class Facade {
 				"acceptance_tests/us1_test.txt", 
 				"acceptance_tests/us2_test.txt",
 				"acceptance_tests/us3_test.txt",
-				"acceptance_tests/us4_test.txt"};
+				"acceptance_tests/us4_test.txt",
+				"acceptance_tests/us5_test.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -189,4 +190,17 @@ public class Facade {
 	public String getInfoAjuda(int idAjuda, String atributo){
 		return this.controleAjudas.getInfoAjuda(idAjuda, atributo);
 	}
+	
+	public String avaliarTutor(int idAjuda, int nota) {
+		return this.controleTutores.avaliarTutor(idAjuda, nota);
+	}
+	
+	public String pegarNota(String matriculaTutor) {
+		return this.controleTutores.pegarNota(matriculaTutor);
+	}
+	
+	public String pegarNivel(String matriculaTutor) {
+		return this.controleTutores.pegarNivel(matriculaTutor);
+	}
+	
 }
