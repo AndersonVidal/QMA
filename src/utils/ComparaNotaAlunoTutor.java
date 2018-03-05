@@ -22,7 +22,7 @@ public class ComparaNotaAlunoTutor implements Comparator<Aluno> {
 			}
 			return -1;
 		}
-		/*return tutor1.getTutor().getNota() - tutor2.getTutor().getNota();*/
+		
 	}
 	
 }

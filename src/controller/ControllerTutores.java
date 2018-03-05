@@ -92,6 +92,11 @@ public class ControllerTutores {
 		return tutor.consultaLocal(local);
 	}
 	
+	/**
+	 * Retorna um objeto aluno que é tutor da ajuda passada como parâmetro.
+	 * @param idAjuda ID da ajuda no formato inteiro.
+	 * @return o aluno.
+	 */
 	private Aluno retornaAlunoTutor(int idAjuda) {
 		Aluno alunoProcurado = null;
 		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
@@ -103,6 +108,11 @@ public class ControllerTutores {
 		return alunoProcurado;
 	}
 	
+	/**
+	 * Retorna um objeto aluno que é tutor e contém a matrícula passada como parâmetro.
+	 * @param matriculaTutor a matricula do aluno tutor, no formato String.
+	 * @return o aluno.
+	 */
 	private Aluno retornaAlunoTutor(String matriculaTutor) {
 		Aluno alunoProcurado = null;
 		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
@@ -114,21 +124,34 @@ public class ControllerTutores {
 		return alunoProcurado;
 	}
 	
+	/**
+	 * Avalia um tutor a partir da nota da ajuda concedida.
+	 * 
+	 * @param idAjuda ID da ajuda, no formato inteiro.
+	 * @param nota nota para a ajuda do tutor, no formato inteiro.
+	 * @return
+	 */
 	public String avaliarTutor(int idAjuda, int nota) {
-		Validador.validadorTamanho(idAjuda, this.ctAlunos.getQtdAjudasAlunosTutores(), "Erro na avaliacao de tutor: id nao encontrado ");
 		Validador.validadorNaoNegativo(nota, "Erro na avaliacao de tutor: nota nao pode ser menor que 0");
 		Validador.validadorMaiorQueAlgo(nota, 5, "Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		Validador.validadorTamanho(idAjuda, this.ctAlunos.getQtdAjudasAlunosTutores(), "Erro na avaliacao de tutor: id nao encontrado ");
 		
 		Aluno alunoTutor = retornaAlunoTutor(idAjuda);
+		Validador.validadorObjeto(alunoTutor, "Erro na avaliacao de tutor: Ajuda nao atribuida a tutor");
 		Ajuda ajuda = alunoTutor.getTutor().getAjudasAjudadas().get(idAjuda);
 		
 		Validador.validadorBooleanTrue(ajuda.getJahDeuNota(), "Erro na avaliacao de tutor: Ajuda ja avaliada");
 		
-		alunoTutor.getTutor().setNota(alunoTutor.getTutor().notaFinal(nota));
+		alunoTutor.getTutor().setNota(alunoTutor.getTutor().notaAjuda(nota));
 		ajuda.setJahDeuNota(true);
 		return alunoTutor.toString();
 	}
 	
+	/**
+	 * Retorna a nota do tutor através de sua matrícula.
+	 * @param matriculaTutor a matricula do tutor, no formato String.
+	 * @return
+	 */
 	public String pegarNota(String matriculaTutor) {
 		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
 		double nota = alunoTutor.getTutor().getNota();
@@ -139,6 +162,11 @@ public class ControllerTutores {
 		return decimalFormat.format(nota);
 	}
 	
+	/**
+	 * Retorna o nível do tutor através de sua matrícula.
+	 * @param matriculaTutor a matrícula do tutor, no formato String.
+	 * @return
+	 */
 	public String pegarNivel(String matriculaTutor) {
 		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
 		double nota = alunoTutor.getTutor().getNota();

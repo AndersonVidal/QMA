@@ -41,6 +41,10 @@ public abstract class Ocupacao {
 	 */
 	private Set<String> locaisAtendimento;
 	
+	/**
+	 * Representação das ajudas que o aluno em tal ocupação concedeu, onde a chave
+	 * do mapa é o ID da ajuda e o valor é a ajuda.
+	 */
 	private Map<Integer, Ajuda> ajudasAjudadas;
 
 	/**
@@ -58,7 +62,7 @@ public abstract class Ocupacao {
 		this.id = id;
 		this.disciplinas = new HashMap<String, Integer>();
 		this.disciplinas.put(disciplina, proficiencia);
-		this.nota = 0;
+		this.nota = 4.005;
 		this.dinheiro = 0;
 		this.constroiHorarios();
 		this.locaisAtendimento = new HashSet<>();
@@ -181,8 +185,14 @@ public abstract class Ocupacao {
 		return this.locaisAtendimento.contains(local);
 	}
 	
-	public double notaFinal(int nota) {
-		return (this.nota * 5 + nota) / 6.0;
+	/**
+	 * Retorna uma nota para o trabalho do aluno na ajuda através de um calculo que considera
+	 * o quesito anterior do trabalho.
+	 * @param nota
+	 * @return
+	 */
+	public double notaAjuda(int nota) {
+		return (this.nota * 5 + nota) / 6;
 	}
 	
 	/**

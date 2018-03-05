@@ -230,6 +230,11 @@ public class ControllerAlunos {
 		return this.getAlunosTutores().size();
 	}
 	
+	/**
+	 * Retorna a quantidade de ajudas criadas.
+	 * 
+	 * @return a quantidade de ajudas.
+	 */
 	public int getQtdAjudasAlunosTutores() {
 		int qtd = 0;
 		for(Aluno aluno : this.getAlunosTutores()) {
