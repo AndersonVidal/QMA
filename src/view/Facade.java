@@ -29,7 +29,7 @@ public class Facade {
 	 * @param matricula Representação do nome do aluno, no formato String "123456"
 	 * @param codigoCurso Representação do codigo do curso, no formato inteiro "1"
 	 * @param telefone Representação do telefone do aluno, no formato String "99999999"
-	 * @param email Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
+	 * @param email Representação de email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		this.controle.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
