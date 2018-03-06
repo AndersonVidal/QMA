@@ -220,4 +220,15 @@ public class Facade {
 		return this.controleTutores.pegarNivel(matriculaTutor);
 	}
 	
+	public void doar(String matriculaTutor, int totalCentavos){
+		this.controleTutores.doar(matriculaTutor, totalCentavos);
+	}
+	
+	public int totalDinheiroTutor(String emailTutor) {
+		return this.controleTutores.totalDinheiroTutor(emailTutor);
+	}
+	
+	public int totalDinheiroSistema() {
+		return this.controleTutores.totalDinheiroSistema();
+	}
 }

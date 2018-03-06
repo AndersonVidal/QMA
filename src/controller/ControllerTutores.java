@@ -182,5 +182,39 @@ public class ControllerTutores {
 		return nivel;
 	}
 	
+	public void doar(String matriculaTutor, int totalCentavos){
+		Validador.validadorPositivo(totalCentavos,"Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
+		Controller controller = null;
+		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
+		double nota = alunoTutor.getTutor().getNota();
+		String nivel = pegarNivel(matriculaTutor);
+		double dinheiroTutor ;
+		double dinheiroSistema;
+		
+		if(nivel == "TOP") {
+			dinheiroSistema = (1 - ((nota - 4.5) * 0.01)) * totalCentavos; ;
+		}else if (nivel == "Tutor") {
+			dinheiroSistema = (1 - 0.8) * totalCentavos; ;
+		}else {
+			dinheiroSistema = (1 - ((3.0 - nota) * 0.01)) * totalCentavos; ;
+		}
+		dinheiroTutor = totalCentavos - dinheiroSistema;
+		alunoTutor.getTutor().addDinheiro(dinheiroTutor);
+		controller.addDinheiroSistema(dinheiroSistema);
+	}
+	
+	public int totalDinheiroTutor(String emailTutor) {
+		Validador.validadorEmail(emailTutor,"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
+		Validador.validadorEmail(emailTutor,"Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
+		Aluno aluno = retornaAlunoTutor(emailTutor);
+		int dinheiroTotalTutor = (int) aluno.getTutor().getDinheiro();
+		return dinheiroTotalTutor;
+	}
+	
+	public int totalDinheiroSistema() {
+		Controller controller = null;
+		return controller.getDinheiroSistema();
+	}
+	
 }
 
