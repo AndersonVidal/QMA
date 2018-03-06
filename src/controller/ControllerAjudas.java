@@ -28,6 +28,8 @@ public class ControllerAjudas {
 	 */
 	private List<Ajuda> ajudas;
 	
+	private Double a;
+	
 	/**
 	 * Constrói o controle de ajudas a partir do controle de alunos.
 	 * 
@@ -89,7 +91,7 @@ public class ControllerAjudas {
 		
 		String tutorSelecionado = this.selecionaMelhorTutor(alunosTutores, matrAluno);
 		
-		return tutorSelecionado;
+		return tutorSelecionado;		
 	}
 	
 	/**
