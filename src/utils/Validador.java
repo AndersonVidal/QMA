@@ -180,4 +180,20 @@ public class Validador {
 	public static void listConteins(List<?> l, int index, String e) {
 		if(l.size() <= index) throw new IndexOutOfBoundsException(e);
 	}
+	
+	public static void validadorNaoNegativo(int numero, String e) {
+		if(numero < 0) throw new IllegalArgumentException(e);
+	}
+	
+	public static void validadorMaiorQueAlgo(int numero, int outroNumero, String e) {
+		if(numero > outroNumero) throw new IllegalArgumentException(e);
+		}
+	
+	public static void validadorTamanho(int numero, int outroNumero, String e) {
+		if(numero > outroNumero) throw new ArrayIndexOutOfBoundsException(e);
+	}
+	
+	public static void validadorBooleanTrue(boolean valor, String e) {
+		if(valor) {throw new IllegalArgumentException(e);}
+	}
 }

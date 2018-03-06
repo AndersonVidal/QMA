@@ -25,6 +25,10 @@ public abstract class Ajuda {
 	 * Representação da disciplina, no formato String "inglês"
 	 */
 	private String disciplina;
+	/**
+	 * Informa se a ajuda já foi avaliada, no formato boolean "true"
+	 */
+	private boolean avaliado;
 	
 	/**
 	 * Constrói ajuda a partir do id, das matrículas do aluno e do tutor,
@@ -45,7 +49,14 @@ public abstract class Ajuda {
 		this.matrTutor = matrTutor;
 		this.matrAluno = matrAluno;
 		this.disciplina = disciplina;
+		this.avaliado = false;
 	}
+	
+	public boolean avaliado() { return this.avaliado; }
+		
+	public void avaliaAjuda() {
+		this.avaliado = true;
+	}	
 	
 	public int getId() { return this.id; }
 

@@ -19,9 +19,9 @@ public class Tutor {
 	 */
 	private int id;
 	/**
-	 * Representação da avaliação do tutor, no formato inteiro "1"
+	 * Representação da avaliação do tutor, no formato double "1"
 	 */
-	private int nota;
+	private double nota;
 	/**
 	 * Representacao do dinheiro recebido, no formato double "0.0"
 	 */
@@ -34,7 +34,12 @@ public class Tutor {
 	 * Representacao dos locais de atendimento do tutor
 	 */
 	private Set<String> locaisAtendimento;
-
+	/**
+	* Representação das ajudas que o aluno em tal ocupação concedeu, onde a chave
+	* do mapa é o ID da ajuda e o valor é a ajuda.
+	*/
+	private Map<Integer, Ajuda> ajudasPrestadas;
+	
 	/**
 	 * Constrói um tutor a partir da disciplina e da proficiência.
 	 * 
@@ -50,10 +55,11 @@ public class Tutor {
 		this.id = id;
 		this.disciplinas = new HashMap<String, Integer>();
 		this.disciplinas.put(disciplina, proficiencia);
-		this.nota = 4;
+		this.nota = 4.007;
 		this.dinheiro = 0;
 		this.constroiHorarios();
 		this.locaisAtendimento = new HashSet<>();
+		this.ajudasPrestadas= new HashMap<>();
 	}
 	
 	/**
@@ -94,13 +100,25 @@ public class Tutor {
 	
 	public int getId() { return this.id; }
 	
-	public int getNota() { return this.nota; }
+	public double getNota() { return this.nota; }
 	
 	public double getDinheiro() { return this.dinheiro; }
 	
 	public Map<String, Set<String>> getDisponibilidade() { return this.disponibilidade; }
 	
 	public Set<String> getLocalAtendimento() { return this.locaisAtendimento; }
+	
+	public Map<Integer, Ajuda> getAjudasPrestadas() {return this.ajudasPrestadas; }
+	
+	/**
+	* Altera a nota para o trabalho do aluno na ajuda através de um calculo que considera
+	* o quesito anterior do trabalho.
+	* @param nota Representação da nota recebida pelo aluno, no formato "5"
+	*/
+	public void setNota(int nota) {
+		Validador.validadorIntervalo(nota, 0, 5, "Erro na alteração da nota: nota inválida");
+		this.nota = (this.nota * 5 + nota) / 6;
+	}
 	
 	/**
 	 * Adiciona dinheiro ao caixa do tutor.

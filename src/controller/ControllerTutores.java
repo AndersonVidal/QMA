@@ -1,5 +1,10 @@
 package controller;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+import model.Ajuda;
+import model.Aluno;
 import model.Tutor;
 import utils.Validador;
 
@@ -25,6 +30,91 @@ public class ControllerTutores {
 		this.ctAlunos = ctrlAlunos;
 	}
 
+	/**
+	/* Retorna um objeto aluno que é tutor da ajuda passada como parâmetro.
+	 * @param idAjuda ID da ajuda no formato inteiro.
+	 * @return o aluno.
+	 */
+	private Aluno retornaAlunoTutor(int idAjuda) {
+		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+			if(aluno.getTutor().getAjudasPrestadas().containsKey(idAjuda)) {
+				return aluno;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Avalia um tutor a partir da nota da ajuda concedida.
+	 * 
+	 * @param idAjuda ID da ajuda, no formato inteiro.
+	 * @param nota nota para a ajuda do tutor, no formato inteiro.
+	 * @return
+	 */
+	public String avaliarTutor(int idAjuda, int nota) {
+		Validador.validadorNaoNegativo(nota, "Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		Validador.validadorMaiorQueAlgo(nota, 5, "Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		Validador.validadorTamanho(idAjuda, this.ctAlunos.getQtdAjudas(), "Erro na avaliacao de tutor: id nao encontrado ");
+		
+		Aluno alunoTutor = retornaAlunoTutor(idAjuda);
+		Validador.validadorObjeto(alunoTutor, "Erro na avaliacao de tutor: Ajuda nao atribuida a tutor");
+		Ajuda ajuda = alunoTutor.getTutor().getAjudasPrestadas().get(idAjuda);
+		
+		Validador.validadorBooleanTrue(ajuda.avaliado(), "Erro na avaliacao de tutor: Ajuda ja avaliada");
+		
+		alunoTutor.getTutor().setNota(nota);
+		ajuda.avaliaAjuda();
+		return alunoTutor.toString();
+	}
+	
+	/**
+	 * Retorna a nota do tutor através de sua matrícula.
+	 * @param matriculaTutor a matricula do tutor, no formato String.
+	 * @return
+	 */
+	public String pegarNota(String matriculaTutor) {
+		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
+		double nota = alunoTutor.getTutor().getNota();
+		
+		DecimalFormat decimalFormat = new DecimalFormat("0.00");
+		decimalFormat.setRoundingMode(RoundingMode.DOWN);
+		
+		return decimalFormat.format(nota);
+	}
+	
+	/**
+	 * Retorna o nível do tutor através de sua matrícula.
+	 * @param matriculaTutor a matrícula do tutor, no formato String.
+	 * @return
+	 */
+	public String pegarNivel(String matriculaTutor) {
+		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
+		double nota = alunoTutor.getTutor().getNota();
+		
+		String nivel = null;
+		if(nota > 4.5) {
+			nivel = "TOP";
+		}else if(nota > 3 && nota <= 4.5) {
+			nivel = "Tutor";
+		}else {
+			nivel = "Aprendiz";
+	}
+		return nivel;
+	}
+	
+	/**
+	 * Retorna um objeto aluno que é tutor e contém a matrícula passada como parâmetro.
+	 * @param matriculaTutor a matricula do aluno tutor, no formato String.
+	 * @return o aluno.
+	 */
+	private Aluno retornaAlunoTutor(String matriculaTutor) {
+		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+			if(aluno.getMatricula().equals(matriculaTutor)) {
+				return aluno;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Adiciona um horário ao dia especificado para um tutor específico

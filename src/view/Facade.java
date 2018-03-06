@@ -16,7 +16,8 @@ public class Facade {
 				"acceptance_tests/us1_test.txt", 
 				"acceptance_tests/us2_test.txt",
 				"acceptance_tests/us3_test.txt",
-				"acceptance_tests/us4_test.txt"};
+				"acceptance_tests/us4_test.txt",
+				"acceptance_tests/us5_test.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -188,5 +189,34 @@ public class Facade {
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo){
 		return this.controleAjudas.getInfoAjuda(idAjuda, atributo);
+	}
+	
+	/**
+	 * Avalia um tutor a partir da nota da ajuda concedida.
+	 * 
+	 * @param idAjuda ID da ajuda, no formato inteiro.
+	 * @param nota nota para a ajuda do tutor, no formato inteiro.
+	 * @return
+	 */
+	public String avaliarTutor(int idAjuda, int nota) {
+		return this.controleTutores.avaliarTutor(idAjuda, nota);
+	}
+	
+	/**
+	 * Retorna a nota do tutor através de sua matrícula.
+	 * @param matriculaTutor a matricula do tutor, no formato String.
+	 * @return
+	 */
+	public String pegarNota(String matriculaTutor) {
+		return this.controleTutores.pegarNota(matriculaTutor);
+	}
+	
+	/**
+	 * Retorna o nível do tutor através de sua matrícula.
+	 * @param matriculaTutor a matrícula do tutor, no formato String.
+	 * @return
+	 */
+	public String pegarNivel(String matriculaTutor) {
+		return this.controleTutores.pegarNivel(matriculaTutor);
 	}
 }
