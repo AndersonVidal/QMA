@@ -223,14 +223,28 @@ public class Facade {
 		return this.controleTutores.pegarNivel(matriculaTutor);
 	}
 	
+	/**
+	 * Doa o dinheiro passado como parâmetro para o caixa do sistema e tutor especificado.
+	 * @param matriculaTutor matrícula do tutor
+	 * @param totalCentavos o dinheiro
+	 */
 	public void doar(String matriculaTutor, int totalCentavos) {
 		this.controleTutores.doar(matriculaTutor, totalCentavos);
 	}
 	
+	/**
+	 * Retorna o total de dinheiro que o tutor do email passado como parâmetro possui.
+	 * @param emailTutor o email do tutor.
+	 * @return o valor total.
+	 */
 	public int totalDinheiroTutor(String emailTutor) {
 		return this.controleTutores.totalDinheiroTutor(emailTutor);
 	}
 	
+	/**
+	 * Retorna o total do dinheiro que o caixa do sistema possui.
+	 * @return o valor total.
+	 */
 	public int totalDinheiroSistema() {
 		return this.caixa.getDinheiroSistema();
 	}

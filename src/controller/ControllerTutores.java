@@ -188,6 +188,11 @@ public class ControllerTutores {
 		return tutor.consultaLocal(local);
 	}
 	
+	/**
+	 * Doa o dinheiro passado como parâmetro para o caixa do sistema e tutor especificado.
+	 * @param matriculaTutor matrícula do tutor
+	 * @param totalCentavos o dinheiro
+	 */
 	public void doar(String matriculaTutor, int totalCentavos){
 		Validador.validadorPositivo(totalCentavos,"Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
 		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
@@ -212,6 +217,11 @@ public class ControllerTutores {
 		caixa.addDinheiroSistema(dinheiroSistema);
 	}
 	
+	/**
+	 * Retorna o total de dinheiro que o tutor do email passado como parâmetro possui.
+	 * @param emailTutor o email do tutor.
+	 * @return o valor total.
+	 */
 	public int totalDinheiroTutor(String emailTutor) {
 		Validador.validadorString(emailTutor,"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		Aluno aluno = retornaAlunoTutorEmail(emailTutor);
@@ -220,6 +230,10 @@ public class ControllerTutores {
 		return dinheiroTotalTutor;
 	}
 	
+	/**
+	 * Retorna o total do dinheiro que o caixa do sistema possui.
+	 * @return o valor total.
+	 */
 	public int totalDinheiroSistema() {
 		return caixa.getDinheiroSistema();
 	}
