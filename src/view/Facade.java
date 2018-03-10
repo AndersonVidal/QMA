@@ -3,6 +3,7 @@
  */
 package view;
 
+import controller.CaixaSistema;
 import controller.ControllerAjudas;
 import controller.ControllerAlunos;
 import controller.ControllerTutores;
@@ -17,12 +18,14 @@ public class Facade {
 				"acceptance_tests/us2_test.txt",
 				"acceptance_tests/us3_test.txt",
 				"acceptance_tests/us4_test.txt",
-				"acceptance_tests/us5_test.txt"};
+				"acceptance_tests/us5_test.txt",
+				"acceptance_tests/us6_test.txt"};
 		EasyAccept.main(args);
 	}
 	
+	private CaixaSistema caixa = new CaixaSistema();
 	private ControllerAlunos controleAlunos = new ControllerAlunos();
-	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos);
+	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos, caixa);
 	private ControllerAjudas controleAjudas = new ControllerAjudas(controleAlunos);
 	
 	/**
@@ -219,4 +222,17 @@ public class Facade {
 	public String pegarNivel(String matriculaTutor) {
 		return this.controleTutores.pegarNivel(matriculaTutor);
 	}
+	
+	public void doar(String matriculaTutor, int totalCentavos) {
+		this.controleTutores.doar(matriculaTutor, totalCentavos);
+	}
+	
+	public int totalDinheiroTutor(String emailTutor) {
+		return this.controleTutores.totalDinheiroTutor(emailTutor);
+	}
+	
+	public int totalDinheiroSistema() {
+		return this.caixa.getDinheiroSistema();
+	}
+	
 }

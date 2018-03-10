@@ -138,8 +138,10 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local);
 		this.ajudas.add(ajuda);
+		
 		Tutor oTutor = retornaTutor(tutor);
 		adicionaAjuda(ajuda, oTutor);
+		
 		return id;
 	}
 	
@@ -160,8 +162,10 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaOnline(id, matriculaAluno, tutor, disciplina);
 		this.ajudas.add(ajuda);
+		
 		Tutor oTutor = retornaTutor(tutor);
 		adicionaAjuda(ajuda, oTutor);
+		
 		return id;
 	}
 

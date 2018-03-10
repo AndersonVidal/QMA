@@ -19,6 +19,7 @@ public class ControllerTutores {
 	 * Representação de um Controller de alunos.
 	 */
 	private ControllerAlunos ctAlunos;
+	private CaixaSistema caixa;
 	
 	/**
 	 * Consotrói um controller de tutores a partir de um controller
@@ -26,8 +27,9 @@ public class ControllerTutores {
 	 * 
 	 * @param ctrlAlunos Controller de alunos
 	 */
-	public ControllerTutores(ControllerAlunos ctrlAlunos) {
+	public ControllerTutores(ControllerAlunos ctrlAlunos, CaixaSistema caixa) {
 		this.ctAlunos = ctrlAlunos;
+		this.caixa = caixa;
 	}
 
 	/**
@@ -115,6 +117,15 @@ public class ControllerTutores {
 		}
 		return null;
 	}
+	
+	private Aluno retornaAlunoTutorEmail(String emailTutor) {
+		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+			if(aluno.getEmail().equals(emailTutor)) {
+				return aluno;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Adiciona um horário ao dia especificado para um tutor específico
@@ -176,5 +187,42 @@ public class ControllerTutores {
 		
 		return tutor.consultaLocal(local);
 	}
+	
+	public void doar(String matriculaTutor, int totalCentavos){
+		Validador.validadorPositivo(totalCentavos,"Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
+		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
+		Validador.validadorObjeto(alunoTutor, "Erro na doacao para tutor: Tutor nao encontrado");
+		double nota = alunoTutor.getTutor().getNota();
+		String nivel = pegarNivel(matriculaTutor);
+		
+		int taxaTutor;
+		if(nivel.equals("TOP")) {
+			taxaTutor = ((int)((nota - 4.5) * 10)) + 90;
+		}else if(nivel.equals("Tutor")) {
+			taxaTutor = 80;
+		}else {
+			taxaTutor = 40 - ((int)(Math.ceil((3 - nota) * 10)));
+		}
+		double taxa = taxaTutor / 100.0;
+		
+		int dinheiroSistema = (int) Math.ceil((1 - taxa) * totalCentavos);
+		int dinheiroTutor = totalCentavos - dinheiroSistema;
+		
+	    alunoTutor.getTutor().addDinheiro(dinheiroTutor);
+		caixa.addDinheiroSistema(dinheiroSistema);
+	}
+	
+	public int totalDinheiroTutor(String emailTutor) {
+		Validador.validadorString(emailTutor,"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
+		Aluno aluno = retornaAlunoTutorEmail(emailTutor);
+		Validador.validadorObjeto(aluno, "Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
+		int dinheiroTotalTutor = (int) aluno.getTutor().getDinheiro();
+		return dinheiroTotalTutor;
+	}
+	
+	public int totalDinheiroSistema() {
+		return caixa.getDinheiroSistema();
+	}
+	
 }
 

@@ -25,7 +25,7 @@ public class Tutor {
 	/**
 	 * Representacao do dinheiro recebido, no formato double "0.0"
 	 */
-	private double dinheiro;
+	private int dinheiro;
 	/**
 	 * Representacao dos horários de disponibilidade do tutor
 	 */
@@ -102,7 +102,7 @@ public class Tutor {
 	
 	public double getNota() { return this.nota; }
 	
-	public double getDinheiro() { return this.dinheiro; }
+	public int getDinheiro() { return this.dinheiro; }
 	
 	public Map<String, Set<String>> getDisponibilidade() { return this.disponibilidade; }
 	
@@ -125,7 +125,7 @@ public class Tutor {
 	 * 
 	 * @param dinheiro Valor a ser adicionado no caixa
 	 */
-	public void addDinheiro(double dinheiro) {
+	public void addDinheiro(int dinheiro) {
 		Validador.validadorPositivo(dinheiro, "Erro ao adicionar dinheiro: valor nao pode ser menor ou igual a 0");
 		this.dinheiro += dinheiro; 
 	}
