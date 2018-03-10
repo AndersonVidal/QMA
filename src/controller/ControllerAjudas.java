@@ -9,6 +9,7 @@ import model.Ajuda;
 import model.AjudaOnline;
 import model.AjudaPresencial;
 import model.Aluno;
+import model.Tutor;
 import utils.ComparaNotaAlunoTutor;
 import utils.Validador;
 
@@ -137,6 +138,10 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local);
 		this.ajudas.add(ajuda);
+		
+		Tutor oTutor = retornaTutor(tutor);
+		adicionaAjuda(ajuda, oTutor);
+		
 		return id;
 	}
 	
@@ -157,9 +162,27 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaOnline(id, matriculaAluno, tutor, disciplina);
 		this.ajudas.add(ajuda);
+		
+		Tutor oTutor = retornaTutor(tutor);
+		adicionaAjuda(ajuda, oTutor);
+		
 		return id;
 	}
 
+	private Tutor retornaTutor(String matrTutor) {
+		Tutor tutor = null;
+		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+		if(aluno.getMatricula().equals(matrTutor)) {
+				tutor = aluno.getTutor();
+			}
+		}
+		return tutor;
+	}
+		
+	private void adicionaAjuda(Ajuda ajuda, Tutor tutor) {
+		tutor.getAjudasPrestadas().put(ajuda.getId(), ajuda);
+	}
+	
 	/**
 	 * Retorna a descrição do tutor da ajuda.
 	 * <ul><li>Para ajudas online:</li>

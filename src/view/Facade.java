@@ -3,6 +3,7 @@
  */
 package view;
 
+import controller.CaixaSistema;
 import controller.ControllerAjudas;
 import controller.ControllerAlunos;
 import controller.ControllerTutores;
@@ -16,12 +17,15 @@ public class Facade {
 				"acceptance_tests/us1_test.txt", 
 				"acceptance_tests/us2_test.txt",
 				"acceptance_tests/us3_test.txt",
-				"acceptance_tests/us4_test.txt"};
+				"acceptance_tests/us4_test.txt",
+				"acceptance_tests/us5_test.txt",
+				"acceptance_tests/us6_test.txt"};
 		EasyAccept.main(args);
 	}
 	
+	private CaixaSistema caixa = new CaixaSistema();
 	private ControllerAlunos controleAlunos = new ControllerAlunos();
-	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos);
+	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos, caixa);
 	private ControllerAjudas controleAjudas = new ControllerAjudas(controleAlunos);
 	
 	/**
@@ -189,4 +193,60 @@ public class Facade {
 	public String getInfoAjuda(int idAjuda, String atributo){
 		return this.controleAjudas.getInfoAjuda(idAjuda, atributo);
 	}
+	
+	/**
+	 * Avalia um tutor a partir da nota da ajuda concedida.
+	 * 
+	 * @param idAjuda ID da ajuda, no formato inteiro.
+	 * @param nota nota para a ajuda do tutor, no formato inteiro.
+	 * @return
+	 */
+	public String avaliarTutor(int idAjuda, int nota) {
+		return this.controleTutores.avaliarTutor(idAjuda, nota);
+	}
+	
+	/**
+	 * Retorna a nota do tutor através de sua matrícula.
+	 * @param matriculaTutor a matricula do tutor, no formato String.
+	 * @return
+	 */
+	public String pegarNota(String matriculaTutor) {
+		return this.controleTutores.pegarNota(matriculaTutor);
+	}
+	
+	/**
+	 * Retorna o nível do tutor através de sua matrícula.
+	 * @param matriculaTutor a matrícula do tutor, no formato String.
+	 * @return
+	 */
+	public String pegarNivel(String matriculaTutor) {
+		return this.controleTutores.pegarNivel(matriculaTutor);
+	}
+	
+	/**
+	 * Doa o dinheiro passado como parâmetro para o caixa do sistema e tutor especificado.
+	 * @param matriculaTutor matrícula do tutor
+	 * @param totalCentavos o dinheiro
+	 */
+	public void doar(String matriculaTutor, int totalCentavos) {
+		this.controleTutores.doar(matriculaTutor, totalCentavos);
+	}
+	
+	/**
+	 * Retorna o total de dinheiro que o tutor do email passado como parâmetro possui.
+	 * @param emailTutor o email do tutor.
+	 * @return o valor total.
+	 */
+	public int totalDinheiroTutor(String emailTutor) {
+		return this.controleTutores.totalDinheiroTutor(emailTutor);
+	}
+	
+	/**
+	 * Retorna o total do dinheiro que o caixa do sistema possui.
+	 * @return o valor total.
+	 */
+	public int totalDinheiroSistema() {
+		return this.caixa.getDinheiroSistema();
+	}
+	
 }
