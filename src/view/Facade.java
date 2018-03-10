@@ -5,6 +5,7 @@ package view;
 
 import controller.ControllerAjudas;
 import controller.ControllerAlunos;
+import controller.ControllerSistema;
 import controller.ControllerTutores;
 
 import easyaccept.EasyAccept;
@@ -16,13 +17,17 @@ public class Facade {
 				"acceptance_tests/us1_test.txt", 
 				"acceptance_tests/us2_test.txt",
 				"acceptance_tests/us3_test.txt",
-				"acceptance_tests/us4_test.txt"};
+				"acceptance_tests/us4_test.txt",
+				"acceptance_tests/us5_test.txt",
+				"acceptance_tests/us6_test.txt"};
 		EasyAccept.main(args);
 	}
 	
 	private ControllerAlunos controleAlunos = new ControllerAlunos();
 	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos);
 	private ControllerAjudas controleAjudas = new ControllerAjudas(controleAlunos);
+	
+	private ControllerSistema controllerSistema = new ControllerSistema();
 	
 	/**
 	 * Cadastra um aluno com telefone no sistema.
@@ -34,7 +39,7 @@ public class Facade {
 	 * @param email Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		this.controleAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
+		this.controllerSistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 
 	
@@ -46,7 +51,7 @@ public class Facade {
 	 * @return Representaçao textual do aluno buscado.
 	 */
 	public String recuperaAluno(String matricula) {
-		return this.controleAlunos.recuperaAluno(matricula);
+		return this.controllerSistema.recuperaAluno(matricula);
 	}
 	
 	/**
@@ -55,7 +60,7 @@ public class Facade {
 	 * @return Representação textual de uma lista de alunos.
 	 */
 	public String listarAlunos() {
-		return this.controleAlunos.listarAlunos();
+		return this.controllerSistema.listarAlunos();
 	}
 
 	/**
@@ -66,7 +71,7 @@ public class Facade {
 	 * @return Representação textual de uma caractéristica do aluno
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
-		return this.controleAlunos.getInfoAluno(matricula, atributo);
+		return this.controllerSistema.getInfoAluno(matricula, atributo);
 	}
 	
 	/**
@@ -77,7 +82,7 @@ public class Facade {
 	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0".
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
-		this.controleAlunos.tornarTutor(matricula, disciplina, proeficiencia);
+		this.controllerSistema.tornarTutor(matricula, disciplina, proeficiencia);
 	}
 	
 	/**
@@ -88,7 +93,7 @@ public class Facade {
 	 * @return Representaçao textual do tutor buscado.
 	 */
 	public String recuperaTutor(String matricula) {
-		return this.controleAlunos.recuperaAlunoTutor(matricula);
+		return this.controllerSistema.recuperaTutor(matricula);
 	}
 	
 	/**
@@ -97,7 +102,7 @@ public class Facade {
 	 * @return Representação textual de uma lista de tutores.
 	 */
 	public String listarTutores() {
-		return this.controleAlunos.listarAlunosTutores();
+		return this.controllerSistema.listarTutores();
 	}
 	
 	/**
@@ -188,5 +193,15 @@ public class Facade {
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo){
 		return this.controleAjudas.getInfoAjuda(idAjuda, atributo);
+	}
+	
+	public String avaliarTutor (int idAjuda, int nota){
+		return "";
+	}
+	public double pegarNota(String matriculaTutor){
+		return 1;
+	}
+	public String pegarNivel(String matriculaTutor){
+		return "";
 	}
 }

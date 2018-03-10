@@ -129,7 +129,6 @@ public class ControllerAlunos {
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		Validador.validadorString(matricula, "Erro na definicao de papel: matricula invalida");
 		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na definicao de papel: Tutor nao encontrado");
-		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na definicao de papel: Ja eh tutor dessa disciplina");
 		
 		Aluno aluno = this.alunos.get(matricula);
 		if (aluno.isTutor()) {
@@ -210,7 +209,7 @@ public class ControllerAlunos {
 	 * 
 	 * @return List de alunos tutores.
 	 */
-	public List<Aluno> getAlunosTutores(){
+	public List<Aluno> getAlunosTutores(){	//ja implementado em controller tutor
 		List<Aluno> tutores = new ArrayList<Aluno>();
 		for(Aluno aln : this.alunos.values()) {
 			if (aln.isTutor()) {
@@ -226,8 +225,20 @@ public class ControllerAlunos {
 	 * 
 	 * @return a quantidade de tutores.
 	 */
-	public int getQtdAlunosTutores(){		
+	public int getQtdAlunosTutores(){	//ja implementado em controller tutor	
 		return this.getAlunosTutores().size();
 	}
 
+	
+	//----------------------------------------------------------
+	
+	
+	public Map<String, Aluno> getAlunos(){
+		return this.alunos;
+	}
+	
+	public void setAlunos(Map<String, Aluno> alunos){
+		this.alunos = alunos;
+	}
+	
 }
