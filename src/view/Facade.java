@@ -113,7 +113,7 @@ public class Facade {
 	 * @param dia Representação de um dia da semana, no formato String "seg"
 	 */
 	public void cadastrarHorario(String email, String horario, String dia){
-		this.controleTutores.cadastrarHorario(email, horario, dia);
+		this.controllerSistema.cadastrarHorario(email, horario, dia);
 	}
 	
 	/**

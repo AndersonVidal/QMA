@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,22 +32,6 @@ public class ControllerTutores {
 	 */
 	public ControllerTutores(ControllerAlunos ctrlAlunos) {
 		this.ctAlunos = ctrlAlunos;
-	}
-
-
-	/**
-	 * Adiciona um horário ao dia especificado para um tutor específico
-	 * 
-	 * @param email Email do tutor, no formato String "teste@email.com"
-	 * @param horario Horário a ser adicionado, no formato String "17:00"
-	 * @param dia Dia da semana, no formato String "seg"
-	 */
-	public void cadastrarHorario(String email, String horario, String dia) {
-		Validador.validadorString(email, "Erro no cadastrar horario: email nao pode ser vazio ou em branco");
-		Validador.validadorMapKeyNotConteins(email, this.ctAlunos.getAlunosTutoresKeyEmail(), "Erro no cadastrar horario: tutor nao cadastrado");
-		
-		Ocupacao tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
-		tutor.addHorario(horario, dia);
 	}
 
 	/**
@@ -119,6 +104,20 @@ public class ControllerTutores {
 		return tutores;
 	}
 	
+	private String buscaTutor(Map<String, Aluno> alunos, String email) {
+		String matriculaTutor = null;
+		
+		for(Aluno aluno : alunos.values()) {
+			if(aluno.isTutor()) {
+				if(aluno.getEmail() == email) {
+					matriculaTutor = aluno.getMatricula();
+				} 
+			}
+		}
+		
+		return matriculaTutor;
+	}
+	
 	public Map<String, Aluno> tornarTutor(String matricula, String disciplina, int proficiencia, Map<String, Aluno> alunos){
 		Validador.validadorString(matricula, "Erro na definicao de papel: matricula invalida");
 		Validador.validadorMapKeyNotConteins(matricula, alunos, "Erro na definicao de papel: Tutor nao encontrado");
@@ -163,6 +162,13 @@ public class ControllerTutores {
 		return lista;
 	}
 	
-	
+	public Map<String, Aluno> cadastrarHorario(String email, String horario, String dia, Map<String, Aluno> alunos) {
+		Validador.validadorString(email, "Erro no cadastrar horario: email nao pode ser vazio ou em branco");
+		String matriculaTutor = this.buscaTutor(alunos, email);
+		Validador.validadorString(matriculaTutor, "Erro no cadastrar horario: tutor nao cadastrado");
+		
+		alunos.get(matriculaTutor).getTutor().addHorario(horario, dia);
+		return alunos;
+	}
 }
 

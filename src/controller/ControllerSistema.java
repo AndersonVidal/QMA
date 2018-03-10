@@ -47,4 +47,10 @@ public class ControllerSistema {
 		return this.controllerTutores.listarAlunosTutores(alunos);
 	}
 	
+	public void cadastrarHorario(String email, String horario, String dia) {
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		alunos = this.controllerTutores.cadastrarHorario(email, horario, dia, alunos);
+		this.controllerAlunos.setAlunos(alunos);
+	}
+	
 }
