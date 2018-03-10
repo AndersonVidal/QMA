@@ -226,7 +226,7 @@ public class ControllerTutores {
 		Validador.validadorString(emailTutor,"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		Aluno aluno = retornaAlunoTutorEmail(emailTutor);
 		Validador.validadorObjeto(aluno, "Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
-		int dinheiroTotalTutor = (int) aluno.getTutor().getDinheiro();
+		int dinheiroTotalTutor = aluno.getTutor().getDinheiro();
 		return dinheiroTotalTutor;
 	}
 	
