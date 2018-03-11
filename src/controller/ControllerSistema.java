@@ -12,7 +12,7 @@ public class ControllerSistema {
 	
 	public ControllerSistema(){
 		this.controllerAlunos = new ControllerAlunos();
-		this.controllerTutores = new ControllerTutores(this.controllerAlunos);
+		this.controllerTutores = new ControllerTutores();
 		this.controllerAjudas = new ControllerAjudas(this.controllerAlunos);
 	}
 	
@@ -50,7 +50,23 @@ public class ControllerSistema {
 	public void cadastrarHorario(String email, String horario, String dia) {
 		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
 		alunos = this.controllerTutores.cadastrarHorario(email, horario, dia, alunos);
+		
 		this.controllerAlunos.setAlunos(alunos);
 	}
 	
+	public void cadastrarLocalDeAtendimento(String email, String local) {
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		alunos = this.controllerTutores.cadastrarLocalDeAtendimento(email, local, alunos);
+		this.controllerAlunos.setAlunos(alunos);
+	}
+	
+	public boolean consultaHorario(String email, String horario, String dia){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		return this.controllerTutores.consultaHorario(email, horario, dia, alunos);
+	}
+	
+	public boolean consultaLocal(String email, String local){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		return this.controllerTutores.consultaLocal(email, local, alunos);
+	}
 }

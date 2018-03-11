@@ -154,8 +154,8 @@ public abstract class Ocupacao {
 	public boolean consultaHorario(String horario, String dia) {
 		Validador.validadorString(dia, "Erro no consultar horario: dia null ou vazio");
 		Validador.validadorMapKeyNotConteins(dia, this.disponibilidade, "Erro no consultar horario: dia invalido");
-		Validador.validadorString(horario, "Erro no consultar horario: horario nao pode ser vazio ou em branco");
-		Validador.validadorHorario(horario, "Erro no cadastrar horario: formato de horario invalido");
+		Validador.validadorString(horario, "Erro ao consultar horario: horario nao pode ser vazio ou em branco");
+		Validador.validadorHorario(horario, "Erro ao consultar horario: formato de horario invalido");
 		
 		return this.disponibilidade.get(dia).contains(horario);
 	}

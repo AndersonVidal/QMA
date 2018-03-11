@@ -6,7 +6,6 @@ package view;
 import controller.ControllerAjudas;
 import controller.ControllerAlunos;
 import controller.ControllerSistema;
-import controller.ControllerTutores;
 
 import easyaccept.EasyAccept;
 
@@ -24,7 +23,6 @@ public class Facade {
 	}
 	
 	private ControllerAlunos controleAlunos = new ControllerAlunos();
-	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos);
 	private ControllerAjudas controleAjudas = new ControllerAjudas(controleAlunos);
 	
 	private ControllerSistema controllerSistema = new ControllerSistema();
@@ -123,7 +121,7 @@ public class Facade {
 	 * @param local Representação de um local de atendimento, no formato String "ufcg"
 	 */
 	public void cadastrarLocalDeAtendimento(String email, String local){
-		this.controleTutores.cadastrarLocalDeAtendimento(email, local);
+		this.controllerSistema.cadastrarLocalDeAtendimento(email, local);
 	}
 	
 	/**
@@ -135,7 +133,7 @@ public class Facade {
 	 * @return Representação booleana da verificação de horario do tutor
 	 */
 	public boolean consultaHorario(String email, String horario, String dia){
-		return this.controleTutores.consultaHorario(email, horario, dia);
+		return this.controllerSistema.consultaHorario(email, horario, dia);
 	}
 	
 	/**
@@ -146,7 +144,7 @@ public class Facade {
 	 * @return Representação booleana da verificação de local do tutor
 	 */
 	public boolean consultaLocal(String email, String local){
-		return this.controleTutores.consultaLocal(email, local);
+		return this.controllerSistema.consultaLocal(email, local);
 	}
 	
 	/**
