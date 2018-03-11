@@ -97,7 +97,7 @@ public class ControllerTutores {
 		return alunos.get(matriculaTutor).getTutor().consultaLocal(local);
 	}
 	
-	private List<Aluno> getAlunosTutores(Map<String, Aluno> alunos){
+	public List<Aluno> getAlunosTutores(Map<String, Aluno> alunos){
 		List<Aluno> tutores = new ArrayList<Aluno>();
 		for(Aluno aln : alunos.values()) {
 			if (aln.isTutor()) tutores.add(aln);

@@ -1,6 +1,8 @@
 package controller;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import model.Aluno;
 
@@ -13,7 +15,7 @@ public class ControllerSistema {
 	public ControllerSistema(){
 		this.controllerAlunos = new ControllerAlunos();
 		this.controllerTutores = new ControllerTutores();
-		this.controllerAjudas = new ControllerAjudas(this.controllerAlunos);
+		this.controllerAjudas = new ControllerAjudas();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email){
@@ -68,5 +70,27 @@ public class ControllerSistema {
 	public boolean consultaLocal(String email, String local){
 		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
 		return this.controllerTutores.consultaLocal(email, local, alunos);
+	}
+	
+	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		List<Aluno> tutores = this.controllerTutores.getAlunosTutores(alunos);
+		Set<String> matrAlunos = this.controllerAlunos.getMatriculaAlunos();
+		return this.controllerAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse, tutores, matrAlunos);
+	}
+	
+	public int pedirAjudaOnline (String matrAluno, String disciplina){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		List<Aluno> tutores = this.controllerTutores.getAlunosTutores(alunos);
+		Set<String> matrAlunos = this.controllerAlunos.getMatriculaAlunos();
+		return this.controllerAjudas.pedirAjudaOnline(matrAluno, disciplina, tutores, matrAlunos);
+	}
+	
+	public String pegarTutor(int idAjuda){
+		return this.controllerAjudas.pegarTutor(idAjuda);
+	}
+	
+	public String getInfoAjuda(int idAjuda, String atributo){
+		return this.controllerAjudas.getInfoAjuda(idAjuda, atributo);
 	}
 }

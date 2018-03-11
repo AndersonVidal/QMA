@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 import model.Aluno;
-import model.Ocupacao;
 import utils.Alfabetica;
 import utils.Comparador;
 import utils.Validador;
@@ -118,115 +117,9 @@ public class ControllerAlunos {
 			throw new IllegalArgumentException("Erro na obtencao de informacao de aluno: Atributo invalido");
 		}
 	}
-	
-	/**
-	 * Torna um aluno tutor de alguma disciplina através de sua matricula.
-	 * 
-	 * @param matricula Representação da matrícula do aluno, no formato String "123456"
-	 * @param disciplina Representação da disciplina, no formato String "matemática"
-	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0"
-	 */
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
-		Validador.validadorString(matricula, "Erro na definicao de papel: matricula invalida");
-		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na definicao de papel: Tutor nao encontrado");
-		
-		Aluno aluno = this.alunos.get(matricula);
-		if (aluno.isTutor()) {
-			aluno.getTutor().addDisciplina(disciplina, proficiencia);
-		} else  {
-			int id = this.getQtdAlunosTutores() + 1;
-			aluno.tornaTutor(id, disciplina, proficiencia);
-		}
-	}
-	
-	/**
-	 * Encontra um tutor segundo a sua matrícula no sistema.
-	 * 
-	 * @param matricula Representação da matricula do aluno tutor, no formato String "123456"
-	 * @return Representação textual do tutor buscado.
-	 */
-	public String recuperaAlunoTutor(String matricula) {
-		Validador.validadorString(matricula, "Erro na busca por tutor: Matricula não pode ser vazio ou nulo");
-		Validador.validadorMapKeyNotConteins(matricula, this.alunos, "Erro na busca por tutor: Tutor nao encontrado");
-		
-		Aluno aluno = this.alunos.get(matricula);
-		if (!aluno.isTutor()) {
-			throw new IllegalArgumentException("Erro na busca por tutor: Matricula nao eh de um aluno tutor");
-		}
-		return aluno.toString();
-	}
-	
-	/**
-	 * Cria uma lista ordenada de alunos que sao tutores, em ordem alfabética.
-	 * 
-	 * @return List de Tutores.
-	 */
-	public String listarAlunosTutores() {
-		List<Aluno> arrayAlunos = ordenaAlfabeticaAlunos();
-		
-		String str = "";
-		int cont = 0, i = 0;
-		while (cont < this.getQtdAlunosTutores()) {
-			if (arrayAlunos.get(i).isTutor()) {
-				if (i == this.getQtdAlunosTutores()) {
-					return str + arrayAlunos.get(i).toString();
-				}
-				str += arrayAlunos.get(i).toString() + ", ";
-			}
-			i++;
-		}
-		
-		return "";
-	}
-	
-	/**
-	 * Retorna um Map onde a chave é o email do tutor e o valor é o Tutor.
-	 * 
-	 * @return Map de tutores chaveados pelo email.
-	 */
-	public Map<String, Ocupacao> getAlunosTutoresKeyEmail(){
-		Map<String, Ocupacao> tutores = new HashMap<String, Ocupacao>();
-		for(Aluno aln : this.alunos.values()) {
-			if (aln.isTutor()) {
-				tutores.put(aln.getEmail(), aln.getTutor());
-			}
-		}
-		
-		return tutores;
-	}
-	
-	/**
-	 * Retorna um Set das matrículas dos alunos.
-	 * 
-	 * @return Set das matrículas dos alunos
-	 */
+
 	public Set<String> getMatriculaAlunos(){
 		return this.alunos.keySet();
-	}
-
-	/**
-	 * Retorna um List dos alunos que são tutores.
-	 * 
-	 * @return List de alunos tutores.
-	 */
-	public List<Aluno> getAlunosTutores(){	//ja implementado em controller tutor
-		List<Aluno> tutores = new ArrayList<Aluno>();
-		for(Aluno aln : this.alunos.values()) {
-			if (aln.isTutor()) {
-				tutores.add(aln);
-			}
-		}
-		
-		return tutores;
-	}
-	
-	/**
-	 * Retorna a quantidade de alunos tutores no sistema.
-	 * 
-	 * @return a quantidade de tutores.
-	 */
-	public int getQtdAlunosTutores(){	//ja implementado em controller tutor	
-		return this.getAlunosTutores().size();
 	}
 
 	

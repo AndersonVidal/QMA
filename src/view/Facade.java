@@ -3,8 +3,6 @@
  */
 package view;
 
-import controller.ControllerAjudas;
-import controller.ControllerAlunos;
 import controller.ControllerSistema;
 
 import easyaccept.EasyAccept;
@@ -21,9 +19,6 @@ public class Facade {
 				"acceptance_tests/us6_test.txt"};
 		EasyAccept.main(args);
 	}
-	
-	private ControllerAlunos controleAlunos = new ControllerAlunos();
-	private ControllerAjudas controleAjudas = new ControllerAjudas(controleAlunos);
 	
 	private ControllerSistema controllerSistema = new ControllerSistema();
 	
@@ -159,7 +154,7 @@ public class Facade {
 	 * @return Represenetação inteira do id da ajuda
 	 */
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
-		return this.controleAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
+		return this.controllerSistema.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
 	
 	/**
@@ -169,7 +164,7 @@ public class Facade {
 	 * @return ID de cadastro da ajuda.
 	 */
 	public int pedirAjudaOnline(String matriculaAluno, String disciplina){
-		return this.controleAjudas.pedirAjudaOnline(matriculaAluno, disciplina);
+		return this.controllerSistema.pedirAjudaOnline(matriculaAluno, disciplina);
 	}
 	
 	/**
@@ -179,7 +174,7 @@ public class Facade {
 	 * @return Representação textual da descrição do tutor da ajuda.
 	 */
 	public String pegarTutor(int idAjuda){
-		return this.controleAjudas.pegarTutor(idAjuda);
+		return this.controllerSistema.pegarTutor(idAjuda);
 	}
 	
 	/**
@@ -190,7 +185,7 @@ public class Facade {
 	 * @return
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo){
-		return this.controleAjudas.getInfoAjuda(idAjuda, atributo);
+		return this.controllerSistema.getInfoAjuda(idAjuda, atributo);
 	}
 	
 	public String avaliarTutor (int idAjuda, int nota){
