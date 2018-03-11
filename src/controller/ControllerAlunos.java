@@ -120,11 +120,7 @@ public class ControllerAlunos {
 
 	public Set<String> getMatriculaAlunos(){
 		return this.alunos.keySet();
-	}
-
-	
-	//----------------------------------------------------------
-	
+	}	
 	
 	public Map<String, Aluno> getAlunos(){
 		return this.alunos;
