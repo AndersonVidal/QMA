@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.List;
+import java.util.Set;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -21,10 +22,6 @@ import utils.Validador;
 public class ControllerAjudas {
 	
 	/**
-	 * Representação de um Controller de alunos.
-	 */
-	private ControllerAlunos ctAlunos;
-	/**
 	 * Representação de uma lista de ajudas.
 	 */
 	private List<Ajuda> ajudas;
@@ -34,8 +31,7 @@ public class ControllerAjudas {
 	 * 
 	 * @param ctAlunos o controle de alunos
 	 */
-	public ControllerAjudas(ControllerAlunos ctAlunos) {
-		this.ctAlunos = ctAlunos;
+	public ControllerAjudas() {
 		this.ajudas = new ArrayList<Ajuda>();
 	}
 	
@@ -75,16 +71,16 @@ public class ControllerAjudas {
 	 * @param local Representação do local, no formato "ufcg"
 	 * @return Representação textual da matrícula do tutor. Null caso não seja selecionado tutor.
 	 */
-	private String selecionaTutorAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String local) {
+	private String selecionaTutorAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String local, List<Aluno> tutores) {
 		List<Aluno> alunosTutores = new ArrayList<Aluno>();
-		for (Aluno aluno : this.ctAlunos.getAlunosTutores()) {
-			boolean contemDisciplina = aluno.getTutor().getDisciplinas().containsKey(disciplina);
-			boolean diaDisponivel = aluno.getTutor().getDisponibilidade().containsKey(dia);
-			boolean horarioDisponivel = aluno.getTutor().getDisponibilidade().get(dia).contains(horario);
-			boolean localDisponivel = aluno.getTutor().getLocalAtendimento().contains(local);
+		for (Aluno alunoTutor : tutores) {
+			boolean contemDisciplina = alunoTutor.getTutor().getDisciplinas().containsKey(disciplina);
+			boolean diaDisponivel = alunoTutor.getTutor().getDisponibilidade().containsKey(dia);
+			boolean horarioDisponivel = alunoTutor.getTutor().getDisponibilidade().get(dia).contains(horario);
+			boolean localDisponivel = alunoTutor.getTutor().getLocalAtendimento().contains(local);
 			
 			if(contemDisciplina && diaDisponivel && horarioDisponivel && localDisponivel) {
-				alunosTutores.add(aluno);
+				alunosTutores.add(alunoTutor);
 			}
 		}		
 		
@@ -101,9 +97,9 @@ public class ControllerAjudas {
 	 * @param disciplina Represetação da disciplina, no formato "inglês"
 	 * @return Representação textual da matrícula do tutor. Null caso nenhum tutor seja selecionado.
 	 */
-	private String selecionaTutorAjudaOnline(String matrAluno, String disciplina) {
+	private String selecionaTutorAjudaOnline(String matrAluno, String disciplina, List<Aluno> tutores) {
 		List<Aluno> alunosTutores = new ArrayList<Aluno>();
-		for (Aluno aluno : this.ctAlunos.getAlunosTutores()) {
+		for (Aluno aluno : tutores) {
 			if(aluno.getTutor().getDisciplinas().containsKey(disciplina)) {
 				alunosTutores.add(aluno);
 			}
@@ -124,16 +120,16 @@ public class ControllerAjudas {
 	 * @param local Representação do local, no formato "ufcg"
 	 * @return O id da ajuda cadastrada
 	 */
-	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String local) {
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String local, List<Aluno> tutores, Set<String> alunos) {
 		Validador.validadorString(matrAluno, "Erro no pedido de ajuda presencial: matricula de aluno nao pode ser vazio ou em branco");
 		Validador.validadorString(disciplina, "Erro no pedido de ajuda presencial: disciplina nao pode ser vazio ou em branco");
 		Validador.validadorString(horario, "Erro no pedido de ajuda presencial: horario nao pode ser vazio ou em branco");
 		Validador.validadorHorario(horario, "Erro no pedido ajuda presencial: horario invalido");
 		Validador.validadorString(dia, "Erro no pedido de ajuda presencial: dia nao pode ser vazio ou em branco");
 		Validador.validadorString(local, "Erro no pedido de ajuda presencial: local de interesse nao pode ser vazio ou em branco");	
-		Validador.validadorSetNotContains(matrAluno, this.ctAlunos.getMatriculaAlunos(), "Erro no pedido de ajuda presencial: matricula de aluno nao cadastrada");
+		Validador.validadorSetNotContains(matrAluno, alunos, "Erro no pedido de ajuda presencial: matricula de aluno nao cadastrada");
 
-		String tutor = this.selecionaTutorAjudaPresencial(matrAluno, disciplina, horario, dia, local);
+		String tutor = this.selecionaTutorAjudaPresencial(matrAluno, disciplina, horario, dia, local, tutores);
 		Validador.validadorString(tutor, "Erro no pedido de ajuda presencial: tutor nao encontrado");
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local);
@@ -152,12 +148,12 @@ public class ControllerAjudas {
 	 * @param disciplina Representação da disciplina solicitada, no formato String "Grafos"
 	 * @return ID de cadastro da ajuda no formato inteiro "12"
 	 */
-	public int pedirAjudaOnline(String matriculaAluno, String disciplina){
+	public int pedirAjudaOnline(String matriculaAluno, String disciplina, List<Aluno> tutores, Set<String> alunos){
 		Validador.validadorString(matriculaAluno, "Erro no pedido de ajuda online: matricula de aluno nao pode ser vazio ou em branco");
 		Validador.validadorString(disciplina, "Erro no pedido de ajuda online: disciplina nao pode ser vazio ou em branco");
-		Validador.validadorSetNotContains(matriculaAluno, this.ctAlunos.getMatriculaAlunos(), "Erro no pedido de ajuda online: matricula de aluno nao cadastrada");
+		Validador.validadorSetNotContains(matriculaAluno, alunos, "Erro no pedido de ajuda online: matricula de aluno nao cadastrada");
 		
-		String tutor = this.selecionaTutorAjudaOnline(matriculaAluno, disciplina);
+		String tutor = this.selecionaTutorAjudaOnline(matriculaAluno, disciplina, tutores);
 		Validador.validadorString(tutor, "Erro no pedido de ajuda online: tutor nao encontrado");
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaOnline(id, matriculaAluno, tutor, disciplina);

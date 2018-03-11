@@ -3,10 +3,7 @@
  */
 package view;
 
-import controller.CaixaSistema;
-import controller.ControllerAjudas;
-import controller.ControllerAlunos;
-import controller.ControllerTutores;
+import controller.ControllerSistema;
 
 import easyaccept.EasyAccept;
 
@@ -23,10 +20,7 @@ public class Facade {
 		EasyAccept.main(args);
 	}
 	
-	private CaixaSistema caixa = new CaixaSistema();
-	private ControllerAlunos controleAlunos = new ControllerAlunos();
-	private ControllerTutores controleTutores = new ControllerTutores(controleAlunos, caixa);
-	private ControllerAjudas controleAjudas = new ControllerAjudas(controleAlunos);
+	private ControllerSistema controllerSistema = new ControllerSistema();
 	
 	/**
 	 * Cadastra um aluno com telefone no sistema.
@@ -38,7 +32,7 @@ public class Facade {
 	 * @param email Representação do email do aluno, no formato String "james@ccc.ufcg.edu.br"
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		this.controleAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
+		this.controllerSistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 
 	
@@ -50,7 +44,7 @@ public class Facade {
 	 * @return Representaçao textual do aluno buscado.
 	 */
 	public String recuperaAluno(String matricula) {
-		return this.controleAlunos.recuperaAluno(matricula);
+		return this.controllerSistema.recuperaAluno(matricula);
 	}
 	
 	/**
@@ -59,7 +53,7 @@ public class Facade {
 	 * @return Representação textual de uma lista de alunos.
 	 */
 	public String listarAlunos() {
-		return this.controleAlunos.listarAlunos();
+		return this.controllerSistema.listarAlunos();
 	}
 
 	/**
@@ -70,7 +64,7 @@ public class Facade {
 	 * @return Representação textual de uma caractéristica do aluno
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
-		return this.controleAlunos.getInfoAluno(matricula, atributo);
+		return this.controllerSistema.getInfoAluno(matricula, atributo);
 	}
 	
 	/**
@@ -81,7 +75,7 @@ public class Facade {
 	 * @param proeficiencia Representação da proeficiencia do tutor, no formato inteiro "0".
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proeficiencia) {
-		this.controleAlunos.tornarTutor(matricula, disciplina, proeficiencia);
+		this.controllerSistema.tornarTutor(matricula, disciplina, proeficiencia);
 	}
 	
 	/**
@@ -92,7 +86,7 @@ public class Facade {
 	 * @return Representaçao textual do tutor buscado.
 	 */
 	public String recuperaTutor(String matricula) {
-		return this.controleAlunos.recuperaAlunoTutor(matricula);
+		return this.controllerSistema.recuperaTutor(matricula);
 	}
 	
 	/**
@@ -101,7 +95,7 @@ public class Facade {
 	 * @return Representação textual de uma lista de tutores.
 	 */
 	public String listarTutores() {
-		return this.controleAlunos.listarAlunosTutores();
+		return this.controllerSistema.listarTutores();
 	}
 	
 	/**
@@ -112,7 +106,7 @@ public class Facade {
 	 * @param dia Representação de um dia da semana, no formato String "seg"
 	 */
 	public void cadastrarHorario(String email, String horario, String dia){
-		this.controleTutores.cadastrarHorario(email, horario, dia);
+		this.controllerSistema.cadastrarHorario(email, horario, dia);
 	}
 	
 	/**
@@ -122,7 +116,7 @@ public class Facade {
 	 * @param local Representação de um local de atendimento, no formato String "ufcg"
 	 */
 	public void cadastrarLocalDeAtendimento(String email, String local){
-		this.controleTutores.cadastrarLocalDeAtendimento(email, local);
+		this.controllerSistema.cadastrarLocalDeAtendimento(email, local);
 	}
 	
 	/**
@@ -134,7 +128,7 @@ public class Facade {
 	 * @return Representação booleana da verificação de horario do tutor
 	 */
 	public boolean consultaHorario(String email, String horario, String dia){
-		return this.controleTutores.consultaHorario(email, horario, dia);
+		return this.controllerSistema.consultaHorario(email, horario, dia);
 	}
 	
 	/**
@@ -145,7 +139,7 @@ public class Facade {
 	 * @return Representação booleana da verificação de local do tutor
 	 */
 	public boolean consultaLocal(String email, String local){
-		return this.controleTutores.consultaLocal(email, local);
+		return this.controllerSistema.consultaLocal(email, local);
 	}
 	
 	/**
@@ -160,7 +154,7 @@ public class Facade {
 	 * @return Represenetação inteira do id da ajuda
 	 */
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) {
-		return this.controleAjudas.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
+		return this.controllerSistema.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
 	
 	/**
@@ -170,7 +164,7 @@ public class Facade {
 	 * @return ID de cadastro da ajuda.
 	 */
 	public int pedirAjudaOnline(String matriculaAluno, String disciplina){
-		return this.controleAjudas.pedirAjudaOnline(matriculaAluno, disciplina);
+		return this.controllerSistema.pedirAjudaOnline(matriculaAluno, disciplina);
 	}
 	
 	/**
@@ -180,7 +174,7 @@ public class Facade {
 	 * @return Representação textual da descrição do tutor da ajuda.
 	 */
 	public String pegarTutor(int idAjuda){
-		return this.controleAjudas.pegarTutor(idAjuda);
+		return this.controllerSistema.pegarTutor(idAjuda);
 	}
 	
 	/**
@@ -191,62 +185,16 @@ public class Facade {
 	 * @return
 	 */
 	public String getInfoAjuda(int idAjuda, String atributo){
-		return this.controleAjudas.getInfoAjuda(idAjuda, atributo);
+		return this.controllerSistema.getInfoAjuda(idAjuda, atributo);
 	}
 	
-	/**
-	 * Avalia um tutor a partir da nota da ajuda concedida.
-	 * 
-	 * @param idAjuda ID da ajuda, no formato inteiro.
-	 * @param nota nota para a ajuda do tutor, no formato inteiro.
-	 * @return
-	 */
-	public String avaliarTutor(int idAjuda, int nota) {
-		return this.controleTutores.avaliarTutor(idAjuda, nota);
+	public String avaliarTutor (int idAjuda, int nota){
+		return "";
 	}
-	
-	/**
-	 * Retorna a nota do tutor através de sua matrícula.
-	 * @param matriculaTutor a matricula do tutor, no formato String.
-	 * @return
-	 */
-	public String pegarNota(String matriculaTutor) {
-		return this.controleTutores.pegarNota(matriculaTutor);
+	public double pegarNota(String matriculaTutor){
+		return 1;
 	}
-	
-	/**
-	 * Retorna o nível do tutor através de sua matrícula.
-	 * @param matriculaTutor a matrícula do tutor, no formato String.
-	 * @return
-	 */
-	public String pegarNivel(String matriculaTutor) {
-		return this.controleTutores.pegarNivel(matriculaTutor);
+	public String pegarNivel(String matriculaTutor){
+		return "";
 	}
-	
-	/**
-	 * Doa o dinheiro passado como parâmetro para o caixa do sistema e tutor especificado.
-	 * @param matriculaTutor matrícula do tutor
-	 * @param totalCentavos o dinheiro
-	 */
-	public void doar(String matriculaTutor, int totalCentavos) {
-		this.controleTutores.doar(matriculaTutor, totalCentavos);
-	}
-	
-	/**
-	 * Retorna o total de dinheiro que o tutor do email passado como parâmetro possui.
-	 * @param emailTutor o email do tutor.
-	 * @return o valor total.
-	 */
-	public int totalDinheiroTutor(String emailTutor) {
-		return this.controleTutores.totalDinheiroTutor(emailTutor);
-	}
-	
-	/**
-	 * Retorna o total do dinheiro que o caixa do sistema possui.
-	 * @return o valor total.
-	 */
-	public int totalDinheiroSistema() {
-		return this.caixa.getDinheiroSistema();
-	}
-	
 }

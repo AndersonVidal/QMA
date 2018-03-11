@@ -1,242 +1,190 @@
 package controller;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
-import model.Ajuda;
 import model.Aluno;
-import model.Tutor;
+import utils.Alfabetica;
+import utils.Comparador;
 import utils.Validador;
 
 /**
  * Controle que contém a lógica de negócio dos tutores do sistema.
  * 
- * @author Maria Cecília Kemiac
+ * @author Maria Cecília Kemiac e Anderson Fellipe de Vasconcelos Vidal
  */
 public class ControllerTutores {
 	
 	/**
-	 * Representação de um Controller de alunos.
+	 * Adiciona a propriedade tutor a um aluno cadastrado no sistema. Caso o aluno já seja tutor, é
+	 * adicionado apenas a disciplina com sua profissiencia.
+	 * 
+	 * @param matricula Matricula do aluno, no formato String "111222333"
+	 * @param disciplina Disciplina para tutor, no formato String "Calculo 2"
+	 * @param proficiencia Profissiencia do tutor na disciplina, no formato inteiro "1"
+	 * @param alunos Alunos cadastrados no sistema, no formato Map
+	 * @return Cadastro de aluno atualizados, no formato Map
 	 */
-	private ControllerAlunos ctAlunos;
-	private CaixaSistema caixa;
+	public Map<String, Aluno> tornarTutor(String matricula, String disciplina, int proficiencia, Map<String, Aluno> alunos){
+		Validador.validadorString(matricula, "Erro na definicao de papel: matricula invalida");
+		Validador.validadorMapKeyNotConteins(matricula, alunos, "Erro na definicao de papel: Tutor nao encontrado");
+		
+		Aluno aluno = alunos.get(matricula);
+		if (aluno.isTutor()) {
+			aluno.getTutor().addDisciplina(disciplina, proficiencia);
+		} else  {
+			int id = this.getQuatidadeTutores(alunos) + 1;
+			aluno.tornaTutor(id, disciplina, proficiencia);
+		}
+		
+		return alunos;
+	}
 	
 	/**
-	 * Consotrói um controller de tutores a partir de um controller
-	 * de alunos.
+	 * Recupera a descrição de um tutor.
 	 * 
-	 * @param ctrlAlunos Controller de alunos
+	 * @param matricula Matricula do tutor no sistema.
+	 * @param alunos Alunos cadastrados no sistema, no formato Map
+	 * @return Desrição de um tutor.
 	 */
-	public ControllerTutores(ControllerAlunos ctrlAlunos, CaixaSistema caixa) {
-		this.ctAlunos = ctrlAlunos;
-		this.caixa = caixa;
+	public String recuperaTutor(String matricula, Map<String, Aluno> alunos){
+		Validador.validadorString(matricula, "Erro na busca por tutor: Matricula não pode ser vazio ou nulo");
+		Validador.validadorMapKeyNotConteins(matricula, alunos, "Erro na busca por tutor: Tutor nao encontrado");
+		
+		Aluno aluno = alunos.get(matricula);
+		if (!aluno.isTutor()) {
+			throw new IllegalArgumentException("Erro na busca por tutor: Matricula nao eh de um aluno tutor");
+		}
+		return aluno.toString();
 	}
-
+	
 	/**
-	/* Retorna um objeto aluno que é tutor da ajuda passada como parâmetro.
-	 * @param idAjuda ID da ajuda no formato inteiro.
-	 * @return o aluno.
+	 * Cria e retorna uma lista de descrições de cada aluno que é tutor
+	 * 
+	 * @param alunos Mapa de alunos cadastrados, no formato Map
+	 * @return Lista de descrições de alunos tutores
 	 */
-	private Aluno retornaAlunoTutor(int idAjuda) {
-		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
-			if(aluno.getTutor().getAjudasPrestadas().containsKey(idAjuda)) {
-				return aluno;
+	public String listarAlunosTutores(Map<String, Aluno> alunos){
+		List<Aluno> arrayTutores = this.ordenaAlfabeticaTutores(this.getAlunosTutores(alunos));
+	
+		int quantidadeTutores = this.getQuatidadeTutores(alunos);
+		String lista = "";
+		int i = 0;
+		for (Aluno tutor : arrayTutores) {
+			i++;
+			if (i < quantidadeTutores) {
+				lista += tutor.toString() + ", ";
+			} else if(tutor.isTutor()){
+				lista += tutor.toString();
 			}
 		}
-		return null;
+		
+		return lista;
 	}
 	
 	/**
-	 * Avalia um tutor a partir da nota da ajuda concedida.
+	 * Cadastra um horário de disponibilidade de atendimeno para um tutor.
 	 * 
-	 * @param idAjuda ID da ajuda, no formato inteiro.
-	 * @param nota nota para a ajuda do tutor, no formato inteiro.
-	 * @return
+	 * @param email Email do aluno tutor, no formato String "tutor@gmail.com"
+	 * @param horario Horario de disponibilidade, no formato String "HH:mm"
+	 * @param dia Dia de atendimento, no formato String "ter"
+	 * @param alunos Cdastro de alunos do sistema, no formato Map
+	 * @return Cadastro atualizado dos alunos no sistema, no formato Map
 	 */
-	public String avaliarTutor(int idAjuda, int nota) {
-		Validador.validadorNaoNegativo(nota, "Erro na avaliacao de tutor: nota nao pode ser menor que 0");
-		Validador.validadorMaiorQueAlgo(nota, 5, "Erro na avaliacao de tutor: nota nao pode ser maior que 5");
-		Validador.validadorTamanho(idAjuda, this.ctAlunos.getQtdAjudas(), "Erro na avaliacao de tutor: id nao encontrado ");
-		
-		Aluno alunoTutor = retornaAlunoTutor(idAjuda);
-		Validador.validadorObjeto(alunoTutor, "Erro na avaliacao de tutor: Ajuda nao atribuida a tutor");
-		Ajuda ajuda = alunoTutor.getTutor().getAjudasPrestadas().get(idAjuda);
-		
-		Validador.validadorBooleanTrue(ajuda.avaliado(), "Erro na avaliacao de tutor: Ajuda ja avaliada");
-		
-		alunoTutor.getTutor().setNota(nota);
-		ajuda.avaliaAjuda();
-		return alunoTutor.toString();
-	}
-	
-	/**
-	 * Retorna a nota do tutor através de sua matrícula.
-	 * @param matriculaTutor a matricula do tutor, no formato String.
-	 * @return
-	 */
-	public String pegarNota(String matriculaTutor) {
-		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
-		double nota = alunoTutor.getTutor().getNota();
-		
-		DecimalFormat decimalFormat = new DecimalFormat("0.00");
-		decimalFormat.setRoundingMode(RoundingMode.DOWN);
-		
-		return decimalFormat.format(nota);
-	}
-	
-	/**
-	 * Retorna o nível do tutor através de sua matrícula.
-	 * @param matriculaTutor a matrícula do tutor, no formato String.
-	 * @return
-	 */
-	public String pegarNivel(String matriculaTutor) {
-		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
-		double nota = alunoTutor.getTutor().getNota();
-		
-		String nivel = null;
-		if(nota > 4.5) {
-			nivel = "TOP";
-		}else if(nota > 3 && nota <= 4.5) {
-			nivel = "Tutor";
-		}else {
-			nivel = "Aprendiz";
-	}
-		return nivel;
-	}
-	
-	/**
-	 * Retorna um objeto aluno que é tutor e contém a matrícula passada como parâmetro.
-	 * @param matriculaTutor a matricula do aluno tutor, no formato String.
-	 * @return o aluno.
-	 */
-	private Aluno retornaAlunoTutor(String matriculaTutor) {
-		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
-			if(aluno.getMatricula().equals(matriculaTutor)) {
-				return aluno;
-			}
-		}
-		return null;
-	}
-	
-	private Aluno retornaAlunoTutorEmail(String emailTutor) {
-		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
-			if(aluno.getEmail().equals(emailTutor)) {
-				return aluno;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Adiciona um horário ao dia especificado para um tutor específico
-	 * 
-	 * @param email Email do tutor, no formato String "teste@email.com"
-	 * @param horario Horário a ser adicionado, no formato String "17:00"
-	 * @param dia Dia da semana, no formato String "seg"
-	 */
-	public void cadastrarHorario(String email, String horario, String dia) {
+	public Map<String, Aluno> cadastrarHorario(String email, String horario, String dia, Map<String, Aluno> alunos) {
 		Validador.validadorString(email, "Erro no cadastrar horario: email nao pode ser vazio ou em branco");
-		Validador.validadorMapKeyNotConteins(email, this.ctAlunos.getAlunosTutoresKeyEmail(), "Erro no cadastrar horario: tutor nao cadastrado");
+		String matriculaTutor = this.buscaTutor(alunos, email);
+		Validador.validadorString(matriculaTutor, "Erro no cadastrar horario: tutor nao cadastrado");
 		
-		Tutor tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
-		tutor.addHorario(horario, dia);
+		alunos.get(matriculaTutor).getTutor().addHorario(horario, dia);
+		return alunos;
 	}
-
+	
 	/**
-	 * Adiciona um local de atendimento do tutor especificado.
+	 * Registra um local de disponibilidade para atendimentos de um tutor cadastrado
 	 * 
-	 * @param email Email do tutor, no formato String "teste@email.com"
-	 * @param local Local de atendimento a ser adicionado, no formato String "ufcg"
+	 * @param email Email do aluno tutor, no formato String "tutor@gmail.com"
+	 * @param local Local de atendimento, no formato String "CAA303"
+	 * @param alunos Cdastro de alunos do sistema, no formato Map
+	 * @return Cadastro atualizado dos alunos no sistema, no formato Map
 	 */
-	public void cadastrarLocalDeAtendimento(String email, String local) {
+	public Map<String, Aluno> cadastrarLocalDeAtendimento(String email, String local, Map<String, Aluno> alunos) {		
 		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		Validador.validadorMapKeyNotConteins(email, this.ctAlunos.getAlunosTutoresKeyEmail(), "Erro no cadastrar local de atendimento: tutor nao cadastrado");
+		String matriculaTutor = this.buscaTutor(alunos, email);
+		Validador.validadorString(matriculaTutor, "Erro no cadastrar local de atendimento: tutor nao cadastrado");
 		
-		Tutor tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
-		tutor.addLocal(local);
+		alunos.get(matriculaTutor).getTutor().addLocal(local);
+		return alunos;
 	}
 	
 	/**
-	 *
-	 * Verifica se o horario especificado é de disponibilidade do tutor especificado.
-	 *
-	 * @param email Email do tutor, no formato String "teste@email.com"
-	 * @param horario Horário a ser consultado, no formato String "17:00"
-	 * @param dia Dia da semana, no formato String "seg"
-	 * @return Representacao booleana da verificacao de horário do tutor
-	 */
-	public boolean consultaHorario(String email, String horario, String dia) {
-		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		if (!this.ctAlunos.getAlunosTutoresKeyEmail().containsKey(email)) return false; 
-		Tutor tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
-		
-		return tutor.consultaHorario(horario, dia);
-	}
-	
-	/**
-	 * Verifica se o local especificado é de disponibilidade do tutor especificado
+	 * Retorna a possibilidade de um atendimento em determinado horario e dia
 	 * 
-	 * @param email Email do tutor, no formato String "teste@email.com"
-	 * @param local Local a ser consultado, no formato String "ufcg"
-	 * @return Representacao booleana da verificacao de local do tutor
+	 * @param email Email do aluno tutor, no formato String "tutor@gmail.com"
+	 * @param horario Horario de disponibilidade, no formato String "HH:mm"
+	 * @param dia Dia de atendimento, no formato String "ter"
+	 * @param alunos Cdastro de alunos do sistema, no formato Map
+	 * @return Booleano que representa a proposição de horário de atendimento existir.
 	 */
-	public boolean consultaLocal(String email, String local) {
-		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		if (!this.ctAlunos.getAlunosTutoresKeyEmail().containsKey(email)) return false;
-		Tutor tutor = this.ctAlunos.getAlunosTutoresKeyEmail().get(email);
+	public boolean consultaHorario(String email, String horario, String dia, Map<String, Aluno> alunos){
+		Validador.validadorString(email, "Erro na consulta de horario: email nao pode ser vazio ou em branco");
+		String matriculaTutor = this.buscaTutor(alunos, email);
+		if(matriculaTutor == null) return false;
 		
-		return tutor.consultaLocal(local);
+		return alunos.get(matriculaTutor).getTutor().consultaHorario(horario, dia); 
 	}
 	
 	/**
-	 * Doa o dinheiro passado como parâmetro para o caixa do sistema e tutor especificado.
-	 * @param matriculaTutor matrícula do tutor
-	 * @param totalCentavos o dinheiro
+	 * Retorna a possibilidade de um atendimento em determinado local.
+	 * 
+	 * @param email Email do aluno tutor, no formato String "tutor@gmail.com"
+	 * @param local Local de atendimento, no formato String "CAA303"
+	 * @param alunos Cdastro de alunos do sistema, no formato Map
+	 * @return Booleano que representa a proposição de local de atendimento existir.
 	 */
-	public void doar(String matriculaTutor, int totalCentavos){
-		Validador.validadorPositivo(totalCentavos,"Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
-		Aluno alunoTutor = retornaAlunoTutor(matriculaTutor);
-		Validador.validadorObjeto(alunoTutor, "Erro na doacao para tutor: Tutor nao encontrado");
-		double nota = alunoTutor.getTutor().getNota();
-		String nivel = pegarNivel(matriculaTutor);
+	public boolean consultaLocal(String email, String local, Map<String, Aluno> alunos){
+		Validador.validadorString(email, "Erro na consulta de local: email nao pode ser vazio ou em branco");
+		String matriculaTutor = this.buscaTutor(alunos, email);
+		if(matriculaTutor == null) return false;
 		
-		int taxaTutor;
-		if(nivel.equals("TOP")) {
-			taxaTutor = ((int)((nota - 4.5) * 10)) + 90;
-		}else if(nivel.equals("Tutor")) {
-			taxaTutor = 80;
-		}else {
-			taxaTutor = 40 - ((int)(Math.ceil((3 - nota) * 10)));
+		return alunos.get(matriculaTutor).getTutor().consultaLocal(local);
+	}
+	
+	/**
+	 * Retorna uma lista de alunos que são tutores.
+	 * 
+	 * @param alunos Cdastro de alunos do sistema, no formato Map
+	 * @return Alunos tutores, no formato List
+	 */
+	public List<Aluno> getAlunosTutores(Map<String, Aluno> alunos){
+		List<Aluno> tutores = new ArrayList<Aluno>();
+		for(Aluno aln : alunos.values()) {
+			if (aln.isTutor()) tutores.add(aln);
 		}
-		double taxa = taxaTutor / 100.0;
 		
-		int dinheiroSistema = (int) Math.ceil((1 - taxa) * totalCentavos);
-		int dinheiroTutor = totalCentavos - dinheiroSistema;
+		return tutores;
+	}
+	
+	private int getQuatidadeTutores(Map<String, Aluno> alunos){
+		return this.getAlunosTutores(alunos).size();
+	}
+	
+	private List<Aluno> ordenaAlfabeticaTutores(List<Aluno> tutores) {
+		Comparador alfabetico = new Alfabetica();
+		Collections.sort(tutores, alfabetico);
+		return tutores;
+	}
+	
+	private String buscaTutor(Map<String, Aluno> alunos, String email) {
+		String matriculaTutor = null;
+		for(Aluno aluno : alunos.values()) {
+			if(aluno.isTutor()) {
+				if(aluno.getEmail().equals(email)) matriculaTutor = aluno.getMatricula();
+			}
+		}
 		
-	    alunoTutor.getTutor().addDinheiro(dinheiroTutor);
-		caixa.addDinheiroSistema(dinheiroSistema);
+		return matriculaTutor;
 	}
-	
-	/**
-	 * Retorna o total de dinheiro que o tutor do email passado como parâmetro possui.
-	 * @param emailTutor o email do tutor.
-	 * @return o valor total.
-	 */
-	public int totalDinheiroTutor(String emailTutor) {
-		Validador.validadorString(emailTutor,"Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
-		Aluno aluno = retornaAlunoTutorEmail(emailTutor);
-		Validador.validadorObjeto(aluno, "Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
-		int dinheiroTotalTutor = aluno.getTutor().getDinheiro();
-		return dinheiroTotalTutor;
-	}
-	
-	/**
-	 * Retorna o total do dinheiro que o caixa do sistema possui.
-	 * @return o valor total.
-	 */
-	public int totalDinheiroSistema() {
-		return caixa.getDinheiroSistema();
-	}
-	
 }
-

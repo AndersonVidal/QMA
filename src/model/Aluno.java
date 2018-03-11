@@ -41,7 +41,6 @@ public class Aluno {
 	 */
 	private Optional<Tutor> tutor;
 	
-	
 	/**
 	 * Constrói um aluno a partir da matricula, do nome, do código do curso,
 	 * do telefone e do email.
@@ -56,9 +55,8 @@ public class Aluno {
 		Validador.validadorString(matricula, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
 		Validador.validadorString(nome, "Erro no cadastro de aluno: Nome nao pode ser vazio ou nulo");
 		Validador.validadorEmail(email, "Erro no cadastro de aluno: Email invalido");
-		Validador.validadorPositivo(codigoCurso, "Erro no cadastro de aluno: Código de curso não pode ser negativo ou nulo1");
 		if(!telefone.isEmpty()) {
-			Validador.validadorString(telefone, "Erro no cadastro de aluno: Telefone nao pode ser vazio ou nulo");
+			Validador.validadorString(matricula, "Erro no cadastro de aluno: Telefone nao pode ser vazio ou nulo");
 		}
 		
 		this.matricula = matricula;
@@ -162,3 +160,4 @@ public class Aluno {
 		return true;
 	}
 }
+
