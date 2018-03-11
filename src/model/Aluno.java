@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Optional;
+
 import utils.Validador;
 
 /**
@@ -37,8 +39,7 @@ public class Aluno {
 	/**
 	 * Representação a função de Tutor do aluno
 	 */
-	private Ocupacao tutor;
-	
+	private Optional<Tutor> tutor;
 	
 	/**
 	 * Constrói um aluno a partir da matricula, do nome, do código do curso,
@@ -64,6 +65,7 @@ public class Aluno {
 		this.telefone = telefone;
 		this.email = email;
 		this.nota = 5;
+		this.tutor = Optional.empty();
 	}
 	
 	public String getMatricula() { return matricula; }
@@ -84,7 +86,7 @@ public class Aluno {
 	 * @return Booleano que representa se o aluno é um tutor
 	 */
 	public boolean isTutor() {
-		return this.tutor != null;
+		return this.tutor.isPresent();
 	}
 	
 	/**
@@ -92,12 +94,12 @@ public class Aluno {
 	 * 
 	 * @return Objeto tutor de aluno.
 	 */
-	public Ocupacao getTutor() {
+	public Tutor getTutor() {
 		if (!this.isTutor()) {
 			throw new NullPointerException("Erro ao recuperar tutor: Tutor nao existe");
 		}
 		
-		return this.tutor;
+		return this.tutor.get();
 	}
 	
 	/**
@@ -107,7 +109,7 @@ public class Aluno {
 	 * @param proficiencia Proficiência do tutor na disciplina
 	 */
 	public void tornaTutor(int id, String disciplina, int proficiencia) {
-		this.tutor = new Tutor(id, disciplina, proficiencia);
+		this.tutor = Optional.of(new Tutor(id, disciplina, proficiencia));
 	}
 	
 	/**
