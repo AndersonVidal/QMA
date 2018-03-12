@@ -213,7 +213,11 @@ public class Tutor {
 			return false;
 		return true;
 	}
-}
 	
+	//----
 	
+	public void avaliar(int nota) {
+		Validador.validadorPositivo(nota, "nota negativa");
+		this.nota = (this.nota * 5 + nota) / 6;
+	}
 }

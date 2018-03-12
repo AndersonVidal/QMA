@@ -167,6 +167,21 @@ public class ControllerTutores {
 		return tutores;
 	}
 	
+	/**
+	 * 
+	 * @param matrTutor
+	 * @param nota
+	 * @param alunos
+	 * @return
+	 */
+	public Map<String, Aluno> avaliaTutor(String matrTutor, int nota, Map<String, Aluno> alunos){
+		Validador.validadorMapKeyNotConteins(matrTutor, alunos, "Tutor não encontrado");
+		alunos.get(matrTutor).getTutor().avaliar(nota);
+		return alunos;
+	}
+	
+	
+	
 	private int getQuatidadeTutores(Map<String, Aluno> alunos){
 		return this.getAlunosTutores(alunos).size();
 	}

@@ -188,9 +188,10 @@ public class Facade {
 		return this.controllerSistema.getInfoAjuda(idAjuda, atributo);
 	}
 	
-	public String avaliarTutor (int idAjuda, int nota){
-		return "";
+	public void avaliarTutor (int idAjuda, int nota){
+		this.controllerSistema.avaliarTutor(idAjuda, nota);
 	}
+	
 	public double pegarNota(String matriculaTutor){
 		return 1;
 	}

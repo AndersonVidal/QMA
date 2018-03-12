@@ -93,4 +93,10 @@ public class ControllerSistema {
 	public String getInfoAjuda(int idAjuda, String atributo){
 		return this.controllerAjudas.getInfoAjuda(idAjuda, atributo);
 	}
+	
+	public void avaliarTutor (int idAjuda, int nota){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		String matrTutor = this.controllerAjudas.avaliarTutor(idAjuda);
+		this.controllerAlunos.setAlunos(this.controllerTutores.avaliaTutor(matrTutor, nota, alunos));
+	}
 }

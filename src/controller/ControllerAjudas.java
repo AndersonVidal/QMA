@@ -10,7 +10,6 @@ import model.Ajuda;
 import model.AjudaOnline;
 import model.AjudaPresencial;
 import model.Aluno;
-import model.Tutor;
 import utils.ComparaNotaAlunoTutor;
 import utils.Validador;
 
@@ -134,10 +133,6 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaPresencial(id, matrAluno, tutor, disciplina, horario, dia, local);
 		this.ajudas.add(ajuda);
-		
-		Tutor oTutor = retornaTutor(tutor);
-		adicionaAjuda(ajuda, oTutor);
-		
 		return id;
 	}
 	
@@ -158,27 +153,9 @@ public class ControllerAjudas {
 		int id = this.ajudas.size() + 1;
 		Ajuda ajuda = new AjudaOnline(id, matriculaAluno, tutor, disciplina);
 		this.ajudas.add(ajuda);
-		
-		Tutor oTutor = retornaTutor(tutor);
-		adicionaAjuda(ajuda, oTutor);
-		
 		return id;
 	}
 
-	private Tutor retornaTutor(String matrTutor) {
-		Tutor tutor = null;
-		for(Aluno aluno : this.ctAlunos.getAlunosTutores()) {
-		if(aluno.getMatricula().equals(matrTutor)) {
-				tutor = aluno.getTutor();
-			}
-		}
-		return tutor;
-	}
-		
-	private void adicionaAjuda(Ajuda ajuda, Tutor tutor) {
-		tutor.getAjudasPrestadas().put(ajuda.getId(), ajuda);
-	}
-	
 	/**
 	 * Retorna a descrição do tutor da ajuda.
 	 * <ul><li>Para ajudas online:</li>
@@ -217,5 +194,13 @@ public class ControllerAjudas {
 		Validador.listConteins(this.ajudas, idAjuda - 1, "Erro ao tentar recuperar info da ajuda : id nao encontrado ");
 		
 		return this.ajudas.get(idAjuda - 1).getInfoAjuda(atributo);
+	}
+	
+
+	public String avaliarTutor(int idAjuda){
+		Validador.listConteins(this.ajudas, idAjuda - 1, "Erro ao tentar avaliar ajuda : id nao encontrado ");
+		this.ajudas.get(idAjuda - 1).checkAvaliacao(); 
+		String matrTutor = this.ajudas.get(idAjuda).getMatriclaTutor();
+		return matrTutor;
 	}
 }
