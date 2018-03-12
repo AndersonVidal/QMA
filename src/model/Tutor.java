@@ -220,4 +220,10 @@ public class Tutor {
 		Validador.validadorPositivo(nota, "nota negativa");
 		this.nota = (this.nota * 5 + nota) / 6;
 	}
+	
+	public String getNivel() {
+		if(this.nota > 4.5) return "TOP";
+		if(this.nota > 3) return "Tutor";
+		return "Aprendiz";
+	}
 }

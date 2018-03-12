@@ -188,12 +188,22 @@ public class Facade {
 		return this.controllerSistema.getInfoAjuda(idAjuda, atributo);
 	}
 	
+	/**
+	 * Registra a avaliação de uma ajuda prestada de um tutor.
+	 * 
+	 * @param idAjuda Número identificador da ajuda, no formato inteiro "2"
+	 * @param nota Valor da avaliação, no formato inteiro "4"
+	 */
 	public void avaliarTutor (int idAjuda, int nota){
 		this.controllerSistema.avaliarTutor(idAjuda, nota);
 	}
-	
+	/**
+	 * 
+	 * @param matriculaTutor
+	 * @return
+	 */
 	public double pegarNota(String matriculaTutor){
-		return 1;
+		return this.controllerSistema.pegarNota(matriculaTutor);
 	}
 	public String pegarNivel(String matriculaTutor){
 		return "";

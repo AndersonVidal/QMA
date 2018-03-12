@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import model.Aluno;
+import utils.Validador;
 
 public class ControllerSistema {
 	
@@ -98,5 +99,12 @@ public class ControllerSistema {
 		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
 		String matrTutor = this.controllerAjudas.avaliarTutor(idAjuda);
 		this.controllerAlunos.setAlunos(this.controllerTutores.avaliaTutor(matrTutor, nota, alunos));
+	}
+	
+	public double pegarNota(String matriculaTutor){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		int nota = this.controllerTutores.pegarNota(matriculaTutor, alunos);
+		Validador.validadorPositivo(nota, "Aluno não é tutor");
+		return nota;
 	}
 }

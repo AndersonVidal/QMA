@@ -168,11 +168,12 @@ public class ControllerTutores {
 	}
 	
 	/**
+	 * Registra uma avaliação de uma ajuda prestara por um tutor identificado pela sua matricula.
 	 * 
-	 * @param matrTutor
-	 * @param nota
-	 * @param alunos
-	 * @return
+	 * @param matrTutor Matricula do tutor responsável pela ajuda, no formato String "123456"
+	 * @param nota Avaliação para a ajuda prestada, no formato inteiro "7"
+	 * @param alunos Mapa de alunos cadastrados, no formato Map
+	 * @return Mapa de alunos cadastrados atualizado.
 	 */
 	public Map<String, Aluno> avaliaTutor(String matrTutor, int nota, Map<String, Aluno> alunos){
 		Validador.validadorMapKeyNotConteins(matrTutor, alunos, "Tutor não encontrado");
@@ -180,7 +181,23 @@ public class ControllerTutores {
 		return alunos;
 	}
 	
-	
+	/**
+	 * Recupera a nota de um tutor de acordo com a matricula do mesmo. <br>
+	 * Caso a matricula referencie um aluno que não é tutor, é retornado -1;
+	 * 
+	 * @param matriculaTutor Matricula do aluno tutor, no formato String "123456"
+	 * @param alunos Mapa de alunos cadastrados, no formato Map
+	 * @return Nota do tutor. -1, caso matricula não referencie tutor.
+	 */
+	public int pegarNota(String matriculaTutor, Map<String, Aluno> alunos) {
+		Validador.validadorString(matriculaTutor, "tutor não pode ser nulo ou vazio");
+		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "tutor não cadastrado");
+		Aluno aluno = alunos.get(matriculaTutor);
+		if(aluno.isTutor()) {
+			return aluno.getNota();
+		}
+		return -1;
+	} 
 	
 	private int getQuatidadeTutores(Map<String, Aluno> alunos){
 		return this.getAlunosTutores(alunos).size();
@@ -199,7 +216,8 @@ public class ControllerTutores {
 				if(aluno.getEmail().equals(email)) matriculaTutor = aluno.getMatricula();
 			}
 		}
-		
 		return matriculaTutor;
 	}
+	
+	
 }
