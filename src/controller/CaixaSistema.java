@@ -48,7 +48,6 @@ public class CaixaSistema {
 	public void limpar(String path) {
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
-			this.dinheiroSistema = 0;
 			fos.close();
 		} catch (IOException ioe) {}
 	}
