@@ -145,7 +145,6 @@ public class ControllerAlunos {
 	public void limpar(String path) {
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
-			this.alunos = new HashMap<String, Aluno>();
 			fos.close();
 		} catch (IOException ioe) {}
 	}
