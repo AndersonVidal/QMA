@@ -231,4 +231,8 @@ public class Facade {
 	public int totalDinheiroSistema() {
 		return this.controllerSistema.totalDinheiroSistema();
 	}
+	
+	public void configurarOrdem(String atributo) {
+		this.controllerSistema.configurarOrdem(atributo);
+	}
 }

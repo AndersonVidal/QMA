@@ -1,10 +1,15 @@
 package controller;
 
 import java.util.List;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
 import model.Aluno;
+import utils.Alfabetica;
+import utils.ComparaMatricula;
+import utils.ComparaNome;
+import utils.ComparaTelefone;
 import utils.Validador;
 
 public class ControllerSistema {
@@ -13,12 +18,14 @@ public class ControllerSistema {
 	private ControllerTutores controllerTutores;
 	private ControllerAjudas controllerAjudas;
 	private CaixaSistema caixaSistema;
+	private Comparator<Aluno> criterioDeListagem;
 	
 	public ControllerSistema(){
 		this.controllerAlunos = new ControllerAlunos();
 		this.controllerTutores = new ControllerTutores();
 		this.controllerAjudas = new ControllerAjudas();
 		this.caixaSistema = new CaixaSistema();
+		this.criterioDeListagem = new Alfabetica();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email){
@@ -30,7 +37,7 @@ public class ControllerSistema {
 	}
 	
 	public String listarAlunos(){
-		return this.controllerAlunos.listarAlunos();
+		return this.controllerAlunos.listarAlunos(this.criterioDeListagem);
 	}
 	
 	public String getInfoAluno(String matricula, String atributo){
@@ -49,7 +56,7 @@ public class ControllerSistema {
 	
 	public String listarTutores() {
 		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
-		return this.controllerTutores.listarAlunosTutores(alunos);
+		return this.controllerTutores.listarAlunosTutores(alunos, this.criterioDeListagem);
 	}
 	
 	public void cadastrarHorario(String email, String horario, String dia) {
@@ -146,5 +153,21 @@ public class ControllerSistema {
 	
 	public int totalDinheiroSistema(){
 		return (int) this.caixaSistema.getDinheiroSistema();
+	}
+
+	public void configurarOrdem(String atributo) {
+		Validador.validadorString(atributo, "Erro ao configurar ordem: atributo nao pode ser vazio ou nulo");
+		
+		switch (atributo) {
+		case "Nome":
+			this.criterioDeListagem = new ComparaNome();
+		case "Matricula":
+			this.criterioDeListagem = new ComparaMatricula();
+		case "Telefone":
+			this.criterioDeListagem = new ComparaTelefone();
+		default:
+			throw new IllegalArgumentException("Erro ao configurar ordem: atributo invalido");
+		}
+		
 	}
 }
