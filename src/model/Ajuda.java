@@ -28,7 +28,7 @@ public abstract class Ajuda {
 	/**
 	 * Informa se a ajuda já foi avaliada, no formato boolean "true"
 	 */
-	private boolean avaliado;
+	private boolean avaliacao;
 	
 	/**
 	 * Constrói ajuda a partir do id, das matrículas do aluno e do tutor,
@@ -49,14 +49,12 @@ public abstract class Ajuda {
 		this.matrTutor = matrTutor;
 		this.matrAluno = matrAluno;
 		this.disciplina = disciplina;
-		this.avaliado = false;
+		this.avaliacao = false;
 	}
 	
-	public boolean avaliado() { return this.avaliado; }
-		
-	public void avaliaAjuda() {
-		this.avaliado = true;
-	}	
+	public void checkAvaliacao() { this.avaliacao = true; }
+	
+	public boolean getAvaliacao() { return this.avaliacao; }	
 	
 	public int getId() { return this.id; }
 

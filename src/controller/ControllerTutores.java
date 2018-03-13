@@ -167,6 +167,89 @@ public class ControllerTutores {
 		return tutores;
 	}
 	
+	/**
+	 * Registra uma avaliação de uma ajuda prestara por um tutor identificado pela sua matricula.
+	 * 
+	 * @param matrTutor Matricula do tutor responsável pela ajuda, no formato String "123456"
+	 * @param nota Avaliação para a ajuda prestada, no formato inteiro "7"
+	 * @param alunos Mapa de alunos cadastrados, no formato Map
+	 * @return Mapa de alunos cadastrados atualizado.
+	 */
+	public Map<String, Aluno> avaliaTutor(String matrTutor, int nota, Map<String, Aluno> alunos){
+		Validador.validadorMapKeyNotConteins(matrTutor, alunos, "Tutor não encontrado");
+		alunos.get(matrTutor).getTutor().avaliar(nota);
+		return alunos;
+	}
+	
+	/**
+	 * Recupera a nota de um tutor de acordo com a matricula do mesmo. <br>
+	 * Caso a matricula referencie um aluno que não é tutor, é retornado -1;
+	 * 
+	 * @param matriculaTutor Matricula do aluno tutor, no formato String "123456"
+	 * @param alunos Mapa de alunos cadastrados, no formato Map
+	 * @return Nota do tutor. -1, caso matricula não referencie tutor.
+	 */
+	public String pegarNota(String matriculaTutor, Map<String, Aluno> alunos) {
+		Validador.validadorString(matriculaTutor, "tutor não pode ser nulo ou vazio");
+		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "tutor não cadastrado");
+		Aluno aluno = alunos.get(matriculaTutor);
+		if(aluno.isTutor()) {
+			return aluno.getTutor().getNotaString();
+		}
+		return null;
+	}
+	
+	/**
+	 * Recupera o nivel do tutor, em que:
+	 * <ul><li><b>TOP</b>: nivel dado ao tutor com nota maior que 4.5</li>
+	 * <li><b>Tutor</b>: nivel dado ao tutor com nota entre 3.1 e 4.5</li>
+	 * <li><b>Aprendiz</b>: nivel dado ao tutor com nota menor ou igual a 3</li></ul>
+	 * 
+	 * @param matriculaTutor Matricula do tutor cujo nivel será resgatado, no formato String "123456"
+	 * @param alunos Mapa de alunos cadastrados, no formato Map
+	 * @return Nivel do tutor. Null caso matricula referencie um aluno que não é tutor.
+	 */
+	public String pegarNivel(String matriculaTutor, Map<String, Aluno> alunos) {
+		Validador.validadorString(matriculaTutor, "tutor não pode ser nulo ou vazio");
+		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "tutor não cadastrado");
+		Aluno aluno = alunos.get(matriculaTutor);
+		if(aluno.isTutor()) {
+			return aluno.getTutor().getNivel();
+		}
+		return null;
+	}
+	
+	public double getTaxaTutor(String matriculaTutor, Map<String, Aluno> alunos){
+		Validador.validadorString(matriculaTutor, "tutor não pode ser nulo ou vazio");
+		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "tutor não cadastrado");
+		Aluno aluno = alunos.get(matriculaTutor);
+		if(aluno.isTutor()) {
+			return aluno.getTutor().getTaxa();
+		}
+		return -1;
+	}
+	
+	public Map<String, Aluno> receberDinheiroTutor(String matriculaTutor, double dinheiro, Map<String, Aluno> alunos){
+		Validador.validadorString(matriculaTutor, "tutor não pode ser nulo ou vazio");
+		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "tutor não cadastrado");
+		Aluno aluno = alunos.get(matriculaTutor);
+		if(aluno.isTutor()) {
+			alunos.get(matriculaTutor).getTutor().setDinheiro(dinheiro);
+			return alunos;
+		}
+		return null;
+	}
+	
+	public double getDinheiroTutor(String email, Map<String, Aluno> alunos){
+		Validador.validadorString(email, "email vazio ou nulo");
+		String matriculaTutor = this.buscaTutor(alunos, email);
+		Validador.validadorString(matriculaTutor, "email nao cadastrado");
+		if(alunos.get(matriculaTutor).isTutor()){
+			return alunos.get(matriculaTutor).getTutor().getDinheiro();
+		}
+		return -1;
+	}
+	
 	private int getQuatidadeTutores(Map<String, Aluno> alunos){
 		return this.getAlunosTutores(alunos).size();
 	}
@@ -184,7 +267,8 @@ public class ControllerTutores {
 				if(aluno.getEmail().equals(email)) matriculaTutor = aluno.getMatricula();
 			}
 		}
-		
 		return matriculaTutor;
 	}
+	
+	
 }

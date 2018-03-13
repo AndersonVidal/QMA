@@ -5,17 +5,20 @@ import java.util.Map;
 import java.util.Set;
 
 import model.Aluno;
+import utils.Validador;
 
 public class ControllerSistema {
 	
 	private ControllerAlunos controllerAlunos;
 	private ControllerTutores controllerTutores;
 	private ControllerAjudas controllerAjudas;
+	private CaixaSistema caixaSistema;
 	
 	public ControllerSistema(){
 		this.controllerAlunos = new ControllerAlunos();
 		this.controllerTutores = new ControllerTutores();
 		this.controllerAjudas = new ControllerAjudas();
+		this.caixaSistema = new CaixaSistema();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email){
@@ -92,5 +95,56 @@ public class ControllerSistema {
 	
 	public String getInfoAjuda(int idAjuda, String atributo){
 		return this.controllerAjudas.getInfoAjuda(idAjuda, atributo);
+	}
+	
+	public void avaliarTutor (int idAjuda, int nota){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		Validador.validadorLimiteSuperior(nota, 5, "Erro na avaliacao de tutor: nota nao pode ser maior que 5");
+		Validador.validadorLimiteInferior(nota, 0, "Erro na avaliacao de tutor: nota nao pode ser menor que 0");
+		String matrTutor = this.controllerAjudas.avaliarTutor(idAjuda);
+		Validador.validadorString(matrTutor, "Erro na avaliacao de tutor: Ajuda ja avaliada");
+		Map<String, Aluno> atualizacao = this.controllerTutores.avaliaTutor(matrTutor, nota, alunos);
+		this.controllerAlunos.setAlunos(atualizacao);
+	}
+	
+	public String pegarNota(String matriculaTutor){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		String nota = this.controllerTutores.pegarNota(matriculaTutor, alunos);
+		Validador.validadorString(nota, "Aluno não é tutor");
+		return nota;
+	}
+	
+	public String pegarNivel(String matriculaTutor){
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		String nivel = this.controllerTutores.pegarNivel(matriculaTutor, alunos);
+		Validador.validadorString(nivel, "Aluno não é tutor");
+		return nivel;
+	}
+	
+	public void doar(String matriculaTutor, int totalCentavos) {
+		Validador.validadorPositivo(totalCentavos, "dinhero não pode ser negativo");
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		
+		double taxaTutor = this.controllerTutores.getTaxaTutor(matriculaTutor, alunos);
+		Validador.validadorPositivo(taxaTutor, "matricula não é de tutor");
+		System.out.println("taxaTutor = " + taxaTutor);
+		
+		double totalSistema = Math.floor(totalCentavos * (1 - taxaTutor));
+		System.out.println("totalSistema = " + totalSistema);
+		
+		double totalTutor = (totalCentavos - totalSistema);
+		System.out.println("totalTutor = " + totalTutor);
+		
+		this.controllerAlunos.setAlunos(this.controllerTutores.receberDinheiroTutor(matriculaTutor, totalTutor, alunos));
+		this.caixaSistema.addDinheiroSistema(totalSistema);
+	}
+
+	public int totalDinheiroTutor(String emailTutor) {
+		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
+		return (int) this.controllerTutores.getDinheiroTutor(emailTutor, alunos);
+	}
+	
+	public int totalDinheiroSistema(){
+		return (int) this.caixaSistema.getDinheiroSistema();
 	}
 }

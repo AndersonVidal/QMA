@@ -1,5 +1,6 @@
 package model;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class Tutor {
 	/**
 	 * Representação da avaliação do tutor, no formato inteiro "1"
 	 */
-	private int nota;
+	private double nota;
 	/**
 	 * Representacao do dinheiro recebido, no formato double "0.0"
 	 */
@@ -100,9 +101,16 @@ public class Tutor {
 	
 	public int getId() { return this.id; }
 	
-	public int getNota() { return this.nota; }
+	public double getNota() { return this.nota; }
+	
+	public String getNotaString(){
+		DecimalFormat df = new DecimalFormat("#.00");
+		return df.format(this.nota);
+	}
 	
 	public double getDinheiro() { return this.dinheiro; }
+	
+	public void setDinheiro(double dinheiro) { this.dinheiro += dinheiro; }
 	
 	public Map<String, Set<String>> getDisponibilidade() { return this.disponibilidade; }
 	
@@ -173,6 +181,44 @@ public class Tutor {
 	}
 	
 	/**
+	 * Registra uma avaliação para o tutor
+	 * 
+	 * @param nota Avaliação dada ao tutor
+	 */
+	public void avaliar(int nota) {
+		Validador.validadorPositivo(nota, "nota negativa");
+		this.nota = (this.nota * 5 + nota) / 6;
+	}
+	
+	/**
+	 * Recupera o nivel do tutor, em que:
+	 * <ul><li><b>TOP</b>: nivel dado ao tutor com nota maior que 4.5</li>
+	 * <li><b>Tutor</b>: nivel dado ao tutor com nota entre 3.1 e 4.5</li>
+	 * <li><b>Aprendiz</b>: nivel dado ao tutor com nota menor ou igual a 3</li></ul>
+	 * 
+	 * @return Nivel do tutor, no formato String "TOP"
+	 */
+	public String getNivel() {
+		if(this.nota > 4.5) return "TOP";
+		if(this.nota > 3) return "Tutor";
+		return "Aprendiz";
+	}
+	
+	public double getTaxa(){
+		switch(this.getNivel()){
+		case "TOP":
+			if(this.nota - 4.5 >= 1) return 1;
+			return 0.9 + (this.nota - 4.5)/10;
+		case "Tutor":
+			return 0.8;
+		case "Aprendiz":
+			return 0.4 - (3 - this.nota)/10;
+		default:
+			throw new NullPointerException("Erro ao calcular taxa");
+		}
+	}
+	
+	/**
 	 * Retorna a representacao em String de um tutor. Segue o 
 	 * formato:<br> "ID - NOTA - DINHEIRO - (DISCIPLINAS - PROFICIENCIA) - (LOCAIS DE ATENDIMENTO)
 	 *  - (HORARIOS DE ATENDIMENTO)"
@@ -213,7 +259,4 @@ public class Tutor {
 			return false;
 		return true;
 	}
-}
-	
-	
 }

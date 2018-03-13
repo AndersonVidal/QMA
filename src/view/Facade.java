@@ -188,13 +188,47 @@ public class Facade {
 		return this.controllerSistema.getInfoAjuda(idAjuda, atributo);
 	}
 	
-	public String avaliarTutor (int idAjuda, int nota){
-		return "";
+	/**
+	 * Registra a avaliação de uma ajuda prestada de um tutor.
+	 * 
+	 * @param idAjuda Número identificador da ajuda, no formato inteiro "2"
+	 * @param nota Valor da avaliação, no formato inteiro "4"
+	 */
+	public void avaliarTutor (int idAjuda, int nota){
+		this.controllerSistema.avaliarTutor(idAjuda, nota);
 	}
-	public double pegarNota(String matriculaTutor){
-		return 1;
+	/**
+	 * Recupera a nota de um tutor no sistema.
+	 * 
+	 * @param matriculaTutor Matricula do tutor, no formato String "123456"
+	 * @return Nota do tutor
+	 */
+	public String pegarNota(String matriculaTutor){
+		return this.controllerSistema.pegarNota(matriculaTutor);
 	}
+	
+	/**
+	 * Recupera o nivel do tutor, em que:
+	 * <ul><li><b>TOP</b>: nivel dado ao tutor com nota maior que 4.5</li>
+	 * <li><b>Tutor</b>: nivel dado ao tutor com nota entre 3.1 e 4.5</li>
+	 * <li><b>Aprendiz</b>: nivel dado ao tutor com nota menor ou igual a 3</li></ul>
+	 * 
+	 * @param matriculaTutor Matricula do tutor cujo nivel será resgatado, no formato String "123456"
+	 * @return Nivel do tutor. Null caso matricula referencie um aluno que não é tutor.
+	 */
 	public String pegarNivel(String matriculaTutor){
-		return "";
+		return this.controllerSistema.pegarNivel(matriculaTutor);
+	}
+	
+	public void doar(String matriculaTutor, int totalCentavos) {
+		this.controllerSistema.doar(matriculaTutor, totalCentavos);
+	}
+	
+	public int totalDinheiroTutor(String emailTutor) {
+		return this.controllerSistema.totalDinheiroTutor(emailTutor);
+	}
+	
+	public int totalDinheiroSistema() {
+		return this.controllerSistema.totalDinheiroSistema();
 	}
 }
