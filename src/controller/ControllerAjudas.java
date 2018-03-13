@@ -198,9 +198,10 @@ public class ControllerAjudas {
 	
 
 	public String avaliarTutor(int idAjuda){
-		Validador.listConteins(this.ajudas, idAjuda - 1, "Erro ao tentar avaliar ajuda : id nao encontrado ");
-		this.ajudas.get(idAjuda - 1).checkAvaliacao(); 
-		String matrTutor = this.ajudas.get(idAjuda).getMatriclaTutor();
+		Validador.listConteins(this.ajudas, idAjuda - 1, "Erro na avaliacao de tutor: id nao encontrado ");
+		if(this.ajudas.get(idAjuda - 1).getAvaliacao()) return null;
+		this.ajudas.get(idAjuda - 1).checkAvaliacao();
+		String matrTutor = this.ajudas.get(idAjuda - 1).getMatriclaTutor();
 		return matrTutor;
 	}
 }
