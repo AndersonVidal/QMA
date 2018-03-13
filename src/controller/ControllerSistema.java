@@ -10,6 +10,7 @@ import utils.Alfabetica;
 import utils.ComparaMatricula;
 import utils.ComparaNome;
 import utils.ComparaTelefone;
+import utils.Constants;
 import utils.Validador;
 
 public class ControllerSistema {
@@ -169,5 +170,23 @@ public class ControllerSistema {
 			throw new IllegalArgumentException("Erro ao configurar ordem: atributo invalido");
 		}
 		
+	}
+
+	public void salvar() {
+		this.controllerAjudas.salvar(Constants.FILE_PATH + "ajudas.txt");
+		this.controllerAlunos.salvar(Constants.FILE_PATH + "alunos.txt");
+		this.caixaSistema.salvar(Constants.FILE_PATH + "caixa.txt");
+	}
+
+	public void carregar() {
+		this.controllerAjudas.carregar(Constants.FILE_PATH + "ajudas.txt");
+		this.controllerAlunos.carregar(Constants.FILE_PATH + "alunos.txt");
+		this.caixaSistema.carregar(Constants.FILE_PATH + "caixa.txt");
+	}
+
+	public void limpar() {
+		this.controllerAjudas.limpar(Constants.FILE_PATH + "ajudas.txt");
+		this.controllerAlunos.limpar(Constants.FILE_PATH + "alunos.txt");
+		this.caixaSistema.limpar(Constants.FILE_PATH + "caixa.txt");
 	}
 }

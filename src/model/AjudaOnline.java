@@ -10,6 +10,11 @@ import utils.Validador;
  */
 public class AjudaOnline extends Ajuda {
 
+	/**
+	 * Serial ID
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public AjudaOnline(int id, String matrAluno, String matrTutor, String disciplina) {
 		super(id, matrAluno, matrTutor, disciplina);
 	}

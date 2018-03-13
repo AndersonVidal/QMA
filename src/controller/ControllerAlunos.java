@@ -1,5 +1,10 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -114,6 +119,35 @@ public class ControllerAlunos {
 	
 	public void setAlunos(Map<String, Aluno> alunos){
 		this.alunos = alunos;
+	}
+
+	public void salvar(String path) {
+		try {
+			FileOutputStream fos = new FileOutputStream(path);
+			ObjectOutputStream oot = new ObjectOutputStream(fos);
+			
+			oot.writeObject(this.alunos);
+			oot.close();
+		} catch (IOException ioe) {}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void carregar(String path) {
+		try {
+			FileInputStream fis = new FileInputStream(path);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			this.alunos = (Map<String, Aluno>) ois.readObject();
+			ois.close();
+		} catch (Exception ioe) {}
+	}
+
+	public void limpar(String path) {
+		try {
+			FileOutputStream fos = new FileOutputStream(path);
+			this.alunos = new HashMap<String, Aluno>();
+			fos.close();
+		} catch (IOException ioe) {}
 	}
 	
 }

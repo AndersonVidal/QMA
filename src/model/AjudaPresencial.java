@@ -10,6 +10,10 @@ import utils.Validador;
 public class AjudaPresencial extends Ajuda {
 
 	/**
+	 * Serial ID
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Representação do horário, no formato String "12:30"
 	 */
 	private String horario;

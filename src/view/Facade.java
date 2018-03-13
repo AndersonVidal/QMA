@@ -235,4 +235,16 @@ public class Facade {
 	public void configurarOrdem(String atributo) {
 		this.controllerSistema.configurarOrdem(atributo);
 	}
+	
+	public void salvar() {
+		this.controllerSistema.salvar();
+	}
+	
+	public void carregar() {
+		this.controllerSistema.carregar();
+	}
+	
+	public void limpar() {
+		this.controllerSistema.limpar();
+	}
 }

@@ -1,8 +1,9 @@
 package model;
 
-import java.util.Optional;
+import java.io.Serializable;
 
 import utils.Validador;
+import utils.SerializableOptional;
 
 /**
  * Representação de um aluno, que terá matricula, identificador de curso, 
@@ -10,8 +11,12 @@ import utils.Validador;
  * 
  * @author Arthur da Silva Rodrigues, Anderson Vasconcelos e Daniel Coura
  */
-public class Aluno {
+public class Aluno implements Serializable {
 	
+	/**
+	 * Serial ID
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Representação da matricula do aluno, no formato String "123456"
 	 */
@@ -39,7 +44,7 @@ public class Aluno {
 	/**
 	 * Representação a função de Tutor do aluno
 	 */
-	private Optional<Tutor> tutor;
+	private SerializableOptional<Tutor> tutor;
 	
 	/**
 	 * Constrói um aluno a partir da matricula, do nome, do código do curso,
@@ -65,7 +70,7 @@ public class Aluno {
 		this.telefone = telefone;
 		this.email = email;
 		this.nota = 5;
-		this.tutor = Optional.empty();
+		this.tutor = SerializableOptional.empty();
 	}
 	
 	public String getMatricula() { return matricula; }
@@ -86,7 +91,7 @@ public class Aluno {
 	 * @return Booleano que representa se o aluno é um tutor
 	 */
 	public boolean isTutor() {
-		return this.tutor.isPresent();
+		return this.tutor.asOptional().isPresent();
 	}
 	
 	/**
@@ -99,7 +104,7 @@ public class Aluno {
 			throw new NullPointerException("Erro ao recuperar tutor: Tutor nao existe");
 		}
 		
-		return this.tutor.get();
+		return this.tutor.asOptional().get();
 	}
 	
 	/**
@@ -109,7 +114,7 @@ public class Aluno {
 	 * @param proficiencia Proficiência do tutor na disciplina
 	 */
 	public void tornaTutor(int id, String disciplina, int proficiencia) {
-		this.tutor = Optional.of(new Tutor(id, disciplina, proficiencia));
+		this.tutor = SerializableOptional.of(new Tutor(id, disciplina, proficiencia));
 	}
 	
 	/**

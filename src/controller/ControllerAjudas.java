@@ -2,6 +2,11 @@ package controller;
 
 import java.util.List;
 import java.util.Set;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -203,5 +208,34 @@ public class ControllerAjudas {
 		this.ajudas.get(idAjuda - 1).checkAvaliacao();
 		String matrTutor = this.ajudas.get(idAjuda - 1).getMatriclaTutor();
 		return matrTutor;
+	}
+
+	public void salvar(String path) {
+		try {
+		FileOutputStream fos = new FileOutputStream(path);
+		ObjectOutputStream oot = new ObjectOutputStream(fos);
+		
+		oot.writeObject(this.ajudas);
+		oot.close();
+		} catch (IOException ioe) {}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void carregar(String path) {
+		try {
+			FileInputStream fis = new FileInputStream(path);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			this.ajudas = (List<Ajuda>) ois.readObject();
+			ois.close();
+		} catch (Exception e) {} 
+	}
+
+	public void limpar(String path) {
+		try {
+			FileOutputStream fos = new FileOutputStream(path);
+			this.ajudas = new ArrayList<Ajuda>();
+			fos.close();
+		} catch (IOException ioe) {}
 	}
 }
