@@ -197,6 +197,7 @@ public class Facade {
 	public void avaliarTutor (int idAjuda, int nota){
 		this.controllerSistema.avaliarTutor(idAjuda, nota);
 	}
+	
 	/**
 	 * Recupera a nota de um tutor no sistema.
 	 * 
@@ -220,30 +221,64 @@ public class Facade {
 		return this.controllerSistema.pegarNivel(matriculaTutor);
 	}
 	
+	/**
+	 * Insere dinheiro no sistema que será dividido entre o sistema e o tutor.
+	 * 
+	 * @param matriculaTutor Matricula identificadora do aluno tutor, no formato String "123456"
+	 * @param totalCentavos Dinheiro a ser doado, no formato inteiro "20000"
+	 */
 	public void doar(String matriculaTutor, int totalCentavos) {
 		this.controllerSistema.doar(matriculaTutor, totalCentavos);
 	}
 	
+	/**
+	 * Recupera o total de dinheiro em um tutor identificado por um email
+	 * 
+	 * @param emailTutor Email do tutor, no formato String "tutor@ccc.ufcg.edu.br"
+	 * @return Total de dinheiro armazenado em tutor.
+	 */
 	public int totalDinheiroTutor(String emailTutor) {
 		return this.controllerSistema.totalDinheiroTutor(emailTutor);
 	}
 	
+	/**
+	 * Recupera o total de dinheiro no sistema.
+	 * 
+	 * @return Total de dinheiro armazenado no sistema.
+	 */
 	public int totalDinheiroSistema() {
 		return this.controllerSistema.totalDinheiroSistema();
 	}
 	
+	/**
+	 * Configura o criterio de ordenação dos alunos no sistema, podendo ser:<br>
+	 * <ul><li>Nome</li>
+	 * <li>Matricula</li>
+	 * <li>Telefone</li></ul>
+	 * 
+	 * @param atributo Critério de ordenação.
+	 */
 	public void configurarOrdem(String atributo) {
 		this.controllerSistema.configurarOrdem(atributo);
 	}
 	
+	/**
+	 * Salva os cadastros de alunos e ajudas, e o estado do caixa do sistema.
+	 */
 	public void salvar() {
 		this.controllerSistema.salvar();
 	}
 	
+	/**
+	 * Recupera os cadastros de alunos e ajudas, e o estado do caixa do sistema.
+	 */
 	public void carregar() {
 		this.controllerSistema.carregar();
 	}
 	
+	/**
+	 * Limpa todo registro de cadastros e estado do caixa do sistema salvo.
+	 */
 	public void limpar() {
 		this.controllerSistema.limpar();
 	}

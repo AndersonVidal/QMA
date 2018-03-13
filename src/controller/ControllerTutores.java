@@ -219,6 +219,13 @@ public class ControllerTutores {
 		return null;
 	}
 	
+	/**
+	 * Recupera a taxa de um tutor identificado pela sua matricula
+	 * 
+	 * @param matriculaTutor Matricula do tutor cujo nivel será resgatado, no formato String "123456"
+	 * @param alunos Mapa de alunos cadastrados, no formato Map
+	 * @return Taxa do tutor, no formato double "30.00". -1, se matricula não referenciar um tutor.
+	 */
 	public double getTaxaTutor(String matriculaTutor, Map<String, Aluno> alunos){
 		Validador.validadorString(matriculaTutor, "Erro na doacao para tutor: matriucla não pode ser vazia ou nula");
 		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "Erro na doacao para tutor: Tutor nao encontrado");
@@ -229,6 +236,14 @@ public class ControllerTutores {
 		return -1;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param matriculaTutor
+	 * @param dinheiro
+	 * @param alunos
+	 * @return
+	 */
 	public Map<String, Aluno> receberDinheiroTutor(String matriculaTutor, double dinheiro, Map<String, Aluno> alunos){
 		Validador.validadorString(matriculaTutor, "Erro no recebimento de dinheiro para tutor: matriucla não pode ser vazia ou nula");
 		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "Erro no recebimento de para tutor: Tutor nao encontrado");
