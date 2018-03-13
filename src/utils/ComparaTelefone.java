@@ -1,10 +1,8 @@
 package utils;
 
-import java.util.Comparator;
-
 import model.Aluno;
 
-public class ComparaTelefone implements Comparator<Aluno> {
+public class ComparaTelefone extends Comparador{
 
 	@Override
 	public int compare(Aluno aluno1, Aluno aluno2) {

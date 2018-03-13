@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.Comparator;
-
 import model.Aluno;
 
 /**
@@ -10,7 +8,7 @@ import model.Aluno;
  * 
  * @author Daniel Coura
  */
-public class ComparaNotaAlunoTutor implements Comparator<Aluno> {
+public class ComparaNotaAlunoTutor extends Comparador {
 
 	@Override
 	public int compare(Aluno tutor1, Aluno tutor2) {

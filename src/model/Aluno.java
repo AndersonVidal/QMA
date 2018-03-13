@@ -45,7 +45,7 @@ public class Aluno implements Serializable {
 	 * Representação a função de Tutor do aluno
 	 */
 	private SerializableOptional<Tutor> tutor;
-	
+		
 	/**
 	 * Constrói um aluno a partir da matricula, do nome, do código do curso,
 	 * do telefone e do email.
