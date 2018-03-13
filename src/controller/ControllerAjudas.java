@@ -234,7 +234,6 @@ public class ControllerAjudas {
 	public void limpar(String path) {
 		try {
 			FileOutputStream fos = new FileOutputStream(path);
-			this.ajudas = new ArrayList<Ajuda>();
 			fos.close();
 		} catch (IOException ioe) {}
 	}
