@@ -204,15 +204,15 @@ public class Tutor {
 		return "Aprendiz";
 	}
 	
-	public double getTaxa(){
+	public int getTaxa(){
 		switch(this.getNivel()){
 		case "TOP":
-			if(this.nota - 4.5 >= 1) return 1;
-			return 0.9 + (this.nota - 4.5)/10;
+			if(this.nota - 4.5 >= 1) return 100;
+			return (int) (90 + (this.nota - 4.5)*10);
 		case "Tutor":
-			return 0.8;
+			return (int) 80;
 		case "Aprendiz":
-			return 0.4 - (3 - this.nota)/10;
+			return (int) (40 - (3 - this.nota)*10);
 		default:
 			throw new NullPointerException("Erro ao calcular taxa");
 		}

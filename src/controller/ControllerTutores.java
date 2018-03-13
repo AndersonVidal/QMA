@@ -220,8 +220,8 @@ public class ControllerTutores {
 	}
 	
 	public double getTaxaTutor(String matriculaTutor, Map<String, Aluno> alunos){
-		Validador.validadorString(matriculaTutor, "tutor não pode ser nulo ou vazio");
-		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "tutor não cadastrado");
+		Validador.validadorString(matriculaTutor, "Erro na doacao para tutor: matriucla não pode ser vazia ou nula");
+		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "Erro na doacao para tutor: Tutor nao encontrado");
 		Aluno aluno = alunos.get(matriculaTutor);
 		if(aluno.isTutor()) {
 			return aluno.getTutor().getTaxa();
@@ -230,8 +230,8 @@ public class ControllerTutores {
 	}
 	
 	public Map<String, Aluno> receberDinheiroTutor(String matriculaTutor, double dinheiro, Map<String, Aluno> alunos){
-		Validador.validadorString(matriculaTutor, "tutor não pode ser nulo ou vazio");
-		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "tutor não cadastrado");
+		Validador.validadorString(matriculaTutor, "Erro no recebimento de dinheiro para tutor: matriucla não pode ser vazia ou nula");
+		Validador.validadorMapKeyNotConteins(matriculaTutor, alunos, "Erro no recebimento de para tutor: Tutor nao encontrado");
 		Aluno aluno = alunos.get(matriculaTutor);
 		if(aluno.isTutor()) {
 			alunos.get(matriculaTutor).getTutor().setDinheiro(dinheiro);
@@ -241,9 +241,9 @@ public class ControllerTutores {
 	}
 	
 	public double getDinheiroTutor(String email, Map<String, Aluno> alunos){
-		Validador.validadorString(email, "email vazio ou nulo");
+		Validador.validadorString(email, "Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		String matriculaTutor = this.buscaTutor(alunos, email);
-		Validador.validadorString(matriculaTutor, "email nao cadastrado");
+		Validador.validadorString(matriculaTutor, "Erro na consulta de total de dinheiro do tutor: Tutor nao encontrado");
 		if(alunos.get(matriculaTutor).isTutor()){
 			return alunos.get(matriculaTutor).getTutor().getDinheiro();
 		}

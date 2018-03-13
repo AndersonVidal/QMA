@@ -122,18 +122,15 @@ public class ControllerSistema {
 	}
 	
 	public void doar(String matriculaTutor, int totalCentavos) {
-		Validador.validadorPositivo(totalCentavos, "dinhero não pode ser negativo");
+		Validador.validadorPositivo(totalCentavos, "Erro na doacao para tutor: totalCentavos nao pode ser menor que zero");
 		Map<String, Aluno> alunos = this.controllerAlunos.getAlunos();
 		
 		double taxaTutor = this.controllerTutores.getTaxaTutor(matriculaTutor, alunos);
 		Validador.validadorPositivo(taxaTutor, "matricula não é de tutor");
-		System.out.println("taxaTutor = " + taxaTutor);
 		
-		double totalSistema = Math.floor(totalCentavos * (1 - taxaTutor));
-		System.out.println("totalSistema = " + totalSistema);
+		double totalSistema = Math.floor(totalCentavos * (100 - taxaTutor)/100);
 		
 		double totalTutor = (totalCentavos - totalSistema);
-		System.out.println("totalTutor = " + totalTutor);
 		
 		this.controllerAlunos.setAlunos(this.controllerTutores.receberDinheiroTutor(matriculaTutor, totalTutor, alunos));
 		this.caixaSistema.addDinheiroSistema(totalSistema);
