@@ -1,5 +1,7 @@
 package model;
 
+import java.io.Serializable;
+
 import utils.Validador;
 
 /**
@@ -7,8 +9,12 @@ import utils.Validador;
  * 
  * @author Daniel Coura
  */
-public abstract class Ajuda {
+public abstract class Ajuda implements Serializable {
 	
+	/**
+	 * Serial ID
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Representação do id da ajuda, no formato int "1"
 	 */

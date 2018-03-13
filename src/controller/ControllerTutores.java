@@ -2,12 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
 import model.Aluno;
-import utils.Alfabetica;
-import utils.Comparador;
 import utils.Validador;
 
 /**
@@ -66,9 +65,10 @@ public class ControllerTutores {
 	 * @param alunos Mapa de alunos cadastrados, no formato Map
 	 * @return Lista de descrições de alunos tutores
 	 */
-	public String listarAlunosTutores(Map<String, Aluno> alunos){
-		List<Aluno> arrayTutores = this.ordenaAlfabeticaTutores(this.getAlunosTutores(alunos));
-	
+	public String listarAlunosTutores(Map<String, Aluno> alunos, Comparator<Aluno> criterioDeListagem){
+		ArrayList<Aluno> arrayTutores= new ArrayList<Aluno>(this.getAlunosTutores(alunos));
+		Collections.sort(arrayTutores, criterioDeListagem);
+		
 		int quantidadeTutores = this.getQuatidadeTutores(alunos);
 		String lista = "";
 		int i = 0;
@@ -252,12 +252,6 @@ public class ControllerTutores {
 	
 	private int getQuatidadeTutores(Map<String, Aluno> alunos){
 		return this.getAlunosTutores(alunos).size();
-	}
-	
-	private List<Aluno> ordenaAlfabeticaTutores(List<Aluno> tutores) {
-		Comparador alfabetico = new Alfabetica();
-		Collections.sort(tutores, alfabetico);
-		return tutores;
 	}
 	
 	private String buscaTutor(Map<String, Aluno> alunos, String email) {

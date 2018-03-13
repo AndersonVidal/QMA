@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,8 +15,12 @@ import utils.Validador;
  * 
  * @author Maria Cecília Kemiac e Daniel Coura
  */
-public class Tutor {
+public class Tutor implements Serializable {
 	
+	/**
+	 * Serial ID
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Representação de um mapa das disciplinas onde a chave é a disciplina e o valor
 	 * é a proficiência do tutor na disciplina

@@ -1,15 +1,18 @@
 package controller;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import model.Aluno;
-import utils.Alfabetica;
-import utils.Comparador;
 import utils.Validador;
 
 /**
@@ -58,26 +61,14 @@ public class ControllerAlunos {
 	}
 	
 	/**
-	 * Cria uma lista ordenada de alunos, em ordem alfabética.
-	 * 
-	 * @return List de Alunos.
-	 */
-	private List<Aluno> ordenaAlfabeticaAlunos() {
-		List<Aluno> arrayAlunos = new ArrayList<Aluno>(this.alunos.values());
-		
-		Comparador alfabetico = new Alfabetica();
-		Collections.sort(arrayAlunos, alfabetico);
-		return arrayAlunos;
-	}
-	
-	/**
 	 * Lista todos os alunos do sistema exibindo suas representações textuais
-	 * em sequência alfabética.
+	 * ordenados através do critério definido no sistema.
 	 * 
 	 * @return Representação textual de uma lista de alunos.
 	 */
-	public String listarAlunos() {
-		List<Aluno> arrayAlunos = ordenaAlfabeticaAlunos();
+	public String listarAlunos(Comparator<Aluno> criterioDeListagem) {
+		ArrayList<Aluno> arrayAlunos = new ArrayList<Aluno>(this.alunos.values());
+		Collections.sort(arrayAlunos, criterioDeListagem);
 		
 		String str = "";
 		for(int i = 0; i < arrayAlunos.size(); i++) {
@@ -128,6 +119,35 @@ public class ControllerAlunos {
 	
 	public void setAlunos(Map<String, Aluno> alunos){
 		this.alunos = alunos;
+	}
+
+	public void salvar(String path) {
+		try {
+			FileOutputStream fos = new FileOutputStream(path);
+			ObjectOutputStream oot = new ObjectOutputStream(fos);
+			
+			oot.writeObject(this.alunos);
+			oot.close();
+		} catch (IOException ioe) {}
+	}
+
+	@SuppressWarnings("unchecked")
+	public void carregar(String path) {
+		try {
+			FileInputStream fis = new FileInputStream(path);
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			
+			this.alunos = (Map<String, Aluno>) ois.readObject();
+			ois.close();
+		} catch (Exception ioe) {}
+	}
+
+	public void limpar(String path) {
+		try {
+			FileOutputStream fos = new FileOutputStream(path);
+			this.alunos = new HashMap<String, Aluno>();
+			fos.close();
+		} catch (IOException ioe) {}
 	}
 	
 }
