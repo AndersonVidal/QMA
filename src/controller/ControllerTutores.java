@@ -27,6 +27,7 @@ public class ControllerTutores {
 	 * @return Cadastro de aluno atualizados, no formato Map
 	 */
 	public Map<String, Aluno> tornarTutor(String matricula, String disciplina, int proficiencia, Map<String, Aluno> alunos){
+		Validador.validadorObjeto(alunos, "cadastro de alunos null");
 		Validador.validadorString(matricula, "Erro na definicao de papel: matricula invalida");
 		Validador.validadorMapKeyNotConteins(matricula, alunos, "Erro na definicao de papel: Tutor nao encontrado");
 		
@@ -49,6 +50,7 @@ public class ControllerTutores {
 	 * @return Desrição de um tutor.
 	 */
 	public String recuperaTutor(String matricula, Map<String, Aluno> alunos){
+		Validador.validadorObjeto(alunos, "cadastro de alunos null");
 		Validador.validadorString(matricula, "Erro na busca por tutor: Matricula não pode ser vazio ou nulo");
 		Validador.validadorMapKeyNotConteins(matricula, alunos, "Erro na busca por tutor: Tutor nao encontrado");
 		
@@ -66,7 +68,9 @@ public class ControllerTutores {
 	 * @return Lista de descrições de alunos tutores
 	 */
 	public String listarAlunosTutores(Map<String, Aluno> alunos, Comparator<Aluno> criterioDeListagem){
-		ArrayList<Aluno> arrayTutores= new ArrayList<Aluno>(this.getAlunosTutores(alunos));
+		Validador.validadorObjeto(alunos, "Cadastro de alunos null");
+		Validador.validadorObjeto(criterioDeListagem, "criterio de ordenação null");
+		List<Aluno> arrayTutores= this.getAlunosTutores(alunos);
 		Collections.sort(arrayTutores, criterioDeListagem);
 		
 		int quantidadeTutores = this.getQuatidadeTutores(alunos);

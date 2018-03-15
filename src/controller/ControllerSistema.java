@@ -338,7 +338,6 @@ public class ControllerSistema {
 		default:
 			throw new IllegalArgumentException("Erro ao configurar ordem: atributo invalido");
 		}
-		
 	}
 
 	/**
