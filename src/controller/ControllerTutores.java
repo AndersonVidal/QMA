@@ -98,6 +98,7 @@ public class ControllerTutores {
 	 * @return Cadastro atualizado dos alunos no sistema, no formato Map
 	 */
 	public Map<String, Aluno> cadastrarHorario(String email, String horario, String dia, Map<String, Aluno> alunos) {
+		Validador.validadorObjeto(alunos, "Cadastro de alunos null");
 		Validador.validadorString(email, "Erro no cadastrar horario: email nao pode ser vazio ou em branco");
 		String matriculaTutor = this.buscaTutor(alunos, email);
 		Validador.validadorString(matriculaTutor, "Erro no cadastrar horario: tutor nao cadastrado");
@@ -115,6 +116,7 @@ public class ControllerTutores {
 	 * @return Cadastro atualizado dos alunos no sistema, no formato Map
 	 */
 	public Map<String, Aluno> cadastrarLocalDeAtendimento(String email, String local, Map<String, Aluno> alunos) {		
+		Validador.validadorObjeto(alunos, "Cadastro de alunos null");
 		Validador.validadorString(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
 		String matriculaTutor = this.buscaTutor(alunos, email);
 		Validador.validadorString(matriculaTutor, "Erro no cadastrar local de atendimento: tutor nao cadastrado");
@@ -133,6 +135,7 @@ public class ControllerTutores {
 	 * @return Booleano que representa a proposição de horário de atendimento existir.
 	 */
 	public boolean consultaHorario(String email, String horario, String dia, Map<String, Aluno> alunos){
+		Validador.validadorObjeto(alunos, "Cadastro de alunos null");
 		Validador.validadorString(email, "Erro na consulta de horario: email nao pode ser vazio ou em branco");
 		String matriculaTutor = this.buscaTutor(alunos, email);
 		if(matriculaTutor == null) return false;
@@ -149,6 +152,7 @@ public class ControllerTutores {
 	 * @return Booleano que representa a proposição de local de atendimento existir.
 	 */
 	public boolean consultaLocal(String email, String local, Map<String, Aluno> alunos){
+		Validador.validadorObjeto(alunos, "Cadastro de alunos null");
 		Validador.validadorString(email, "Erro na consulta de local: email nao pode ser vazio ou em branco");
 		String matriculaTutor = this.buscaTutor(alunos, email);
 		if(matriculaTutor == null) return false;
@@ -163,6 +167,7 @@ public class ControllerTutores {
 	 * @return Alunos tutores, no formato List
 	 */
 	public List<Aluno> getAlunosTutores(Map<String, Aluno> alunos){
+		Validador.validadorObjeto(alunos, "Cadastro de alunos null");
 		List<Aluno> tutores = new ArrayList<Aluno>();
 		for(Aluno aln : alunos.values()) {
 			if (aln.isTutor()) tutores.add(aln);
@@ -180,6 +185,8 @@ public class ControllerTutores {
 	 * @return Mapa de alunos cadastrados atualizado.
 	 */
 	public Map<String, Aluno> avaliaTutor(String matrTutor, int nota, Map<String, Aluno> alunos){
+		Validador.validadorObjeto(alunos, "Cadastro de alunos null");
+		Validador.validadorString(matrTutor, "matricula do tutor não pode ser vazia ou nula");
 		Validador.validadorMapKeyNotConteins(matrTutor, alunos, "Tutor não encontrado");
 		alunos.get(matrTutor).getTutor().avaliar(nota);
 		return alunos;
