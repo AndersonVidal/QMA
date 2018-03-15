@@ -209,6 +209,15 @@ public class Tutor implements Serializable {
 		return "Aprendiz";
 	}
 	
+	/**
+	 * Retorna a taxa que será usada nos descontos de doações para o sistema.<br>
+	 * O calculo da taxa é feito de acordo com o nivel:<br>
+	 * <ul><li>TOP: 90% + (1% para cada decimo a mais que 4.5 da nota do tutor)</li>
+	 * <li>Tutor: 80%</li>
+	 * <li>Aprendiz: 40% - (1% para cada decimo a menos que 3.0 da nota do tutor)</li></ul>
+	 * 
+	 * @return  Taxa de desconto para doações do sistema.
+	 */
 	public int getTaxa(){
 		switch(this.getNivel()){
 		case "TOP":
@@ -240,7 +249,7 @@ public class Tutor implements Serializable {
 		}
 		
 		return this.nota + " - " + this.dinheiro + " - (" + disciplinas + ") - (" +
-			   this.locaisAtendimento.toString() + ") - (" + horarios;
+			   this.locaisAtendimento.toString() + ") - (" + horarios + ")";
 	}
 
 	@Override

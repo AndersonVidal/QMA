@@ -237,12 +237,12 @@ public class ControllerTutores {
 	}
 	
 	/**
+	 * Registra uma quantia de dinheiro no cadastro do tutor e retorna o registro de alunos cadastrados atualizados.
 	 * 
-	 * 
-	 * @param matriculaTutor
-	 * @param dinheiro
-	 * @param alunos
-	 * @return
+	 * @param matriculaTutor Matricula do tutor a receber a quantia.
+	 * @param dinheiro Dinheiro a ser doado para o tutor.
+	 * @param alunos Alunos cadastrados no sistema.
+	 * @return Registro de alunos cadastrados no sistema. Null caso a matricula não referencie um tutor.
 	 */
 	public Map<String, Aluno> receberDinheiroTutor(String matriculaTutor, double dinheiro, Map<String, Aluno> alunos){
 		Validador.validadorString(matriculaTutor, "Erro no recebimento de dinheiro para tutor: matriucla não pode ser vazia ou nula");
@@ -255,6 +255,13 @@ public class ControllerTutores {
 		return null;
 	}
 	
+	/**
+	 * Retorna o total de dinheiro armazenado no tutor. Caso email não referencie um tutor, é retornado -1.
+	 * 
+	 * @param email Email do tutor a ser consultado.
+	 * @param alunos Alunos cadastrados no sistema.
+	 * @return Total de dinheiro do tutor, no formato double. -1 caso email não referencie um aluno que é tutor.
+	 */
 	public double getDinheiroTutor(String email, Map<String, Aluno> alunos){
 		Validador.validadorString(email, "Erro na consulta de total de dinheiro do tutor: emailTutor nao pode ser vazio ou nulo");
 		String matriculaTutor = this.buscaTutor(alunos, email);
@@ -265,10 +272,24 @@ public class ControllerTutores {
 		return -1;
 	}
 	
+	/**
+	 * Retorna a quantidade de tutores cadastrados no sistema.
+	 * 
+	 * @param alunos Alunos cadastrados no sistema.
+	 * @return Numero de tutores cadastrados no sistema, no formato inteiro "3"
+	 */
 	private int getQuatidadeTutores(Map<String, Aluno> alunos){
 		return this.getAlunosTutores(alunos).size();
 	}
 	
+	/**
+	 * Realiza uma busca de um tutor nos alunos cadastrados a partir do seu email, retornando sua
+	 * matricula. Caso o tutor não seja encontrado, é retornado null.
+	 * 
+	 * @param alunos Mapa de alunos cadastrados no sistema, no formato Map
+	 * @param email Email do aluno a ser buscado, no formato "tutor@teste.com"
+	 * @return Matricula do tutor. Null caso tutor não seja encontrado.
+	 */
 	private String buscaTutor(Map<String, Aluno> alunos, String email) {
 		String matriculaTutor = null;
 		for(Aluno aluno : alunos.values()) {
