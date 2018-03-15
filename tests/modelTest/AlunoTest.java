@@ -1,6 +1,5 @@
 package modelTest;
 
-import static org.junit.Assert.*;
 import org.junit.*;
 
 import model.Aluno;
